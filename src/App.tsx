@@ -1,10 +1,13 @@
-import EventList from "./components/EventList";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+// import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-center my-6">서울시 문화 정보</h1>
-      <EventList />
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-grow">{<Home />}</main>
+      {/* <Footer /> */}
     </div>
   );
 }

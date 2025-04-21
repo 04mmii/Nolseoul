@@ -1,26 +1,14 @@
-import { useEffect, useState } from "react";
-import { EventData } from "../types/apiTypes";
-import { fetchEvents } from "../api/fetchEvents";
-
-export default function EventList() {
-  const [events, setEvents] = useState<EventData[]>([]);
-
-  useEffect(() => {
-    fetchEvents().then(setEvents);
-  }, []);
-
+const EventList = () => {
+  // 추후 API 연동 예정
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">문화 행사 목록</h2>
-      <ul className="space-y-3">
-        {events.map((event, index) => (
-          <li key={index} className="border p-4 rounded-md">
-            <h3 className="font-semibold">{event.TITLE}</h3>
-            <p>{event.DATE}</p>
-            <p className="text-sm text-gray-500">{event.PLACE}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <section id="events" className="py-12 px-4 max-w-7xl mx-auto">
+      <h3 className="text-2xl font-semibold mb-6">📅 문화행사</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* 예시용 카드 */}
+        <div className="border p-4 rounded shadow">행사명</div>
+      </div>
+    </section>
   );
-}
+};
+
+export default EventList;
