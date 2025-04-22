@@ -1,13 +1,17 @@
+import { useEvents } from "../hooks/useEvents";
+import EventCard from "./EventCard";
+
 const EventList = () => {
-  // 추후 API 연동 예정
+  const { events, loading } = useEvents();
+
+  if (loading) return <p className="text-center mt-10">불러오는 중...</p>;
+
   return (
-    <section id="events" className="py-12 px-4 max-w-7xl mx-auto">
-      <h3 className="text-2xl font-semibold mb-6">📅 문화행사</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* 예시용 카드 */}
-        <div className="border p-4 rounded shadow">행사명</div>
-      </div>
-    </section>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4">
+      {events.map((event, index) => (
+        <EventCard key={index} event={event} />
+      ))}
+    </div>
   );
 };
 

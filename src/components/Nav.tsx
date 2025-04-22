@@ -1,5 +1,5 @@
 const Nav = () => (
-  <nav className="space-x-4 text-gray-600">
+  <nav className="space-x-10 text-gray-600">
     <a href="#events" className="hover:text-black">
       문화행사
     </a>
