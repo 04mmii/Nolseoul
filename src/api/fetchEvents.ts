@@ -1,10 +1,13 @@
-import { EventData } from "../types/apiTypes";
+import axios from "axios";
+import { EventItem } from "../types/EventItem";
 
-export async function fetchEvents(): Promise<EventData[]> {
-  const serviceKey = import.meta.env.SEOUL_API_KEY;
-  const url = `https://openapi.seoul.go.kr:8088/${serviceKey}/json/culturalEventInfo/1/100/`;
+const API_KEY = import.meta.env.VITE_API_KEY;
 
-  const res = await fetch(url);
-  const data = await res.json();
-  return data?.culturalEventInfo?.row || [];
-}
+export const fetchEvents = async (): Promise<EventItem[]> => {
+  const response = await axios.get(
+    `https://openapi.seoul.go.kr:8088/${API_KEY}/json/culturalEventInfo/1/100/`
+  );
+
+  const data = response.data?.culturalEventInfo?.row || [];
+  return data;
+};

@@ -6,4 +6,5 @@ export interface Event {
   PLACE: string;
   ORG_NAME: string;
   MAIN_IMG: string;
+  [key: string]: string;
 }
