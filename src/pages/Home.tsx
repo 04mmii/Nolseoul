@@ -2,6 +2,7 @@ import { useEvents } from "../hooks/useEvents";
 import { EventCard } from "../components/EventCard";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
+import HeroSlider from "../components/HeroSlider";
 
 const Home = () => {
   const { events, loading } = useEvents();
@@ -11,6 +12,7 @@ const Home = () => {
   return (
     <>
       <Header />
+      <HeroSlider />
       <div className="p-6">
         <h2 className="text-xl font-bold mb-4">문화 행사</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
