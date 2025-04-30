@@ -1,58 +1,53 @@
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
-import { useEvents } from "../hooks/useEvents";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { bannerData } from "../data/bannerData";
 
 const HeroSlider = () => {
-  const { events } = useEvents();
+  const [current, setCurrent] = useState(0);
 
-  const banners = events.filter((event) => event.MAIN_IMG).slice(0, 5);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % bannerData.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleClick = (link: string) => {
+    if (link.startsWith("http")) {
+      window.open(link, "_blank"); // 외부 링크는 새 창으로
+    } else {
+      window.location.href = link; // 내부 경로는 직접 이동
+    }
+  };
 
   return (
-    <div className="w-full max-w-screen-xl mx-auto px-4 mb-10 flex items-center gap-8">
-      {/* 배너 슬라이드 */}
-      <div className="w-[378px] h-[534px]">
-        <Swiper
-          modules={[Pagination, Autoplay]}
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 4000 }}
-          loop={true}
-          className="w-full h-full rounded-lg overflow-hidden shadow-md"
+    <div className="relative w-full h-[847px] overflow-hidden">
+      {bannerData.map((banner, idx) => (
+        <div
+          key={banner.id}
+          className={`absolute transition-opacity duration-1000 ease-in-out w-full h-full flex items-center ${
+            current === idx ? "opacity-100" : "opacity-0"
+          }`}
         >
-          {banners.map((event, idx) => (
-            <SwiperSlide key={idx} className="relative">
-              <Link to={`/events/${event.MAIN_KEY}`}>
-                <img
-                  src={event.MAIN_IMG}
-                  alt={event.TITLE}
-                  className="w-full h-full object-cover object-center rounded-lg"
-                />
-                <div className="absolute bottom-4 left-4 bg-black/60 text-white p-3 rounded-md max-w-[90%]">
-                  <h2 className="text-lg font-bold">{event.TITLE}</h2>
-                  <p className="text-xs mt-1">{event.DATE}</p>
-                </div>
-              </Link>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-
-      {/* 배너 옆 소개글 */}
-      <div className="flex-1">
-        {banners.length > 0 && (
-          <div className="space-y-4">
-            <h1 className="text-3xl font-bold">{banners[0].TITLE}</h1>
-            <p className="text-gray-700">{banners[0].PLACE}</p>
-            <p className="text-gray-500 text-sm">{banners[0].DATE}</p>
-            <Link
-              to={`/events/${banners[0].MAIN_KEY}`}
-              className="inline-block mt-4 px-5 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-            >
-              행사 자세히 보기 →
-            </Link>
+          <div className="w-full flex justify-center items-center gap-12 px-12">
+            <img
+              src={banner.image}
+              alt={banner.title}
+              className="w-[1020px] h-auto rounded shadow-lg cursor-pointer"
+              onClick={() => handleClick(banner.link)}
+            />
+            <div className="max-w-md text-left">
+              <h2 className="text-4xl font-bold mb-4">{banner.title}</h2>
+              <p className="text-lg text-gray-700 mb-4">{banner.description}</p>
+              <button
+                onClick={() => handleClick(banner.link)}
+                className="px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+              >
+                바로가기 →
+              </button>
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      ))}
     </div>
   );
 };
