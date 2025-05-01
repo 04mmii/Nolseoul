@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { fetchEvents } from "../api/fetchEvents";
-import { EventItem } from "../types/EventItem";
+import { fetchEvents } from "../../api/fetchEvents";
+import { EventItem } from "../../types/EventItem";
 
 const EventListPreview = () => {
   const [events, setEvents] = useState<EventItem[]>([]);
@@ -15,7 +15,7 @@ const EventListPreview = () => {
   }, []);
 
   return (
-    <div className="px-4">
+    <div className="max-w-7xl px-4">
       <h2 className="text-xl font-bold mb-4">문화 행사</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {events.map((event, idx) => (

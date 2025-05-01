@@ -2,11 +2,15 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import EventsPage from "./pages/EventsPage";
 
-export default function App() {
+function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/events" element={<EventsPage />} />
-    </Routes>
+    <div className="font-noto">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/events" element={<EventsPage />} />
+      </Routes>
+    </div>
   );
 }
+
+export default App;

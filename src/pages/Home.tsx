@@ -1,8 +1,8 @@
 import { useEvents } from "../hooks/useEvents";
-import { EventCard } from "../components/EventCard";
-import Header from "../components/Header";
+import { EventCard } from "../components/Events/EventCard";
+import Header from "../components/Layout/Header";
 import { Link } from "react-router-dom";
-import HeroSlider from "../components/HeroSlider";
+import HeroSlider from "../components/Banner/HeroSlider";
 
 const Home = () => {
   const { events, loading } = useEvents();
@@ -13,7 +13,7 @@ const Home = () => {
     <>
       <Header />
       <HeroSlider />
-      <div className="p-6">
+      <div className="max-w-7xl mx-auto">
         <h2 className="text-xl font-bold mb-4">문화 행사</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {events.slice(0, 5).map((event, i) => (

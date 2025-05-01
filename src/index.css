@@ -1,4 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
 @import "tailwindcss";
 
 @import "swiper/css";
 @import "swiper/css/pagination";
+
+:root {
+  --font-sans: "Noto Sans KR", ui-sans-serif, system-ui, sans-serif;
+}

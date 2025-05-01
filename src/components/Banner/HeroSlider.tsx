@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { bannerData } from "../data/bannerData";
+import { bannerData } from "./bannerData";
 
 const HeroSlider = () => {
   const [current, setCurrent] = useState(0);
@@ -13,14 +13,14 @@ const HeroSlider = () => {
 
   const handleClick = (link: string) => {
     if (link.startsWith("http")) {
-      window.open(link, "_blank"); // 외부 링크는 새 창으로
+      window.open(link, "_blank");
     } else {
-      window.location.href = link; // 내부 경로는 직접 이동
+      window.location.href = link;
     }
   };
 
   return (
-    <div className="relative w-full h-[847px] overflow-hidden">
+    <div className="relative w-full h-[847px] overflow-hidden px-5">
       {bannerData.map((banner, idx) => (
         <div
           key={banner.id}

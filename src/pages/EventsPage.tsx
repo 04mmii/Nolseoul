@@ -1,9 +1,9 @@
 import { useState, useMemo } from "react";
 import { useEvents } from "../hooks/useEvents";
-import { EventCard } from "../components/EventCard";
-import Header from "../components/Header";
+import { EventCard } from "../components/Events/EventCard";
+import Header from "../components/Layout/Header";
 
-const categories = ["전체", "문화", "공연", "전시", "체험"];
+const categories = ["전체", "공연", "전시", "교육/체험"];
 
 const EventsPage = () => {
   const { events, loading } = useEvents();
@@ -14,7 +14,7 @@ const EventsPage = () => {
   const filteredEvents = useMemo(() => {
     return events
       .filter((event) => {
-        const category = event.CODENAME || ""; // ← 실제 필드명 확인해서 바꿔줘
+        const category = event.CODENAME || "";
         const title = event.TITLE || "";
 
         const matchesCategory =
@@ -26,14 +26,14 @@ const EventsPage = () => {
       .sort((a, b) => {
         const dateA = new Date(a.STRTDATE || a.DATE || "").getTime();
         const dateB = new Date(b.STRTDATE || b.DATE || "").getTime();
-        return dateA - dateB; // 가까운 날짜가 위로
+        return dateA - dateB;
       });
   }, [events, selectedCategory, searchQuery]);
 
   return (
     <>
       <Header />
-      <div className="p-6">
+      <div className="p-6 max-w-7xl mx-auto">
         {/* 검색창 */}
         <input
           type="text"
