@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import EventsPage from "./pages/EventsPage";
 import CulturalSpacesPage from "./components/CulturalSpace/CulturalSpacesPage";
+import CulturalSpaceDetail from "./components/CulturalSpace/CulturalSpaceDetail.tsx";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/spaces" element={<CulturalSpacesPage />} />
+        <Route path="/spaces/:facCode" element={<CulturalSpaceDetail />} />
       </Routes>
     </div>
   );
