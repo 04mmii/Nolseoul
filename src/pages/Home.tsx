@@ -20,9 +20,13 @@ const Home = () => {
       <div className="max-w-7xl mx-auto">
         <h2 className="text-xl font-bold mb-4">문화 행사</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {events.slice(0, 5).map((event, i) => (
-            <EventCard key={i} event={event} />
-          ))}
+          {events?.length > 0 ? (
+            events
+              .slice(0, 5)
+              .map((event, i) => <EventCard key={i} event={event} />)
+          ) : (
+            <p>문화 행사가 없습니다.</p>
+          )}
         </div>
         <div className="text-right mt-4">
           <Link to="/events" className="text-blue-600 hover:underline">
@@ -33,8 +37,8 @@ const Home = () => {
       <section className="mt-12 max-w-7xl mx-auto">
         <h2 className="text-xl font-bold mb-4">문화공간</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {spaces.slice(0, 5).map((space, i) => (
-            <CulturalSpaceCard key={i} space={space} />
+          {spaces?.slice(0, 5).map((space, i) => (
+            <CulturalSpaceCard key={space.FAC_CODE || i} space={space} />
           ))}
         </div>
         <div className="text-right mt-4">

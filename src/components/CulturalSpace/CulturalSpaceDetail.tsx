@@ -1,16 +1,19 @@
 import { useParams } from "react-router-dom";
 import { useCulturalSpaces } from "../../hooks/useCulturalSpaces";
 import Header from "../Layout/Header";
+import { CulturalSpace } from "../../types/CulturalSpace";
 
 const CulturalSpaceDetailPage = () => {
-  const { facCode } = useParams(); // <- 라우터에서 :facCode로 받았으므로 여기도 facCode
+  const { facCode } = useParams<{ facCode: string }>();
   const { spaces, loading, error } = useCulturalSpaces();
 
+  if (!facCode) return <p>잘못된 접근입니다. (facCode 없음)</p>;
   if (loading) return <p>불러오는 중...</p>;
   if (error) return <p>오류가 발생했습니다: {error.message}</p>;
 
-  const space = spaces.find((s) => s.FAC_CODE.toString() === facCode);
-
+  const space = (spaces as CulturalSpace[]).find(
+    (s) => s.FAC_CODE.toString() === facCode
+  );
   if (!space) return <p>문화공간 정보를 찾을 수 없습니다.</p>;
 
   return (
@@ -23,16 +26,16 @@ const CulturalSpaceDetailPage = () => {
           alt={space.FAC_NAME}
           className="w-full h-64 object-cover rounded-lg mb-4"
         />
-        <p className="text-gray-700 mb-2">
+        <p>
           <strong>주소:</strong> {space.ADDR}
         </p>
-        <p className="text-gray-700 mb-2">
+        <p>
           <strong>전화번호:</strong> {space.PHNE}
         </p>
-        <p className="text-gray-700 mb-2">
+        <p>
           <strong>카테고리:</strong> {space.SUBJCODE}
         </p>
-        <p className="text-gray-600 mt-4">{space.FAC_DESC}</p>
+        <p>{space.FAC_DESC}</p>
       </main>
     </>
   );

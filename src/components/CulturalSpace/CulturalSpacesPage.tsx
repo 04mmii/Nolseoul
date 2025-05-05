@@ -1,9 +1,9 @@
 import { useCulturalSpaces } from "../../hooks/useCulturalSpaces";
 import Header from "../Layout/Header";
 import CulturalSpaceCard from "../CulturalSpace/CulturalSpaceCard";
-import Map from "../Map/KakaoMap.tsx";
-import FilterTabs from "./FilterTabs.tsx";
-import Pagination from "../Common/Pagination.tsx";
+import Map from "../Map/KakaoMap";
+import FilterTabs from "./FilterTabs";
+import Pagination from "../Common/Pagination";
 import { useState, useEffect } from "react";
 
 const CulturalSpacesPage = () => {
@@ -22,7 +22,6 @@ const CulturalSpacesPage = () => {
     currentPage * itemsPerPage
   );
 
-  // 페이지 변경 시 스크롤 상단 이동
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);

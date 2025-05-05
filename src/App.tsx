@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import EventsPage from "./pages/EventsPage";
 import CulturalSpacesPage from "./components/CulturalSpace/CulturalSpacesPage";
-import CulturalSpaceDetail from "./components/CulturalSpace/CulturalSpaceDetail.tsx";
+import CulturalSpaceDetail from "./components/CulturalSpace/CulturalSpaceDetail";
 
 function App() {
   return (
