@@ -1,8 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import EventsPage from "./pages/EventsPage";
-import CulturalSpacesPage from "./components/CulturalSpace/CulturalSpacesPage";
+import CulturalSpacesPage from "./pages/CulturalSpacesPage";
 import CulturalSpaceDetail from "./components/CulturalSpace/CulturalSpaceDetail";
+import NightViewsPage from "./pages/NightViewsPage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/events" element={<EventsPage />} />
         <Route path="/spaces" element={<CulturalSpacesPage />} />
         <Route path="/spaces/:facCode" element={<CulturalSpaceDetail />} />
+        <Route path="/night-views" element={<NightViewsPage />} />
       </Routes>
     </div>
   );

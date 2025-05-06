@@ -1,9 +1,9 @@
-import { useCulturalSpaces } from "../../hooks/useCulturalSpaces";
-import Header from "../Layout/Header";
-import CulturalSpaceCard from "../CulturalSpace/CulturalSpaceCard";
-import Map from "../Map/KakaoMap";
-import FilterTabs from "./FilterTabs";
-import Pagination from "../Common/Pagination";
+import { useCulturalSpaces } from "../hooks/useCulturalSpaces";
+import Header from "../components/Layout/Header";
+import CulturalSpaceCard from "../components/CulturalSpace/CulturalSpaceCard";
+import Map from "../components/Map/KakaoMap";
+import FilterTabs from "../components/CulturalSpace/FilterTabs";
+import Pagination from "../components/Common/Pagination";
 import { useState, useEffect } from "react";
 
 const CulturalSpacesPage = () => {
