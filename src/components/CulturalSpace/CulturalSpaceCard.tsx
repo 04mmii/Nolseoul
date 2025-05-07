@@ -7,7 +7,7 @@ interface Props {
 
 const CulturalSpaceCard = ({ space }: Props) => {
   return (
-    <Link to={`/spaces/${space.FAC_CODE}`}>
+    <Link to={`/spaces/${space.NUM}`}>
       <div className="bg-white rounded-xl shadow-md p-3 hover:shadow-lg transition">
         <img
           src={space.MAIN_IMG}

@@ -1,180 +1,146 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Header from "../components/Layout/Header";
 import Pagination from "../components/Common/Pagination";
-import Map from "../components/Map/KakaoMap";
+import NightViewMap from "../components/Map/NightViewMap";
+import { useNightViewSpots } from "../hooks/useNightViewSpots";
+import NightViewCard from "../components/Places/NightViewCard";
 
-// 야경명소 목록 (API 오류 대체 데이터)
-const nightViewSpots = [
-  {
-    id: 1,
-    title: "아름다이에 광장",
-    image: "/images/nightview1.jpg",
-    subtitle: "도심 속 아름다운 야경",
-    address: "서울시 중구",
-    operatingHours: "일몰후~23:00",
-    category: "공원/광장",
-    lat: 37.566826,
-    lng: 126.978656,
-  },
-  {
-    id: 2,
-    title: "석촌호수 루미나리에",
-    image: "/images/nightview2.jpg",
-    subtitle: "송파나루공원",
-    address: "서울 송파구 석촌호수로 226",
-    operatingHours: "17:30~22:30",
-    category: "다리/하천",
-    lat: 37.5092,
-    lng: 127.1037,
-  },
-  {
-    id: 3,
-    title: "세종문화회관",
-    image: "/images/nightview3.jpg",
-    subtitle: "문화와 예술이 있는 곳",
-    address: "서울특별시 종로구 세종대로 175",
-    operatingHours: "일몰 후부터 심야",
-    category: "공공시설",
-    lat: 37.5725,
-    lng: 126.9756,
-  },
-  {
-    id: 4,
-    title: "여의도한강공원 물빛광장",
-    image: "/images/nightview4.jpg",
-    subtitle: "음악분수와 야경",
-    address: "서울 영등포구 여의도동 84-1",
-    operatingHours: "일몰 후 21:00까지",
-    category: "다리/하천",
-    lat: 37.5248,
-    lng: 126.9324,
-  },
+// API 응답의 실제 SUBJCODE 값으로 카테고리 수정
+const categories = [
+  "전체",
+  "다리/전망대",
+  "공원/광장",
+  "문화시설",
+  "역사유적지",
+  "테마거리",
 ];
 
-const categories = ["전체", "다리/하천", "공원/광장", "공공시설", "문화 체험"];
-
 const NightViewsPage = () => {
+  const { spots, loading, error } = useNightViewSpots();
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState("");
   const itemsPerPage = 8;
 
-  // 카테고리 및 검색어로 필터링
-  const filteredSpots = nightViewSpots.filter((spot) => {
-    const categoryMatch =
-      selectedCategory === "전체" || spot.category === selectedCategory;
-    const searchMatch =
-      searchKeyword === "" ||
-      spot.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-      spot.address.toLowerCase().includes(searchKeyword.toLowerCase());
-    return categoryMatch && searchMatch;
-  });
+  // 필터링 로직 수정 (FAC_NAME → TITLE)
+  const filteredSpots = useMemo(() => {
+    return spots.filter(
+      (spot) =>
+        (selectedCategory === "전체" || spot.SUBJCODE === selectedCategory) &&
+        (spot.TITLE.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          spot.ADDR.toLowerCase().includes(searchKeyword.toLowerCase()))
+    );
+  }, [spots, selectedCategory, searchKeyword]);
 
   // 페이지네이션
-  const paginatedSpots = filteredSpots.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const paginatedSpots = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredSpots.slice(startIndex, startIndex + itemsPerPage);
+  }, [currentPage, filteredSpots]);
 
+  // 페이지 초기화
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchKeyword]);
+
+  // 스크롤 상단 이동
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
+
+  // 로딩 및 에러 상태 처리
+  if (loading) return <div className="text-center py-8">로딩 중...</div>;
+  if (error)
+    return (
+      <div className="text-red-500 text-center py-8">
+        오류 발생: {error.message}
+      </div>
+    );
 
   return (
     <>
       <Header />
       <div className="min-h-screen bg-white">
-        {/* 헤더 */}
-        <div className="py-4">
-          <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-            <h1 className="text-3xl font-bold">야경명소</h1>
-          </div>
-        </div>
-
-        {/* 소개 */}
+        {/* 헤더 영역 */}
         <div className="max-w-7xl mx-auto px-4 py-8">
-          <p className="text-lg">
-            서울의 아름답고 멋진 <strong>야경명소</strong>를 확인해보세요!
+          <h1 className="text-3xl font-bold text-center mb-4">야경명소</h1>
+          <p className="text-lg text-center text-gray-600">
+            서울의 아름다운 야경 명소를探索해보세요!
           </p>
         </div>
 
-        {/* 카테고리 필터 */}
-        <div className="max-w-7xl mx-auto px-4 mb-6 border-b pb-4">
-          <div className="flex gap-4">
+        {/* 지도 표시 */}
+        <div className="max-w-7xl mx-auto px-4 mb-8">
+          <NightViewMap spots={filteredSpots} />
+        </div>
+
+        {/* 필터 섹션 */}
+        <div className="max-w-7xl mx-auto px-4 mb-6 space-y-4">
+          {/* 카테고리 필터 */}
+          <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
-              <span
+              <button
                 key={category}
-                onClick={() => {
-                  setSelectedCategory(category);
-                  setCurrentPage(1);
-                }}
-                className={`px-4 py-1 rounded-full cursor-pointer ${
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full transition-colors ${
                   selectedCategory === category
-                    ? "bg-yellow-300 font-bold"
-                    : "bg-gray-100"
+                    ? "bg-yellow-400 text-black font-bold"
+                    : "bg-gray-100 hover:bg-gray-200"
                 }`}
               >
                 {category}
-              </span>
+              </button>
             ))}
           </div>
-        </div>
 
-        {/* 검색 필터 */}
-        <div className="max-w-7xl mx-auto px-4 mb-8">
-          <div className="flex gap-4">
-            <select className="border px-4 py-2 rounded w-[150px]">
-              <option>전체</option>
-            </select>
-            <select className="border px-4 py-2 rounded w-[150px]">
-              <option>전체</option>
-            </select>
+          {/* 검색 필터 */}
+          <div className="relative">
             <input
               type="text"
-              placeholder="검색어를 입력하세요"
-              className="border px-4 py-2 rounded flex-grow"
+              placeholder="이름 또는 주소로 검색"
+              className="w-full p-3 pl-10 border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
             />
-            <button className="bg-red-500 text-white px-6 py-2 rounded">
-              검색
-            </button>
+            <svg
+              className="absolute left-3 top-4 h-5 w-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
           </div>
         </div>
 
-        {/* 지도 컴포넌트 */}
-        <div className="max-w-7xl mx-auto px-4 mb-8">
-          <Map spaces={filteredSpots} />
-        </div>
-
-        {/* 야경명소 목록 */}
-        <div className="max-w-7xl mx-auto px-4 mb-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {paginatedSpots.map((spot) => (
-              <div key={spot.id} className="border rounded overflow-hidden">
-                <img
-                  src={spot.image}
-                  alt={spot.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-4">
-                  <h3 className="font-bold mb-1">{spot.title}</h3>
-                  <p className="text-sm text-gray-600 mb-1">{spot.subtitle}</p>
-                  <p className="text-xs text-gray-500">{spot.operatingHours}</p>
-                  <p className="text-xs text-gray-500 mt-1">{spot.address}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* 명소 카드 표시 */}
+        <div className="max-w-7xl mx-auto px-4 mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {paginatedSpots.map((spot) => (
+            <NightViewCard
+              key={spot.NUM} // 고유 식별자 사용
+              title={spot.TITLE}
+              address={spot.ADDR}
+              image={spot.MAIN_IMG || "/default-nightview.jpg"}
+              operatingHours={spot.OPERATING_TIME}
+              description={spot.CONTENT}
+            />
+          ))}
         </div>
 
         {/* 페이지네이션 */}
-        <Pagination
-          totalItems={filteredSpots.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-        />
+        <div className="max-w-7xl mx-auto px-4 pb-8">
+          <Pagination
+            totalItems={filteredSpots.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        </div>
       </div>
     </>
   );

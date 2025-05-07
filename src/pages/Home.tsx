@@ -38,7 +38,7 @@ const Home = () => {
         <h2 className="text-xl font-bold mb-4">문화공간</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {spaces?.slice(0, 5).map((space, i) => (
-            <CulturalSpaceCard key={space.FAC_CODE || i} space={space} />
+            <CulturalSpaceCard key={space.NUM || i} space={space} />
           ))}
         </div>
         <div className="text-right mt-4">

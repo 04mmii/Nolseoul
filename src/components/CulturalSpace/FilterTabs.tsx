@@ -1,12 +1,12 @@
-const categories = [
-  "전체",
-  "공연장",
-  "박물관/기념관",
-  "미술관/갤러리",
-  "문화예술회관",
-  "문화원",
-  "도서관",
-  "기타",
+const categoryOptions = [
+  { label: "전체", value: "전체" },
+  { label: "공연장", value: "공연장" },
+  { label: "박물관/기념관", value: "박물관" },
+  { label: "미술관/갤러리", value: "미술관" },
+  { label: "문화예술회관", value: "문화예술회관" },
+  { label: "문화원", value: "문화원" },
+  { label: "도서관", value: "도서관" },
+  { label: "기타", value: "기타" },
 ];
 
 export default function FilterTabs({
@@ -14,19 +14,19 @@ export default function FilterTabs({
   onSelect,
 }: {
   selected: string;
-  onSelect: (cat: string) => void;
+  onSelect: (value: string) => void;
 }) {
   return (
     <div className="flex flex-wrap justify-center gap-2 my-4">
-      {categories.map((cat) => (
+      {categoryOptions.map(({ label, value }) => (
         <button
-          key={cat}
+          key={value}
           className={`px-4 py-1 rounded-full border ${
-            selected === cat ? "bg-black text-white" : "bg-white text-black"
+            selected === value ? "bg-black text-white" : "bg-white text-black"
           }`}
-          onClick={() => onSelect(cat)}
+          onClick={() => onSelect(value)}
         >
-          {cat}
+          {label}
         </button>
       ))}
     </div>

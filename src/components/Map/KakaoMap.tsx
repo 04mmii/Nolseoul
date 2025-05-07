@@ -1,9 +1,8 @@
 // src/components/Map/KakaoMap.tsx
 import { useEffect, useRef } from "react";
-import { useKakaoLoader } from "../../hooks/useKakaoLoader.ts";
+import { useKakaoLoader } from "../../hooks/useKakaoLoader";
 import type { CulturalSpace } from "../../types/CulturalSpace"; // 타입 불러오기
 
-// props 타입 정의
 type KakaoMapProps = {
   spaces: CulturalSpace[];
 };
@@ -16,7 +15,7 @@ const KakaoMap = ({ spaces }: KakaoMapProps) => {
     if (window.kakao && window.kakao.maps && mapRef.current) {
       const container = mapRef.current;
       const options = {
-        center: new window.kakao.maps.LatLng(37.5665, 126.978), // 서울시청 좌표
+        center: new window.kakao.maps.LatLng(37.5665, 126.978),
         level: 6,
       };
 
@@ -28,7 +27,7 @@ const KakaoMap = ({ spaces }: KakaoMapProps) => {
         const geocoder = new window.kakao.maps.services.Geocoder();
 
         // 주소로 좌표 검색
-        geocoder.addressSearch(space.ADDR, (result, status) => {
+        geocoder.addressSearch(space.addr, (result, status) => {
           if (status === window.kakao.maps.services.Status.OK) {
             const coords = new kakao.maps.LatLng(
               Number(result[0].y),
@@ -43,12 +42,17 @@ const KakaoMap = ({ spaces }: KakaoMapProps) => {
 
             // 인포윈도우 생성
             const infowindow = new window.kakao.maps.InfoWindow({
-              content: `<div style="padding:5px;font-size:12px;">${space.FAC_NAME}</div>`,
+              content: `<div style="padding:5px;font-size:12px;">${space.fac_name}</div>`,
+            }) as kakao.maps.InfoWindow;
+
+            // 마커에 마우스를 올리면 인포윈도우 표시
+            window.kakao.maps.event.addListener(marker, "mouseover", () => {
+              infowindow.open(map, marker);
             });
 
-            // 마커 클릭 시 인포윈도우 표시
-            window.kakao.maps.event.addListener(marker, "click", () => {
-              infowindow.open(map, marker);
+            // 마커에서 마우스를 떼면 인포윈도우 닫기
+            window.kakao.maps.event.addListener(marker, "mouseout", () => {
+              infowindow.close();
             });
           }
         });

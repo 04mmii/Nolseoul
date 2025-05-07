@@ -11,7 +11,7 @@ export const useEvents = () => {
     const fetchEvents = async () => {
       try {
         const res = await fetch(
-          `http://openapi.seoul.go.kr:8088/${API_KEY}/json/culturalEventInfo/1/20/`
+          `http://openapi.seoul.go.kr:8088/${API_KEY}/json/culturalEventInfo/1/1000/`
         );
         const data = await res.json();
         setEvents(data.culturalEventInfo.row);

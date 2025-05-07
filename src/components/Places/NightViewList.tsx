@@ -1,60 +1,64 @@
+// hooks/useNightViewSpots.ts
 import { useEffect, useState } from "react";
-import axios from "axios";
-import NightViewCard from "./NightViewCard";
+import { NightViewSpot } from "../../types/NightViewSpot";
 
-export interface NightViewSpot {
-  TITLE: string;
-  MAIN_IMG: string;
-  SUBTITLE: string;
-  ADDRESS: string;
-}
+const API_KEY = import.meta.env.VITE_SEOUL_API_KEY;
 
-const NightViewList = ({ limit = 3 }: { limit?: number }) => {
-  // 임시 데이터 (API 실패시 사용)
-  const mockData: NightViewSpot[] = [
-    {
-      TITLE: "2025 서울 문화의 밤, 문화로 야금야금(夜金)",
-      MAIN_IMG: "/images/nightview.jpg",
-      SUBTITLE: "도심 내 주요 시립 문화시설(8개소), 한강공원 등",
-      ADDRESS: "",
-    },
-  ];
-
-  const [data, setData] = useState<NightViewSpot[]>(mockData);
+export const useNightViewSpots = () => {
+  const [spots, setSpots] = useState<NightViewSpot[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    const fetchNightViewData = async () => {
+    const fetchSpots = async () => {
       try {
-        const apiKey = import.meta.env.VITE_SEOUL_API_KEY;
-        const response = await axios.get(
-          `http://openapi.seoul.go.kr:8088/${apiKey}/json/ListNightviewSpotDesign/1/20/`
+        const encodedKey = encodeURIComponent(API_KEY);
+        const res = await fetch(
+          `http://openapi.seoul.go.kr:8088/${encodedKey}/json/ListNightviewSpotDesign/1/100/`,
+          {
+            headers: { Accept: "application/json" },
+          }
         );
 
+        if (!res.ok) throw new Error(`HTTP 오류: ${res.status}`);
+
+        const data = await res.json();
+
         if (
-          response.data &&
-          response.data.ListNightviewSpotDesign &&
-          response.data.ListNightviewSpotDesign.row
+          !data.ListNightviewSpotDesign ||
+          !Array.isArray(data.ListNightviewSpotDesign.row)
         ) {
-          setData(response.data.ListNightviewSpotDesign.row);
-        } else {
-          console.log("API 응답:", response.data);
+          throw new Error("데이터 구조 불일치");
         }
-      } catch (error) {
-        console.error("야경명소 데이터를 불러오는 중 오류 발생:", error);
-        // 오류 발생 시 임시 데이터 사용 (이미 설정됨)
+
+        setSpots(
+          data.ListNightviewSpotDesign.row.map((item: any) => ({
+            TITLE: item.TITLE,
+            ADDR: item.ADDR,
+            LA: item.LA,
+            LO: item.LO,
+            TEL_NO: item.TEL_NO,
+            URL: item.URL,
+            OPERATING_TIME: item.OPERATING_TIME,
+            ENTR_FEE: item.ENTR_FEE,
+            CONTENT: item.CONTENT,
+            SUBWAY: item.SUBWAY,
+            BUS: item.BUS,
+            MAIN_IMG: item.MAIN_IMG,
+            SUBJCODE: item.SUBJCODE,
+            title: item.TITLE,
+            NUM: item.NUM,
+          }))
+        );
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error("API 오류 발생"));
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchNightViewData();
+    fetchSpots();
   }, []);
 
-  return (
-    <div className="flex flex-col gap-4">
-      {data.slice(0, limit).map((item, index) => (
-        <NightViewCard key={index} data={item} />
-      ))}
-    </div>
-  );
+  return { spots, loading, error };
 };
-
-export default NightViewList;

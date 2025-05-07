@@ -17,6 +17,7 @@ declare global {
       class InfoWindow {
         constructor(options: any);
         open(map: Map, marker: Marker): void;
+        close(): void;
       }
       namespace services {
         class Geocoder {
@@ -38,9 +39,9 @@ declare global {
       }
       namespace event {
         function addListener(
-          target: any, // 지도, 마커 등 이벤트를 등록할 객체
-          type: string, // 이벤트 타입 (예: 'click')
-          handler: (event?: any) => void // 이벤트 핸들러
+          target: any,
+          type: string,
+          handler: (event?: any) => void
         ): void;
       }
     }

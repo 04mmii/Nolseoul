@@ -12,7 +12,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/spaces" element={<CulturalSpacesPage />} />
-        <Route path="/spaces/:facCode" element={<CulturalSpaceDetail />} />
+        <Route path="/spaces/:NUM" element={<CulturalSpaceDetail />} />
         <Route path="/night-views" element={<NightViewsPage />} />
       </Routes>
     </div>

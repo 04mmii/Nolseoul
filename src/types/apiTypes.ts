@@ -1,4 +1,3 @@
-// 문화행사 정보 타입
 export interface EventData {
   CODENAME: string;
   TITLE: string;
@@ -18,24 +17,6 @@ export interface EventData {
   LOT: string;
   LAT: string;
   IS_FREE: string;
-}
-
-// 문화공간 정보 타입
-export interface PlaceData {
-  GCODE: string;
-  GNAME: string;
-  CODENAME: string;
-  NAME: string;
-  MAIN_IMG: string;
-  ADDRESS: string;
-  PHNE: string;
-  HOMEPAGE: string;
-  OPENHOUR: string;
-  FEE: string;
-  HOLIDAY: string;
-  SEATCNT: string;
-  LOT: string;
-  LAT: string;
 }
 
 // 야경명소 정보 타입
