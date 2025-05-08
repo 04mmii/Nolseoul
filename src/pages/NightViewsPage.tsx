@@ -5,15 +5,7 @@ import NightViewMap from "../components/Map/NightViewMap";
 import { useNightViewSpots } from "../hooks/useNightViewSpots";
 import NightViewCard from "../components/Places/NightViewCard";
 
-// API 응답의 실제 SUBJCODE 값으로 카테고리 수정
-const categories = [
-  "전체",
-  "다리/전망대",
-  "공원/광장",
-  "문화시설",
-  "역사유적지",
-  "테마거리",
-];
+const categories = ["전체", "공원/광장", "문화/체육", "공공시설", "가로/마을"];
 
 const NightViewsPage = () => {
   const { spots, loading, error } = useNightViewSpots();
@@ -26,7 +18,7 @@ const NightViewsPage = () => {
   const filteredSpots = useMemo(() => {
     return spots.filter(
       (spot) =>
-        (selectedCategory === "전체" || spot.SUBJCODE === selectedCategory) &&
+        (selectedCategory === "전체" || spot.SUBJECT_CD === selectedCategory) &&
         (spot.TITLE.toLowerCase().includes(searchKeyword.toLowerCase()) ||
           spot.ADDR.toLowerCase().includes(searchKeyword.toLowerCase()))
     );
@@ -71,7 +63,7 @@ const NightViewsPage = () => {
 
         {/* 지도 표시 */}
         <div className="max-w-7xl mx-auto px-4 mb-8">
-          <NightViewMap spots={filteredSpots} />
+          <NightViewMap spots={paginatedSpots} />
         </div>
 
         {/* 필터 섹션 */}
@@ -121,14 +113,7 @@ const NightViewsPage = () => {
         {/* 명소 카드 표시 */}
         <div className="max-w-7xl mx-auto px-4 mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {paginatedSpots.map((spot) => (
-            <NightViewCard
-              key={spot.NUM} // 고유 식별자 사용
-              title={spot.TITLE}
-              address={spot.ADDR}
-              image={spot.MAIN_IMG || "/default-nightview.jpg"}
-              operatingHours={spot.OPERATING_TIME}
-              description={spot.CONTENT}
-            />
+            <NightViewCard key={spot.NUM} spot={spot} />
           ))}
         </div>
 

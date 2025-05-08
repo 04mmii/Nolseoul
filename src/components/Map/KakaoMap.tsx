@@ -1,7 +1,6 @@
-// src/components/Map/KakaoMap.tsx
 import { useEffect, useRef } from "react";
 import { useKakaoLoader } from "../../hooks/useKakaoLoader";
-import type { CulturalSpace } from "../../types/CulturalSpace"; // 타입 불러오기
+import type { CulturalSpace } from "../../types/CulturalSpace";
 
 type KakaoMapProps = {
   spaces: CulturalSpace[];
@@ -9,56 +8,93 @@ type KakaoMapProps = {
 
 const KakaoMap = ({ spaces }: KakaoMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
+  const markersRef = useRef<kakao.maps.Marker[]>([]);
+  const mapInstanceRef = useRef<kakao.maps.Map | null>(null);
+  const geocoderRef = useRef<kakao.maps.services.Geocoder | null>(null);
   useKakaoLoader();
 
   useEffect(() => {
-    if (window.kakao && window.kakao.maps && mapRef.current) {
-      const container = mapRef.current;
-      const options = {
-        center: new window.kakao.maps.LatLng(37.5665, 126.978),
-        level: 6,
-      };
+    if (!window.kakao?.maps) return;
 
-      const map = new window.kakao.maps.Map(container, options);
+    window.kakao.maps.load(() => {
+      if (!mapRef.current) return;
 
-      // 문화공간 마커 추가
+      // 지도 인스턴스 생성 또는 재사용
+      if (!mapInstanceRef.current) {
+        mapInstanceRef.current = new window.kakao.maps.Map(mapRef.current, {
+          center: new window.kakao.maps.LatLng(37.5665, 126.978),
+          level: 6,
+        });
+      }
+      const map = mapInstanceRef.current;
+
+      // 기존 마커 제거
+      markersRef.current.forEach((marker) => marker.setMap(null));
+      markersRef.current = [];
+
+      // Geocoder 인스턴스 생성 또는 재사용
+      if (!geocoderRef.current) {
+        geocoderRef.current = new window.kakao.maps.services.Geocoder();
+      }
+      const geocoder = geocoderRef.current;
+
+      // 마커 생성 및 지도 bounds 계산
+      const bounds = new window.kakao.maps.LatLngBounds();
+      let geocodeCount = 0;
+      let successCount = 0;
+
+      if (spaces.length === 0) {
+        // 공간이 없으면 지도 중심만 초기화
+        map.setCenter(new window.kakao.maps.LatLng(37.5665, 126.978));
+        return;
+      }
+
       spaces.forEach((space) => {
-        // 주소를 좌표로 변환하기 위한 geocoder
-        const geocoder = new window.kakao.maps.services.Geocoder();
-
-        // 주소로 좌표 검색
-        geocoder.addressSearch(space.addr, (result, status) => {
-          if (status === window.kakao.maps.services.Status.OK) {
-            const coords = new kakao.maps.LatLng(
+        geocoder.addressSearch(space.ADDR, (result, status) => {
+          geocodeCount += 1;
+          if (status === window.kakao.maps.services.Status.OK && result[0]) {
+            const coords = new window.kakao.maps.LatLng(
               Number(result[0].y),
               Number(result[0].x)
             );
 
             // 마커 생성
             const marker = new window.kakao.maps.Marker({
-              map: map,
+              map,
               position: coords,
             });
 
-            // 인포윈도우 생성
             const infowindow = new window.kakao.maps.InfoWindow({
-              content: `<div style="padding:5px;font-size:12px;">${space.fac_name}</div>`,
-            }) as kakao.maps.InfoWindow;
+              content: `<div style="padding:5px;font-size:12px;">${space.FAC_NAME}</div>`,
+            });
 
-            // 마커에 마우스를 올리면 인포윈도우 표시
             window.kakao.maps.event.addListener(marker, "mouseover", () => {
               infowindow.open(map, marker);
             });
-
-            // 마커에서 마우스를 떼면 인포윈도우 닫기
             window.kakao.maps.event.addListener(marker, "mouseout", () => {
               infowindow.close();
             });
+
+            markersRef.current.push(marker);
+            bounds.extend(coords);
+            successCount += 1;
+          } else {
+            console.warn(`주소 변환 실패: ${space.ADDR}`);
+          }
+
+          // 모든 주소 변환이 끝난 후에만 bounds 적용
+          if (geocodeCount === spaces.length) {
+            if (successCount > 0) {
+              map.setBounds(bounds);
+            } else {
+              // 모두 실패 시 서울 중심으로 이동
+              map.setCenter(new window.kakao.maps.LatLng(37.5665, 126.978));
+            }
           }
         });
       });
-    }
-  }, [spaces]); // spaces가 변경될 때마다 마커 업데이트
+    });
+  }, [spaces]);
 
   return <div ref={mapRef} className="w-full h-[400px] rounded-lg shadow" />;
 };

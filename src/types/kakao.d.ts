@@ -9,16 +9,51 @@ declare global {
         constructor(lat: number, lng: number);
       }
       class Map {
-        constructor(container: HTMLElement, options: any);
+        constructor(container: HTMLElement, options: MapOptions);
+        setCenter(latlng: LatLng): void;
+        setLevel(level: number): void;
+        setBounds(bounds: LatLngBounds, paddingTop?: number): void;
       }
+
+      interface MapOptions {
+        center: LatLng;
+        level: number;
+      }
+
+      class LatLng {
+        constructor(lat: number, lng: number);
+        getLat(): number;
+        getLng(): number;
+      }
+
       class Marker {
-        constructor(options: any);
+        constructor(options: MarkerOptions);
+        setMap(map: Map | null): void;
+        getPosition(): LatLng;
       }
       class InfoWindow {
         constructor(options: any);
         open(map: Map, marker: Marker): void;
         close(): void;
       }
+
+      class LatLngBounds {
+        extend(latlng: LatLng): void;
+      }
+      interface MapOptions {
+        center: LatLng;
+        level: number;
+      }
+
+      interface MarkerOptions {
+        map?: Map;
+        position: LatLng;
+      }
+
+      interface InfoWindowOptions {
+        content: string;
+      }
+
       namespace services {
         class Geocoder {
           addressSearch(
@@ -44,6 +79,7 @@ declare global {
           handler: (event?: any) => void
         ): void;
       }
+      function load(callback: () => void): void;
     }
   }
 }

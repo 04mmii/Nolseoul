@@ -7,13 +7,24 @@ import Pagination from "../components/Common/Pagination";
 import { useState, useEffect } from "react";
 
 const CulturalSpacesPage = () => {
-  const { spaces } = useCulturalSpaces();
+  const { spaces, loading, error } = useCulturalSpaces();
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
-  // 필터링 (카테고리 + 검색어)
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, selectedCategory]);
+
+  if (loading) return <div className="text-center py-8">로딩 중...</div>;
+  if (error)
+    return (
+      <div className="text-center py-8 text-red-500">
+        오류 발생: {error.message}
+      </div>
+    );
+
   const filteredSpaces = spaces.filter((space) => {
     const matchesCategory =
       selectedCategory === "전체" || space.SUBJCODE === selectedCategory;
@@ -28,14 +39,6 @@ const CulturalSpacesPage = () => {
     currentPage * itemsPerPage
   );
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [currentPage]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [searchTerm]);
-
   return (
     <>
       <Header />
@@ -43,9 +46,7 @@ const CulturalSpacesPage = () => {
         <h1 className="text-3xl font-bold text-center mt-8 mb-4">
           문화공간 전체
         </h1>
-        <Map spaces={filteredSpaces} />
-
-        {/* 필터 탭 */}
+        <Map spaces={paginatedSpaces} /> {/* 페이지네이션 반영 */}
         <FilterTabs
           selected={selectedCategory}
           onSelect={(category) => {
@@ -53,8 +54,6 @@ const CulturalSpacesPage = () => {
             setCurrentPage(1);
           }}
         />
-
-        {/* 검색창 */}
         <div className="mt-4 mb-6">
           <input
             type="text"
@@ -64,15 +63,11 @@ const CulturalSpacesPage = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-
-        {/* 문화공간 카드 */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 pt-1">
-          {paginatedSpaces.map((space, i) => (
-            <CulturalSpaceCard key={i} space={space} />
+          {paginatedSpaces.map((space) => (
+            <CulturalSpaceCard key={space.NUM} space={space} />
           ))}
         </div>
-
-        {/* 페이지네이션 */}
         <Pagination
           totalItems={filteredSpaces.length}
           itemsPerPage={itemsPerPage}

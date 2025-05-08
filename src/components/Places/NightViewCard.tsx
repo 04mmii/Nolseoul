@@ -7,12 +7,6 @@ interface NightViewCardProps {
 const NightViewCard: React.FC<NightViewCardProps> = ({ spot }) => {
   return (
     <div className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-white">
-      <img
-        src={spot.MAIN_IMG || "/default-nightview.jpg"}
-        alt={spot.TITLE}
-        className="w-full h-48 object-cover"
-        loading="lazy"
-      />
       <div className="p-4">
         <h3 className="font-bold text-lg mb-2">{spot.TITLE}</h3>
         <p className="text-gray-500 truncate mb-1">{spot.ADDR}</p>
