@@ -3,7 +3,15 @@ import { useEvents } from "../hooks/useEvents";
 import { EventCard } from "../components/Events/EventCard";
 import Header from "../components/Layout/Header";
 
-const categories = ["전체", "공연", "전시", "교육/체험"];
+const categories = [
+  "전체",
+  "클래식",
+  "콘서트",
+  "전시",
+  "축제-전통/역사",
+  "축제-자연/경관",
+  "교육/체험",
+];
 
 const EventsPage = () => {
   const { events, loading } = useEvents();
