@@ -2,41 +2,50 @@ import { useState, useMemo } from "react";
 import { useEvents } from "../hooks/useEvents";
 import { EventCard } from "../components/Events/EventCard";
 import Header from "../components/Layout/Header";
-
-const categories = [
-  "전체",
-  "클래식",
-  "콘서트",
-  "전시",
-  "축제-전통/역사",
-  "축제-자연/경관",
-  "교육/체험",
-];
+import FilterTabs from "../components/Common/FilterTabs";
+import { eventCategoryOptions } from "../components/Events/eventCategoryOptions";
+import Pagination from "../components/Common/Pagination";
 
 const EventsPage = () => {
   const { events, loading } = useEvents();
-  const [selectedCategory, setSelectedCategory] = useState("전체");
+  const [selectedCategory, setSelectedCategory] = useState<string | string[]>(
+    "전체"
+  );
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 20;
 
-  // 필터 + 정렬된 리스트
   const filteredEvents = useMemo(() => {
     return events
       .filter((event) => {
         const category = event.CODENAME || "";
         const title = event.TITLE || "";
 
+        // 카테고리 필터
         const matchesCategory =
-          selectedCategory === "전체" || category.includes(selectedCategory);
-        const matchesSearch = title.includes(searchQuery);
+          (Array.isArray(selectedCategory) &&
+            selectedCategory.some((cat) => category.includes(cat))) ||
+          selectedCategory === "전체" ||
+          category.includes(selectedCategory as string);
+
+        // 검색어 필터
+        const matchesSearch = title
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase());
 
         return matchesCategory && matchesSearch;
       })
       .sort((a, b) => {
         const dateA = new Date(a.STRTDATE || a.DATE || "").getTime();
         const dateB = new Date(b.STRTDATE || b.DATE || "").getTime();
-        return dateA - dateB;
+        return dateB - dateA; // 최신순
       });
   }, [events, selectedCategory, searchQuery]);
+
+  const paginatedEvents = filteredEvents.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   return (
     <>
@@ -52,32 +61,29 @@ const EventsPage = () => {
         />
 
         {/* 카테고리 탭 */}
-        <div className="flex flex-wrap gap-2 mb-6">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-full transition ${
-                selectedCategory === cat
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-200 text-gray-800"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+        <FilterTabs
+          selected={selectedCategory}
+          onSelect={setSelectedCategory}
+          options={eventCategoryOptions}
+        />
 
         {/* 리스트 */}
-        {filteredEvents.length > 0 ? (
+        {paginatedEvents.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredEvents.map((event, i) => (
+            {paginatedEvents.map((event, i) => (
               <EventCard key={i} event={event} />
             ))}
           </div>
         ) : (
           <p className="text-gray-500">조건에 맞는 행사가 없습니다.</p>
         )}
+        {/* 페이지네이션 */}
+        <Pagination
+          totalItems={filteredEvents.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </>
   );

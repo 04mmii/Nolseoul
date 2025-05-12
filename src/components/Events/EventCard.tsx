@@ -1,4 +1,4 @@
-import { Event } from "../types/Event";
+import { Event } from "../../types/Event";
 
 export const EventCard = ({ event }: { event: Event }) => {
   return (

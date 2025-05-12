@@ -1,5 +1,5 @@
-import { useEvents } from "../hooks/useEvents";
-import EventCard from "./EventCard";
+import { useEvents } from "../../hooks/useEvents";
+import { EventCard } from "./EventCard";
 
 const EventList = () => {
   const { events, loading } = useEvents();
