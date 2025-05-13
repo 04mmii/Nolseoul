@@ -1,3 +1,9 @@
+export interface EventItem {
+  TITLE: string;
+  DATE: string;
+  [key: string]: any;
+}
+
 export interface Event {
   CODENAME: string;
   TITLE: string;

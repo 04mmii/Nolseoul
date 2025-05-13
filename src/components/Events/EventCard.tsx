@@ -1,8 +1,16 @@
 import { Event } from "../../types/Event";
 
-export const EventCard = ({ event }: { event: Event }) => {
+export interface EventCardProps {
+  event: Event;
+  onClick?: (eventData: Event) => void;
+}
+
+export const EventCard = ({ event, onClick }: EventCardProps) => {
   return (
-    <div className="rounded-xl border shadow-md overflow-hidden">
+    <div
+      className="rounded-xl border shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition"
+      onClick={() => onClick?.(event)}
+    >
       <img
         src={event.MAIN_IMG}
         alt={event.TITLE}
