@@ -7,6 +7,7 @@ import { eventCategoryOptions } from "../components/Events/eventCategoryOptions"
 import Pagination from "../components/Common/Pagination";
 import EventDetailModal from "../components/Events/EventDetailModal";
 import { Event } from "../types/Event";
+import { useParams, useNavigate } from "react-router-dom";
 
 const EventsPage = () => {
   const { events, loading } = useEvents();
@@ -15,7 +16,9 @@ const EventsPage = () => {
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+
+  const { slug } = useParams();
+  const navigate = useNavigate();
 
   const itemsPerPage = 20;
 
@@ -46,6 +49,17 @@ const EventsPage = () => {
     currentPage * itemsPerPage
   );
 
+  // URL의 slug를 이용해 현재 선택된 이벤트 찾기
+  const selectedEvent = useMemo(() => {
+    if (!slug || events.length === 0) return null;
+    const decodedSlug = decodeURIComponent(slug);
+    return events.find((e) => e.TITLE === decodedSlug) || null;
+  }, [slug, events]);
+
+  const handleCloseModal = () => {
+    navigate("/events");
+  };
+
   return (
     <>
       <Header />
@@ -67,11 +81,7 @@ const EventsPage = () => {
         {paginatedEvents.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
             {paginatedEvents.map((event, i) => (
-              <EventCard
-                key={i}
-                event={event}
-                onClick={(eventData) => setSelectedEvent(eventData)}
-              />
+              <EventCard key={i} event={event} />
             ))}
           </div>
         ) : (
@@ -86,12 +96,9 @@ const EventsPage = () => {
         />
       </div>
 
-      {/* ✅ 모달 렌더링 */}
+      {/* ✅ 모달은 URL로 선택된 이벤트 기반으로 렌더링 */}
       {selectedEvent && (
-        <EventDetailModal
-          event={selectedEvent}
-          onClose={() => setSelectedEvent(null)}
-        />
+        <EventDetailModal event={selectedEvent} onClose={handleCloseModal} />
       )}
     </>
   );

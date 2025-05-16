@@ -10,6 +10,7 @@ function App() {
     <div className="font-noto">
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/events/:slug" element={<EventsPage />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/spaces" element={<CulturalSpacesPage />} />
         <Route path="/spaces/:NUM" element={<CulturalSpaceDetail />} />

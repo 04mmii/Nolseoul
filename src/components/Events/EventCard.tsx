@@ -1,15 +1,22 @@
+import { useNavigate } from "react-router-dom";
 import { Event } from "../../types/Event";
 
 export interface EventCardProps {
   event: Event;
-  onClick?: (eventData: Event) => void;
 }
 
-export const EventCard = ({ event, onClick }: EventCardProps) => {
+export const EventCard = ({ event }: EventCardProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    const slug = encodeURIComponent(event.TITLE);
+    navigate(`/events/${slug}`);
+  };
+
   return (
     <div
       className="rounded-xl border shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition"
-      onClick={() => onClick?.(event)}
+      onClick={handleClick}
     >
       <img
         src={event.MAIN_IMG}
