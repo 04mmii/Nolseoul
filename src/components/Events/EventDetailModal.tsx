@@ -4,40 +4,36 @@ import { Event } from "../../types/Event";
 
 type Props = {
   event: Event;
-  onClose?: () => void; // optional로 변경
+  onClose?: () => void;
 };
 
 const EventDetailModal = ({ event, onClose }: Props) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  // 외부 클릭 시 닫기
   const handleClickOutside = (e: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
       handleClose();
     }
   };
 
-  // Esc 키 닫기
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Escape") handleClose();
   };
 
-  // 공통 닫기 처리
   const handleClose = () => {
-    onClose ? onClose() : navigate(-1); // onClose 있으면 실행, 없으면 뒤로가기
+    onClose ? onClose() : navigate(-1);
   };
 
-  // 이벤트 등록
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleKeyDown);
-    document.body.style.overflow = "hidden"; // 배경 스크롤 막기
+    document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
       document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = ""; // 스크롤 원복
+      document.body.style.overflow = "";
     };
   }, []);
 
@@ -45,7 +41,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
       <div
         ref={modalRef}
-        className="bg-white w-full max-w-2xl p-6 rounded shadow-lg relative"
+        className="bg-white w-full max-w-2xl max-h-[90vh] p-6 rounded shadow-lg relative flex flex-col"
       >
         <button
           className="absolute top-4 right-4 text-gray-500 hover:text-black text-xl"
@@ -53,22 +49,24 @@ const EventDetailModal = ({ event, onClose }: Props) => {
         >
           ✕
         </button>
-
-        <h2 className="text-2xl font-bold mb-4">{event.TITLE}</h2>
-        <p className="text-gray-600 mb-2">기간: {event.DATE}</p>
-        {event.PLACE && (
-          <p className="text-gray-600 mb-2">장소: {event.PLACE}</p>
-        )}
-        {event.ORG_NAME && (
-          <p className="text-gray-600 mb-2">주최: {event.ORG_NAME}</p>
-        )}
-        {event.MAIN_IMG && (
-          <img
-            src={event.MAIN_IMG}
-            alt={event.TITLE}
-            className="mt-4 w-full h-auto rounded"
-          />
-        )}
+        {/* 스크롤 가능한 컨텐츠 영역 */}
+        <div className="overflow-y-auto max-h-[70vh] pr-2">
+          <h2 className="text-2xl font-bold mb-4">{event.TITLE}</h2>
+          <p className="text-gray-600 mb-2">기간: {event.DATE}</p>
+          {event.PLACE && (
+            <p className="text-gray-600 mb-2">장소: {event.PLACE}</p>
+          )}
+          {event.ORG_NAME && (
+            <p className="text-gray-600 mb-2">주최: {event.ORG_NAME}</p>
+          )}
+          {event.MAIN_IMG && (
+            <img
+              src={event.MAIN_IMG}
+              alt={event.TITLE}
+              className="mt-4 w-full h-auto rounded"
+            />
+          )}
+        </div>
       </div>
     </div>
   );

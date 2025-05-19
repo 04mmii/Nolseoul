@@ -14,3 +14,11 @@ export interface Event {
   MAIN_IMG: string;
   [key: string]: string;
 }
+
+export interface EventData {
+  TITLE: string;
+  MAIN_IMG: string;
+  STRTDATE?: string;
+  END_DATE?: string;
+  [key: string]: any;
+}
