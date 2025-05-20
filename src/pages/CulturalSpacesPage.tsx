@@ -28,7 +28,7 @@ const CulturalSpacesPage = () => {
       </div>
     );
 
-  const filteredSpaces = spaces.filter((space) => {
+  const filteredSpaces = (spaces ?? []).filter((space) => {
     const subj = space.SUBJCODE || "";
     const name = space.FAC_NAME || "";
     const addr = space.ADDR || "";

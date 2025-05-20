@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
 import { bannerData } from "./bannerData";
-import NightViewList from "../Places/NightViewList";
 import { Link } from "react-router-dom";
 
 const HeroSlider = () => {
   const [current, setCurrent] = useState(0);
 
-  // 고정 정보 (API에서 데이터를 가져오지 못할 경우 사용)
   const nightViewInfo = {
     title: "2025 서울 문화의 밤, 문화로 야금야금(夜金)",
     date: "2025.4. ~ 12.",
     location: "도심 내 주요 시립 문화시설(8개소), 한강공원 등",
-    image: "/images/nightview.jpg", // 이미지 경로는 적절히 수정
+    image: "/images/nightview.jpg",
   };
 
   useEffect(() => {

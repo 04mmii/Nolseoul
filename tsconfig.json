@@ -1,7 +1,20 @@
 {
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["vite/client", "node"],
+    "lib": ["ES2015", "DOM", "DOM.Iterable"], // 핵심 수정 부분
+    "target": "ES2015", // Symbol 지원 강화
+    "module": "Node16",
+    "moduleResolution": "node16", // 모듈 해결 방식 변경
+    "esModuleInterop": true
+  },
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
-  "include": ["src", "src/global.d.ts"]
+  "include": ["src/**/*", "src/global.d.ts"]
 }

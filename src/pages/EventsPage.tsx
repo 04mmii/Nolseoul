@@ -6,11 +6,10 @@ import FilterTabs from "../components/Common/FilterTabs";
 import { eventCategoryOptions } from "../components/Events/eventCategoryOptions";
 import Pagination from "../components/Common/Pagination";
 import EventDetailModal from "../components/Events/EventDetailModal";
-import { Event } from "../types/Event";
 import { useParams, useNavigate } from "react-router-dom";
 
 const EventsPage = () => {
-  const { events, loading } = useEvents();
+  const { events } = useEvents();
   const [selectedCategory, setSelectedCategory] = useState<string | string[]>(
     "전체"
   );

@@ -6,7 +6,7 @@ const API_KEY = import.meta.env.VITE_SEOUL_API_KEY;
 let cachedSpaces: CulturalSpace[] | null = null;
 
 export const useCulturalSpaces = () => {
-  const [spaces, setSpaces] = useState<CulturalSpace[]>([]);
+  const [spaces, setSpaces] = useState<CulturalSpace[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 

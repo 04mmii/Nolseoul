@@ -10,7 +10,7 @@ const CulturalSpaceDetailPage = () => {
   if (loading) return <p>불러오는 중...</p>;
   if (error) return <p>오류가 발생했습니다: {error.message}</p>;
 
-  const space = spaces.find((s) => String(s.NUM) === String(NUM));
+  const space = spaces?.find((s) => String(s.NUM) === String(NUM));
 
   if (!space) {
     return <p>문화공간 정보를 찾을 수 없습니다.</p>;

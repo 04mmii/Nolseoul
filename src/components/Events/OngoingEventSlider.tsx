@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
+// import "swiper/css";
+// import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import EventDetailModal from "./EventDetailModal";
-import type { EventData } from "../../types/Event";
+import type { Event } from "../../types/Event";
 
 interface Props {
-  events: EventData[];
+  events: Event[];
 }
 
 const OngoingEventSlider = ({ events }: Props) => {
-  const [selectedEvent, setSelectedEvent] = useState<EventData | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
   return (
     <div>

@@ -1,9 +1,9 @@
 import axios from "axios";
-import { EventItem } from "../types/EventItem";
+import { Event } from "../types/Event";
 
 const API_KEY = import.meta.env.VITE_API_KEY;
 
-export const fetchEvents = async (): Promise<EventItem[]> => {
+export const fetchEvents = async (): Promise<Event[]> => {
   try {
     const response = await axios.get(
       `https://openapi.seoul.go.kr:8088/${API_KEY}/json/culturalEventInfo/1/100/`
