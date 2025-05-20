@@ -20,7 +20,7 @@ export const useCulturalSpaces = () => {
 
       try {
         const res = await fetch(
-          `http://openapi.seoul.go.kr:8088/${API_KEY}/json/culturalSpaceInfo/1/1000/`,
+          `https://openapi.seoul.go.kr:8088/${API_KEY}/json/culturalSpaceInfo/1/1000/`,
           { headers: { Accept: "application/json" } }
         );
 

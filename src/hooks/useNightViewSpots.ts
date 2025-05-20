@@ -12,7 +12,7 @@ export const useNightViewSpots = () => {
     const fetchSpots = async () => {
       try {
         const res = await fetch(
-          `http://openapi.seoul.go.kr:8088/${API_KEY}/json/viewNightSpot/1/1000/`
+          `https://openapi.seoul.go.kr:8088/${API_KEY}/json/viewNightSpot/1/1000/`
         );
 
         const data = await res.json();
