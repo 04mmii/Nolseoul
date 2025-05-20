@@ -27,7 +27,6 @@
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
     "@types/scheduler": "^0.26.0",
-    "@types/swiper": "^6.0.0",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.22.0",
