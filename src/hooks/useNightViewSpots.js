@@ -8,21 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { useEffect, useState } from "react";
-const API_KEY = import.meta.env.VITE_SEOUL_API_KEY;
 export const useNightViewSpots = () => {
-    const [spots, setSpaces] = useState([]);
+    const [spots, setSpots] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     useEffect(() => {
         const fetchSpots = () => __awaiter(void 0, void 0, void 0, function* () {
+            var _a;
             try {
-                const res = yield fetch(`http://openapi.seoul.go.kr:8088/${API_KEY}/json/viewNightSpot/1/1000/`);
+                const res = yield fetch(`/api/seoulapi?type=night`);
                 const data = yield res.json();
-                if (!data.viewNightSpot || !Array.isArray(data.viewNightSpot.row)) {
+                if (!((_a = data.viewNightSpot) === null || _a === void 0 ? void 0 : _a.row) ||
+                    !Array.isArray(data.viewNightSpot.row)) {
                     console.error("API 구조:", data);
                     throw new Error("데이터 구조 불일치");
                 }
-                setSpaces(data.viewNightSpot.row);
+                setSpots(data.viewNightSpot.row);
             }
             catch (err) {
                 setError(err instanceof Error ? err : new Error("API 오류 발생"));

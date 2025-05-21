@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/css";
-// import "swiper/css/navigation";
+import "swiper/css";
+import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import EventDetailModal from "./EventDetailModal";
 import type { Event } from "../../types/Event";

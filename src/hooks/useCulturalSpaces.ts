@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { CulturalSpace } from "../types/CulturalSpace";
 
-const API_KEY = import.meta.env.VITE_SEOUL_API_KEY;
-
-let cachedSpaces: CulturalSpace[] | null = null;
-
 export const useCulturalSpaces = () => {
   const [spaces, setSpaces] = useState<CulturalSpace[] | null>(null);
   const [loading, setLoading] = useState(true);
@@ -12,30 +8,17 @@ export const useCulturalSpaces = () => {
 
   useEffect(() => {
     const fetchSpaces = async () => {
-      if (cachedSpaces) {
-        setSpaces(cachedSpaces!);
-        setLoading(false);
-        return;
-      }
-
       try {
-        const res = await fetch(
-          `https://openapi.seoul.go.kr:8088/${API_KEY}/json/culturalSpaceInfo/1/1000/`,
-          { headers: { Accept: "application/json" } }
-        );
-
-        const rawText = await res.text();
-
-        if (!res.ok) throw new Error(`HTTP 오류: ${res.status}`);
-
-        const data = JSON.parse(rawText);
+        const res = await fetch(`/api/seoulapi?type=space`);
+        const data = await res.json();
 
         if (!data.culturalSpaceInfo?.row) {
-          throw new Error("데이터 구조 불일치: " + rawText.slice(0, 100));
+          throw new Error(
+            "데이터 구조 불일치: " + JSON.stringify(data).slice(0, 100)
+          );
         }
 
-        cachedSpaces = data.culturalSpaceInfo.row;
-        setSpaces(cachedSpaces);
+        setSpaces(data.culturalSpaceInfo.row);
       } catch (err) {
         setError(err instanceof Error ? err : new Error("API 오류 발생"));
         console.error("API 호출 실패:", err);

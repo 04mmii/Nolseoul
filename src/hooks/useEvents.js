@@ -8,14 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { useEffect, useState } from "react";
-const API_KEY = import.meta.env.VITE_SEOUL_API_KEY;
 export const useEvents = () => {
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
         const fetchEvents = () => __awaiter(void 0, void 0, void 0, function* () {
             try {
-                const res = yield fetch(`http://openapi.seoul.go.kr:8088/${API_KEY}/json/culturalEventInfo/1/1000/`);
+                const res = yield fetch(`/api/seoulapi?type=event`);
                 const data = yield res.json();
                 setEvents(data.culturalEventInfo.row);
             }

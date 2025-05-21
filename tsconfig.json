@@ -6,11 +6,12 @@
       "@/*": ["src/*"]
     },
     "types": ["vite/client", "node"],
-    "lib": ["ES2015", "DOM", "DOM.Iterable"], // 핵심 수정 부분
-    "target": "ES2015", // Symbol 지원 강화
+    "lib": ["ES2015", "DOM", "DOM.Iterable"],
+    "target": "ES2017",
     "module": "Node16",
-    "moduleResolution": "node16", // 모듈 해결 방식 변경
-    "esModuleInterop": true
+    "moduleResolution": "node16",
+    "esModuleInterop": true,
+    "typeRoots": ["node_modules/@types"]
   },
   "references": [
     { "path": "./tsconfig.app.json" },

@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Event } from "../types/Event";
 
-const API_KEY = import.meta.env.VITE_SEOUL_API_KEY;
-
 export const useEvents = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
@@ -10,9 +8,7 @@ export const useEvents = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch(
-          `https://openapi.seoul.go.kr:8088/${API_KEY}/json/culturalEventInfo/1/1000/`
-        );
+        const res = await fetch(`/api/seoulapi?type=event`);
         const data = await res.json();
         setEvents(data.culturalEventInfo.row);
       } catch (error) {
