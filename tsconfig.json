@@ -5,17 +5,17 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": ["vite/client", "node"],
+    "types": ["node"],
     "lib": ["ES2015", "DOM", "DOM.Iterable"],
     "target": "ES2017",
     "module": "Node16",
     "moduleResolution": "node16",
     "esModuleInterop": true,
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["./node_modules/@types", "./src/types"]
   },
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
-  "include": ["src/**/*", "src/global.d.ts"]
+  "include": ["src", "src/types"]
 }

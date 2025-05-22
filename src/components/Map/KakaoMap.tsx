@@ -10,8 +10,8 @@ const KakaoMap = ({ spaces }: KakaoMapProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const markersRef = useRef<kakao.maps.Marker[]>([]);
   const mapInstanceRef = useRef<kakao.maps.Map | null>(null);
-  const geocoderRef = useRef<kakao.maps.services.Geocoder | null>(null);
-  useKakaoLoader();
+
+  useKakaoLoader(); // ✅ 공통 스크립트 로더 사용
 
   useEffect(() => {
     if (!window.kakao?.maps) return;
@@ -19,32 +19,24 @@ const KakaoMap = ({ spaces }: KakaoMapProps) => {
     window.kakao.maps.load(() => {
       if (!mapRef.current) return;
 
-      // 지도 인스턴스 생성 또는 재사용
-      if (!mapInstanceRef.current) {
-        mapInstanceRef.current = new window.kakao.maps.Map(mapRef.current, {
-          center: new window.kakao.maps.LatLng(37.5665, 126.978),
-          level: 6,
-        });
-      }
-      const map = mapInstanceRef.current;
+      // 지도 인스턴스 생성
+      const map = new window.kakao.maps.Map(mapRef.current, {
+        center: new window.kakao.maps.LatLng(37.5665, 126.978),
+        level: 6,
+      });
+      mapInstanceRef.current = map;
 
       // 기존 마커 제거
       markersRef.current.forEach((marker) => marker.setMap(null));
       markersRef.current = [];
 
-      // Geocoder 인스턴스 생성 또는 재사용
-      if (!geocoderRef.current) {
-        geocoderRef.current = new window.kakao.maps.services.Geocoder();
-      }
-      const geocoder = geocoderRef.current;
-
-      // 마커 생성 및 지도 bounds 계산
       const bounds = new window.kakao.maps.LatLngBounds();
+      const geocoder = new window.kakao.maps.services.Geocoder(); // ✅ 필수 위치
+
       let geocodeCount = 0;
       let successCount = 0;
 
       if (spaces.length === 0) {
-        // 공간이 없으면 지도 중심만 초기화
         map.setCenter(new window.kakao.maps.LatLng(37.5665, 126.978));
         return;
       }
@@ -52,13 +44,13 @@ const KakaoMap = ({ spaces }: KakaoMapProps) => {
       spaces.forEach((space) => {
         geocoder.addressSearch(space.ADDR, (result, status) => {
           geocodeCount += 1;
+
           if (status === window.kakao.maps.services.Status.OK && result[0]) {
             const coords = new window.kakao.maps.LatLng(
               Number(result[0].y),
               Number(result[0].x)
             );
 
-            // 마커 생성
             const marker = new window.kakao.maps.Marker({
               map,
               position: coords,
@@ -82,12 +74,11 @@ const KakaoMap = ({ spaces }: KakaoMapProps) => {
             console.warn(`주소 변환 실패: ${space.ADDR}`);
           }
 
-          // 모든 주소 변환이 끝난 후에만 bounds 적용
+          // 모든 주소 처리 완료 후 bounds 적용
           if (geocodeCount === spaces.length) {
             if (successCount > 0) {
               map.setBounds(bounds);
             } else {
-              // 모두 실패 시 서울 중심으로 이동
               map.setCenter(new window.kakao.maps.LatLng(37.5665, 126.978));
             }
           }
@@ -96,7 +87,13 @@ const KakaoMap = ({ spaces }: KakaoMapProps) => {
     });
   }, [spaces]);
 
-  return <div ref={mapRef} className="w-full h-[400px] rounded-lg shadow" />;
+  return (
+    <div
+      ref={mapRef}
+      className="w-full h-[400px] rounded-lg shadow"
+      style={{ minHeight: "400px" }}
+    />
+  );
 };
 
 export default KakaoMap;

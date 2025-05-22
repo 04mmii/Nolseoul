@@ -6,6 +6,7 @@ import HeroSlider from "../components/Banner/HeroSlider";
 import CulturalSpaceCard from "../components/CulturalSpace/CulturalSpaceCard";
 import { useCulturalSpaces } from "../hooks/useCulturalSpaces";
 import OngoingEventSlider from "../components/Events/OngoingEventSlider";
+import { parseDate } from "../utils/parseDate";
 
 const Home = () => {
   const { events, loading: eventsLoading } = useEvents();
@@ -14,23 +15,28 @@ const Home = () => {
   if (eventsLoading || spacesLoading)
     return <p className="p-4">불러오는 중...</p>;
 
-  const today = new Date();
+  const today = new Date(new Date().toDateString()); // 시각 제거
+  const isValidDate = (d: Date) => !isNaN(d.getTime());
 
-  // 현재 날짜가 포함된 행사 5개
+  // ✅ 현재 진행 중인 행사 필터
   const ongoingEvents = events
     ?.filter((event) => {
-      const start = new Date(event.STRTDATE);
-      const end = new Date(event.END_DATE);
+      const start = parseDate(event.STRTDATE);
+      const end = parseDate(event.END_DATE);
+
+      if (!isValidDate(start) || !isValidDate(end)) return false;
       return start <= today && end >= today;
     })
     .slice(0, 20);
 
-  // 5월에 열리는 행사 5개
+  // ✅ 5월 행사 필터
   const mayEvents = events
     ?.filter((event) => {
-      const start = new Date(event.STRTDATE);
-      const end = new Date(event.END_DATE);
-      return start.getMonth() === 4 || end.getMonth() === 4; // 0=1월 → 4=5월
+      const start = parseDate(event.STRTDATE);
+      const end = parseDate(event.END_DATE);
+
+      if (!isValidDate(start) || !isValidDate(end)) return false;
+      return start.getMonth() === 4 || end.getMonth() === 4;
     })
     .slice(0, 5);
 

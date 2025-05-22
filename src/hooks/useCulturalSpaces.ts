@@ -2,20 +2,24 @@ import { useEffect, useState } from "react";
 import { CulturalSpace } from "../types/CulturalSpace";
 
 export const useCulturalSpaces = () => {
-  const [spaces, setSpaces] = useState<CulturalSpace[] | null>(null);
+  const [spaces, setSpaces] = useState<CulturalSpace[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const fetchSpaces = async () => {
       try {
-        const res = await fetch(`/api/seoulapi?type=space`);
+        const BASE_URL = import.meta.env.DEV
+          ? "https://nolseoul.vercel.app"
+          : "";
+
+        const res = await fetch(`${BASE_URL}/api/seoulapi?type=space`);
         const data = await res.json();
 
-        if (!data.culturalSpaceInfo?.row) {
-          throw new Error(
-            "데이터 구조 불일치: " + JSON.stringify(data).slice(0, 100)
-          );
+        if (!data?.culturalSpaceInfo?.row) {
+          console.warn("문화공간 데이터 없음:", data);
+          setSpaces([]);
+          return;
         }
 
         setSpaces(data.culturalSpaceInfo.row);

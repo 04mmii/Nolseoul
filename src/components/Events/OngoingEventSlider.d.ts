@@ -1,3 +1,5 @@
+import "swiper/css";
+import "swiper/css/navigation";
 import type { Event } from "../../types/Event";
 interface Props {
     events: Event[];

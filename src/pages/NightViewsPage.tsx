@@ -56,8 +56,8 @@ const NightViewsPage = () => {
         {/* 헤더 영역 */}
         <div className="max-w-7xl mx-auto px-4 py-8">
           <h1 className="text-3xl font-bold text-center mb-4">야경명소</h1>
-          <p className="text-lg text-center text-gray-600">
-            서울의 아름다운 야경 명소를探索해보세요!
+          <p className="text-lg text-center text-navy-900">
+            서울의 아름다운 야경 명소를 찾아보세요!
           </p>
         </div>
 
@@ -76,7 +76,7 @@ const NightViewsPage = () => {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-2 rounded-full transition-colors ${
                   selectedCategory === category
-                    ? "bg-yellow-400 text-black font-bold"
+                    ? "bg-orange-400 text-black font-bold"
                     : "bg-gray-100 hover:bg-gray-200"
                 }`}
               >
