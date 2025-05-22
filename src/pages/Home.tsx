@@ -1,3 +1,5 @@
+// Home.tsx
+
 import { useEvents } from "../hooks/useEvents";
 import { EventCard } from "../components/Events/EventCard";
 import Header from "../components/Layout/Header";
@@ -11,7 +13,6 @@ import { parseDate } from "../utils/parseDate";
 import dayjs from "dayjs";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
-import { useEffect } from "react";
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
 
@@ -22,33 +23,35 @@ const Home = () => {
   const today = dayjs().startOf("day");
   const isValidDate = (d: Date) => !isNaN(d.getTime());
 
-  useEffect(() => {
-    console.log("🚀 Home 컴포넌트 마운트됨");
-    console.log("📦 불러온 이벤트:", events);
-  }, [events]);
-
+  // 오늘이 포함된 행사만 필터링
   const ongoingEvents = events
     ?.filter((event) => {
       const start = parseDate(event.STRTDATE);
       const end = parseDate(event.END_DATE);
-      if (!isValidDate(start) || !isValidDate(end)) return false;
 
       return (
+        isValidDate(start) &&
+        isValidDate(end) &&
         dayjs(start).isSameOrBefore(today, "day") &&
         dayjs(end).isSameOrAfter(today, "day")
       );
     })
-    .slice(0, 20);
+    .slice(0, 20); // 최대 20개
 
+  // 오늘의 월(예: 5월)이 포함된 행사만 필터링
   const mayEvents = events
     ?.filter((event) => {
       const start = parseDate(event.STRTDATE);
       const end = parseDate(event.END_DATE);
-      if (!isValidDate(start) || !isValidDate(end)) return false;
 
-      return dayjs(start).month() === 4 || dayjs(end).month() === 4;
+      return (
+        isValidDate(start) &&
+        isValidDate(end) &&
+        (dayjs(start).month() === today.month() ||
+          dayjs(end).month() === today.month())
+      );
     })
-    .slice(0, 5);
+    .slice(0, 5); // 최대 5개
 
   if (eventsLoading || spacesLoading)
     return <p className="p-4">불러오는 중...</p>;
@@ -59,6 +62,7 @@ const Home = () => {
       <HeroSlider />
 
       <div className="max-w-7xl mx-auto">
+        {/* 1. 현재 진행 중인 행사 */}
         <h2 className="text-xl font-bold mb-4">현재 진행 중인 행사</h2>
         {ongoingEvents?.length > 0 ? (
           <OngoingEventSlider events={ongoingEvents} />
@@ -66,12 +70,15 @@ const Home = () => {
           <p>현재 진행 중인 문화 행사가 없습니다.</p>
         )}
 
-        <h2 className="text-xl font-bold mt-12 mb-4">5월 문화 행사</h2>
+        {/* 2. 이번 달 행사 */}
+        <h2 className="text-xl font-bold mt-12 mb-4">
+          {today.month() + 1}월 문화 행사
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {mayEvents?.length > 0 ? (
             mayEvents.map((event, i) => <EventCard key={i} event={event} />)
           ) : (
-            <p>5월에 열리는 문화 행사가 없습니다.</p>
+            <p>{today.month() + 1}월에 열리는 문화 행사가 없습니다.</p>
           )}
         </div>
 
@@ -82,6 +89,7 @@ const Home = () => {
         </div>
       </div>
 
+      {/* 문화공간 */}
       <section className="mt-12 max-w-7xl mx-auto">
         <h2 className="text-xl font-bold mb-4">문화공간</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">

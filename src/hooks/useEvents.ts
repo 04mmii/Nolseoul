@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Event } from "../types/Event";
 
+// useEvents.ts
 export const useEvents = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
@@ -8,7 +9,7 @@ export const useEvents = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch(`/api/seoulapi?type=event`);
+        const res = await fetch("/api/seoulapi?type=event");
         const data = await res.json();
         setEvents(data.culturalEventInfo.row);
       } catch (error) {

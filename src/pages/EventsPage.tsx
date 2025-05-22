@@ -48,7 +48,6 @@ const EventsPage = () => {
     currentPage * itemsPerPage
   );
 
-  // URL의 slug를 이용해 현재 선택된 이벤트 찾기
   const selectedEvent = useMemo(() => {
     if (!slug || events.length === 0) return null;
     const decodedSlug = decodeURIComponent(slug);
