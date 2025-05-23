@@ -1,5 +1,4 @@
 // Home.tsx
-
 import { useEvents } from "../hooks/useEvents";
 import { EventCard } from "../components/Events/EventCard";
 import Header from "../components/Layout/Header";
@@ -9,10 +8,10 @@ import CulturalSpaceCard from "../components/CulturalSpace/CulturalSpaceCard";
 import { useCulturalSpaces } from "../hooks/useCulturalSpaces";
 import OngoingEventSlider from "../components/Events/OngoingEventSlider";
 import { parseDate } from "../utils/parseDate";
-
 import dayjs from "dayjs";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
 
@@ -21,88 +20,122 @@ const Home = () => {
   const { spaces, loading: spacesLoading } = useCulturalSpaces();
 
   const today = dayjs().startOf("day");
-  const isValidDate = (d: Date) => !isNaN(d.getTime());
 
-  // 오늘이 포함된 행사만 필터링
+  // 개선된 날짜 유효성 검사 함수
+  const isValidDate = (d: Date) => dayjs(d).isValid();
+
+  // 현재 진행 중인 이벤트 필터링
   const ongoingEvents = events
     ?.filter((event) => {
       const start = parseDate(event.STRTDATE);
       const end = parseDate(event.END_DATE);
 
+      // 디버깅용 로그 (문제시 주석 해제)
+      console.log("현재 이벤트:", {
+        title: event.TITLE,
+        originalStart: event.STRTDATE,
+        parsedStart: start,
+        originalEnd: event.END_DATE,
+        parsedEnd: end,
+      });
+
       return (
         isValidDate(start) &&
         isValidDate(end) &&
-        dayjs(start).isSameOrBefore(today, "day") &&
-        dayjs(end).isSameOrAfter(today, "day")
+        dayjs(start).isSameOrBefore(today) &&
+        dayjs(end).isSameOrAfter(today)
       );
     })
-    .slice(0, 20); // 최대 20개
+    .slice(0, 20);
 
-  // 오늘의 월(예: 5월)이 포함된 행사만 필터링
-  const mayEvents = events
+  // 이번 달 행사 필터링 (월 범위 체크 강화)
+  const currentMonthEvents = events
     ?.filter((event) => {
       const start = parseDate(event.STRTDATE);
       const end = parseDate(event.END_DATE);
 
+      if (!isValidDate(start) || !isValidDate(end)) return false;
+
+      const eventStart = dayjs(start);
+      const eventEnd = dayjs(end);
+      const currentMonth = today.month();
+
+      // 시작월 ≤ 현재월 ≤ 종료월 조건으로 장기 이벤트 포함
       return (
-        isValidDate(start) &&
-        isValidDate(end) &&
-        (dayjs(start).month() === today.month() ||
-          dayjs(end).month() === today.month())
+        (eventStart.month() <= currentMonth &&
+          currentMonth <= eventEnd.month()) ||
+        eventStart.month() === currentMonth ||
+        eventEnd.month() === currentMonth
       );
     })
-    .slice(0, 5); // 최대 5개
+    .slice(0, 5);
 
-  if (eventsLoading || spacesLoading)
+  if (eventsLoading || spacesLoading) {
     return <p className="p-4">불러오는 중...</p>;
+  }
 
   return (
     <>
       <Header />
       <HeroSlider />
 
-      <div className="max-w-7xl mx-auto">
-        {/* 1. 현재 진행 중인 행사 */}
-        <h2 className="text-xl font-bold mb-4">현재 진행 중인 행사</h2>
-        {ongoingEvents?.length > 0 ? (
-          <OngoingEventSlider events={ongoingEvents} />
-        ) : (
-          <p>현재 진행 중인 문화 행사가 없습니다.</p>
-        )}
-
-        {/* 2. 이번 달 행사 */}
-        <h2 className="text-xl font-bold mt-12 mb-4">
-          {today.month() + 1}월 문화 행사
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {mayEvents?.length > 0 ? (
-            mayEvents.map((event, i) => <EventCard key={i} event={event} />)
+      <div className="max-w-7xl mx-auto px-4">
+        {/* 현재 진행 중인 행사 섹션 */}
+        <section className="my-8">
+          <h2 className="text-2xl font-bold mb-6">현재 진행 중인 행사</h2>
+          {ongoingEvents?.length > 0 ? (
+            <OngoingEventSlider events={ongoingEvents} />
           ) : (
-            <p>{today.month() + 1}월에 열리는 문화 행사가 없습니다.</p>
+            <p className="text-gray-500">
+              현재 진행 중인 문화 행사가 없습니다.
+            </p>
           )}
-        </div>
+        </section>
 
-        <div className="text-right mt-4">
-          <Link to="/events" className="text-blue-600 hover:underline">
-            더보기 →
-          </Link>
-        </div>
+        {/* 이번 달 행사 섹션 */}
+        <section className="my-12">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold">
+              {today.month() + 1}월 문화 행사
+            </h2>
+            <Link
+              to="/events"
+              className="text-blue-600 hover:text-blue-800 transition-colors"
+            >
+              더보기 →
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {currentMonthEvents?.length > 0 ? (
+              currentMonthEvents.map((event) => (
+                <EventCard key={event.CULTCODE} event={event} />
+              ))
+            ) : (
+              <p className="text-gray-500 col-span-full">
+                {today.month() + 1}월에 예정된 문화 행사가 없습니다.
+              </p>
+            )}
+          </div>
+        </section>
+
+        {/* 문화공간 섹션 */}
+        <section className="my-12">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold">추천 문화공간</h2>
+            <Link
+              to="/spaces"
+              className="text-blue-600 hover:text-blue-800 transition-colors"
+            >
+              더보기 →
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {spaces?.slice(0, 5).map((space) => (
+              <CulturalSpaceCard key={space.NUM} space={space} />
+            ))}
+          </div>
+        </section>
       </div>
-
-      {/* 문화공간 */}
-      <section className="mt-12 max-w-7xl mx-auto">
-        <h2 className="text-xl font-bold mb-4">문화공간</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {spaces?.slice(0, 5).map((space, i) => (
-            <CulturalSpaceCard key={space.NUM || i} space={space} />
-          ))}
-        </div>
-        <div className="text-right mt-4">
-          <Link to="/spaces" className="text-blue-600 hover:underline">
-            더보기 →
-          </Link>
-        </div>
-      </section>
     </>
   );
 };
