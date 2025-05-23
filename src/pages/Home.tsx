@@ -7,7 +7,6 @@ import HeroSlider from "../components/Banner/HeroSlider";
 import CulturalSpaceCard from "../components/CulturalSpace/CulturalSpaceCard";
 import { useCulturalSpaces } from "../hooks/useCulturalSpaces";
 import OngoingEventSlider from "../components/Events/OngoingEventSlider";
-import { parseDate } from "../utils/parseDate";
 import dayjs from "dayjs";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
@@ -20,9 +19,6 @@ const Home = () => {
   const { spaces, loading: spacesLoading } = useCulturalSpaces();
 
   const today = dayjs().startOf("day");
-
-  // 개선된 날짜 유효성 검사 함수
-  const isValidDate = (d: Date) => dayjs(d).isValid();
 
   // 현재 진행 중인 이벤트 필터링
   const ongoingEvents = events
@@ -60,6 +56,7 @@ const Home = () => {
       );
     })
     .slice(0, 5);
+
   if (eventsLoading || spacesLoading) {
     return <p className="p-4">불러오는 중...</p>;
   }
