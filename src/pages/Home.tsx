@@ -27,49 +27,39 @@ const Home = () => {
   // 현재 진행 중인 이벤트 필터링
   const ongoingEvents = events
     ?.filter((event) => {
-      const start = parseDate(event.STRTDATE);
-      const end = parseDate(event.END_DATE);
+      if (!event.DATE?.includes("~")) return false;
 
-      // 디버깅용 로그 (문제시 주석 해제)
-      console.log("현재 이벤트:", {
-        title: event.TITLE,
-        originalStart: event.STRTDATE,
-        parsedStart: start,
-        originalEnd: event.END_DATE,
-        parsedEnd: end,
-      });
+      const [startStr, endStr] = event.DATE.split("~");
+      const start = dayjs(startStr.trim());
+      const end = dayjs(endStr.trim());
 
       return (
-        isValidDate(start) &&
-        isValidDate(end) &&
-        dayjs(start).isSameOrBefore(today) &&
-        dayjs(end).isSameOrAfter(today)
+        start.isValid() &&
+        end.isValid() &&
+        today.isSameOrAfter(start, "day") &&
+        today.isSameOrBefore(end, "day")
       );
     })
     .slice(0, 20);
 
-  // 이번 달 행사 필터링 (월 범위 체크 강화)
   const currentMonthEvents = events
     ?.filter((event) => {
-      const start = parseDate(event.STRTDATE);
-      const end = parseDate(event.END_DATE);
+      if (!event.DATE?.includes("~")) return false;
 
-      if (!isValidDate(start) || !isValidDate(end)) return false;
+      const [startStr, endStr] = event.DATE.split("~");
+      const start = dayjs(startStr.trim());
+      const end = dayjs(endStr.trim());
 
-      const eventStart = dayjs(start);
-      const eventEnd = dayjs(end);
-      const currentMonth = today.month();
+      if (!start.isValid() || !end.isValid()) return false;
 
-      // 시작월 ≤ 현재월 ≤ 종료월 조건으로 장기 이벤트 포함
+      const currentMonth = today.month(); // 0부터 시작
       return (
-        (eventStart.month() <= currentMonth &&
-          currentMonth <= eventEnd.month()) ||
-        eventStart.month() === currentMonth ||
-        eventEnd.month() === currentMonth
+        start.month() === currentMonth ||
+        end.month() === currentMonth ||
+        (start.month() <= currentMonth && end.month() >= currentMonth)
       );
     })
     .slice(0, 5);
-
   if (eventsLoading || spacesLoading) {
     return <p className="p-4">불러오는 중...</p>;
   }
