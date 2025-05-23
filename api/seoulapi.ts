@@ -20,7 +20,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: "Invalid type parameter" });
   }
 
-  const url = `http://openapi.seoul.go.kr:8088/${API_KEY}/json/${endpoint}/1/100/`;
+  const url = `http://openapi.seoul.go.kr:8088/${API_KEY}/json/${endpoint}/1/1000/`;
   try {
     const response = await fetch(url);
 
