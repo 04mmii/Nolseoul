@@ -11,6 +11,10 @@ export const useEvents = () => {
       try {
         const res = await fetch("/api/seoulapi?type=event");
         const data = await res.json();
+
+        console.log("✅ API 응답 구조 확인:", data); // 추가
+        console.log("🧾 첫 번째 row:", data.culturalEventInfo?.row?.[0]); // 추가
+
         setEvents(data.culturalEventInfo.row);
       } catch (error) {
         console.error("이벤트 불러오기 오류:", error);
