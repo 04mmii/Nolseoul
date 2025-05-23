@@ -46,20 +46,19 @@ const HeroSlider = () => {
                 onClick={() => handleClick(banner.link)}
               />
 
-              {/* 이미지 하단 텍스트 박스 */}
-              <div className="absolute w-full h-[150px] top-103 left-10 bg-white opacity-98 p-6 max-w-[600px] ">
-                <h2 className="text-2xl font-bold mb-2">{banner.title}</h2>
+              {/* 이미지 위 텍스트 오버레이 */}
+              <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm p-5 rounded-xl shadow-md max-w-[600px]">
+                <h2 className="text-xl font-bold text-gray-800 mb-1">
+                  {banner.title}
+                </h2>
                 {banner.description && (
-                  <p className="text-base text-gray-700 mb-2">
+                  <p className="text-sm text-gray-700 mb-1">
                     {banner.description}
                   </p>
                 )}
-                {banner.date && (
-                  <p className="text-sm text-gray-500 mb-3">{banner.date}</p>
-                )}
                 <button
                   onClick={() => handleClick(banner.link)}
-                  className="absolute right-10 top--1 px-4 py-2 bg-indigo-600 text-white cursor-pointer hover:bg-indigo-800 transition"
+                  className="mt-2 px-4 py-2 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700 transition"
                 >
                   자세히 보기
                 </button>
@@ -101,7 +100,7 @@ const HeroSlider = () => {
             key={idx}
             onClick={() => setCurrent(idx)}
             className={`w-3 h-3 rounded-full cursor-pointer ${
-              current === idx ? "bg-indigo-600" : "bg-gray-300"
+              current === idx ? "bg-navy-600" : "bg-gray-300"
             }`}
           />
         ))}

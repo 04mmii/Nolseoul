@@ -13,9 +13,26 @@ export const EventCard = ({ event }: EventCardProps) => {
     navigate(`/events/${slug}`);
   };
 
+  const getBadgeColor = (category: string) => {
+    switch (category) {
+      case "전시/미술":
+        return "bg-pink-500";
+      case "공연":
+        return "bg-green-500";
+      case "교육/체험":
+        return "bg-yellow-500";
+      case "축제":
+        return "bg-purple-500";
+      case "기타":
+        return "bg-gray-500";
+      default:
+        return "bg-blue-600";
+    }
+  };
+
   return (
     <div
-      className="bg-white rounded-xl p-2 border shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition"
+      className="bg-white rounded-xl border shadow-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-2 transition"
       onClick={handleClick}
     >
       {/* 이미지 섹션 */}
@@ -27,7 +44,11 @@ export const EventCard = ({ event }: EventCardProps) => {
         />
         {/* 카테고리 뱃지 */}
         {event.CODENAME && (
-          <span className="absolute top-2 left-2 bg-blue-600 text-white text-xs font-semibold px-2 py-1 rounded">
+          <span
+            className={`absolute top-2 left-2 text-white text-xs font-semibold px-2 py-1 rounded ${getBadgeColor(
+              event.CODENAME
+            )}`}
+          >
             {event.CODENAME}
           </span>
         )}

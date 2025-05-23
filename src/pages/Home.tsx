@@ -65,7 +65,6 @@ const Home = () => {
     <>
       <Header />
       <HeroSlider />
-
       <div className="max-w-7xl mx-auto px-4">
         {/* 현재 진행 중인 행사 섹션 */}
         <section className="my-8">
