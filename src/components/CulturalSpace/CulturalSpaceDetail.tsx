@@ -30,7 +30,7 @@ const CulturalSpaceDetailPage = () => {
           />
         )}
 
-        <section className="mb-4">
+        <section className="mb-4 ">
           <p>
             <strong>주소:</strong> {space.ADDR}
           </p>
@@ -39,6 +39,9 @@ const CulturalSpaceDetailPage = () => {
           </p>
           <p>
             <strong>카테고리:</strong> {space.SUBJCODE}
+          </p>
+          <p>
+            <strong>HOMEPAGE:</strong> {space.HOMEPAGE}
           </p>
         </section>
 

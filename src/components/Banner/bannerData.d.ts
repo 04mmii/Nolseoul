@@ -4,5 +4,4 @@ export declare const bannerData: {
     description: string;
     image: string;
     link: string;
-    date: string;
 }[];

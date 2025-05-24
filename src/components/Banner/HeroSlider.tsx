@@ -47,13 +47,13 @@ const HeroSlider = () => {
               />
 
               {/* 이미지 위 텍스트 오버레이 */}
-              <div className="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm p-5 rounded-xl shadow-md max-w-[600px]">
+              <div className="absolute bottom-6 left-6 bg-white/80 backdrop-blur-sm p-5 rounded-xl shadow-md w-[600px]">
                 <h2 className="text-xl font-bold text-gray-800 mb-1">
                   {banner.title}
                 </h2>
                 {banner.description && (
                   <p className="text-sm text-gray-700 mb-1">
-                    {banner.description}
+                    {banner.description}s
                   </p>
                 )}
                 <button
