@@ -36,15 +36,22 @@ const HeroSlider = () => {
             current === idx ? "opacity-100" : "opacity-0"
           }`}
         >
-          <div className="w-full h-full flex justify-between items-center gap-10 px-6">
+          <div className="w-full h-full flex flex-col lg:flex-row flex-nowrap justify-between items-center gap-10 px-6">
             {/* 왼쪽 배너 이미지 */}
             <div className="relative w-[70%] h-full">
-              <img
-                src={banner.image}
-                alt={banner.title}
-                className="w-full h-[85%] object-cover rounded-xl shadow-lg cursor-pointer"
-                onClick={() => handleClick(banner.link)}
-              />
+              <a
+                href={banner.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block"
+              >
+                <img
+                  src={banner.image}
+                  alt={banner.title}
+                  className="w-full h-[85%] object-cover rounded-xl shadow-lg cursor-pointer"
+                  onClick={() => handleClick(banner.link)}
+                />
+              </a>
 
               {/* 이미지 위 텍스트 오버레이 */}
               <div className="absolute bottom-6 left-6 bg-white/80 backdrop-blur-sm p-5 rounded-xl shadow-md w-[600px]">
@@ -53,15 +60,15 @@ const HeroSlider = () => {
                 </h2>
                 {banner.description && (
                   <p className="text-sm text-gray-700 mb-1">
-                    {banner.description}s
+                    {banner.description}
                   </p>
                 )}
-                <button
+                <a
                   onClick={() => handleClick(banner.link)}
                   className="mt-2 px-4 py-2 bg-indigo-600 text-white text-sm rounded hover:bg-indigo-700 transition"
                 >
                   자세히 보기
-                </button>
+                </a>
               </div>
             </div>
 

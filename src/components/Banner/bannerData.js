@@ -8,8 +8,8 @@ export const bannerData = [
     },
     {
         id: 2,
-        title: "2025 문화가 흐르는 서울광장장",
-        description: "5월~11월, 서울광장장",
+        title: "2025 문화가 흐르는 서울광장",
+        description: "5월~11월, 서울광장",
         image: "/images/banner-02.jpg",
         link: "https://cultureseoul.co.kr/",
     },

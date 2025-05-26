@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import logoImage2 from "../../../public/images/nol-b.gif";
 
 const Footer = () => {
   return (
@@ -7,9 +6,12 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
         {/* 왼쪽: 로고 */}
         <Link to="/">
-          <div className="flex items-center gap-2">
-            <img src={logoImage2} alt="놀서울 로고" className="w-8 h-8" />
-            <span className="font-bold text-lg text-gray-800">놀서울</span>
+          <div className="flex w-[300px] items-center gap-2">
+            <img
+              src="/images/nol-b.gif"
+              alt="놀서울 로고"
+              className="w-8 h-8"
+            />
           </div>
         </Link>
 

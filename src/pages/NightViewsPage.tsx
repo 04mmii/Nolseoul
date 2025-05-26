@@ -4,6 +4,7 @@ import Pagination from "../components/Common/Pagination";
 import NightViewMap from "../components/Map/NightViewMap";
 import { useNightViewSpots } from "../hooks/useNightViewSpots";
 import NightViewCard from "../components/Places/NightViewCard";
+import Footer from "@/components/Layout/Footer";
 
 const categories = ["전체", "공원/광장", "문화/체육", "공공시설", "가로/마을"];
 
@@ -127,6 +128,7 @@ const NightViewsPage = () => {
           />
         </div>
       </div>
+      <Footer />
     </>
   );
 };

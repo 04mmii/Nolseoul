@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
-import logoImage from "/images/nol.gif";
 
 const Logo = () => {
   return (
     <Link to="/">
       <img
-        src={logoImage}
+        src="/images/nol.gif"
         alt="놀서울 로고"
         className="w-60 h-auto cursor-pointe pr-5"
       />
