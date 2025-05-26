@@ -4,6 +4,7 @@ import EventsPage from "./pages/EventsPage";
 import CulturalSpacesPage from "./pages/CulturalSpacesPage";
 import CulturalSpaceDetail from "./components/CulturalSpace/CulturalSpaceDetail";
 import NightViewsPage from "./pages/NightViewsPage";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/spaces/:NUM" element={<CulturalSpaceDetail />} />
         <Route path="/night-views" element={<NightViewsPage />} />
       </Routes>
+      <SpeedInsights />
     </div>
   );
 }

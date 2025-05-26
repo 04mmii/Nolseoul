@@ -14,7 +14,7 @@ const CulturalSpaceCard = ({ space }: Props) => {
           alt={space.FAC_NAME}
           className="w-full h-48 object-cover rounded-md"
         />
-        <div className="mt-2 leading-snug line-clamp-1">
+        <div className="mt-2 leading-snug line-clamp-2">
           <h3 className="font-bold text-lg">{space.FAC_NAME}</h3>
           <p className="text-sm text-gray-600">{space.ADDR}</p>
           <p className="text-xs mt-1 text-gray-400">{space.SUBJCODE}</p>
