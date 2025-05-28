@@ -54,9 +54,8 @@ const NightViewsPage = () => {
     <>
       <Header />
       <div className="min-h-screen bg-white">
-        {/* 헤더 영역 */}
         <div
-          className="w-full h-[600px] bg-cover bg-center relative"
+          className="w-full h-[300px] bg-cover bg-center relative"
           style={{ backgroundImage: "url('/images/n-1920.jpg')" }}
         >
           <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center px-4">
@@ -69,8 +68,7 @@ const NightViewsPage = () => {
           </div>
         </div>
 
-        {/* 지도 표시 */}
-        <div className="max-w-7xl mx-auto px-4 mb-8">
+        <div className="max-w-7xl mx-auto px-4 mb-8 mt-8">
           <NightViewMap spots={paginatedSpots} />
         </div>
 

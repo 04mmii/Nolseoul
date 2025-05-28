@@ -6,10 +6,10 @@ interface NightViewCardProps {
 
 const NightViewCard: React.FC<NightViewCardProps> = ({ spot }) => {
   return (
-    <div className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-white">
-      <div className="p-4">
-        <h3 className="font-bold text-lg mb-2">{spot.TITLE}</h3>
-        <p className="text-gray-500 truncate mb-1">{spot.ADDR}</p>
+    <div className="border rounded-lg overflow-hidden hover:shadow-lg transition-shadow bg-white h-full flex flex-col justify-between">
+      <div className="p-4 flex-1 flex flex-col">
+        <h3 className="font-bold text-base sm:text-lg mb-2">{spot.TITLE}</h3>
+        <p className="text-gray-500 text-sm truncate mb-1">{spot.ADDR}</p>
         {spot.OPERATING_TIME && (
           <p className="text-xs text-gray-500 mb-1">
             <span className="font-medium">운영시간:</span> {spot.OPERATING_TIME}
@@ -43,7 +43,9 @@ const NightViewCard: React.FC<NightViewCardProps> = ({ spot }) => {
           </p>
         )}
         {spot.CONTENT && (
-          <p className="text-sm text-gray-600 mt-2">{spot.CONTENT}</p>
+          <p className="text-sm text-gray-600 mt-2 line-clamp-3">
+            {spot.CONTENT}
+          </p>
         )}
       </div>
     </div>

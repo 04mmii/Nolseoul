@@ -32,17 +32,15 @@ export const EventCard = ({ event }: EventCardProps) => {
 
   return (
     <div
-      className="bg-white rounded-xl border shadow-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-2 transition"
+      className="bg-white rounded-xl border shadow-md overflow-hidden cursor-pointer hover:shadow-lg hover:border-2 transition w-full flex flex-col"
       onClick={handleClick}
     >
-      {/* 이미지 섹션 */}
       <div className="relative aspect-[3/4] overflow-hidden">
         <img
           src={event.MAIN_IMG}
           alt={event.TITLE}
           className="w-full h-full object-cover"
         />
-        {/* 카테고리 뱃지 */}
         {event.CODENAME && (
           <span
             className={`absolute top-2 left-2 text-white text-xs font-semibold px-2 py-1 rounded ${getBadgeColor(
@@ -54,13 +52,14 @@ export const EventCard = ({ event }: EventCardProps) => {
         )}
       </div>
 
-      {/* 텍스트 콘텐츠 */}
-      <div className="p-4">
+      <div className="p-3 flex-1 flex flex-col justify-between">
         <h3 className="text-sm font-semibold leading-snug line-clamp-2">
           [{event.ORG_NAME}] {event.TITLE}
         </h3>
-        <p className="text-sm text-gray-600 mt-1">{event.DATE}</p>
-        <p className="text-sm text-gray-500 mt-1">{event.PLACE}</p>
+        <div className="mt-2">
+          <p className="text-sm text-gray-600">{event.DATE}</p>
+          <p className="text-sm text-gray-500">{event.PLACE}</p>
+        </div>
       </div>
     </div>
   );

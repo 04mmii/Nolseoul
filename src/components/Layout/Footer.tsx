@@ -10,7 +10,7 @@ const Footer = () => {
             <img
               src="/images/nol-b.gif"
               alt="놀서울 로고"
-              className="w-8 h-8 object-contain"
+              className="w-[600px] object-contain"
             />
           </div>
         </Link>
