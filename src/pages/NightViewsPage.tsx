@@ -55,11 +55,18 @@ const NightViewsPage = () => {
       <Header />
       <div className="min-h-screen bg-white">
         {/* 헤더 영역 */}
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold text-center mb-4">야경명소</h1>
-          <p className="text-lg text-center text-navy-900">
-            서울의 아름다운 야경 명소를 찾아보세요!
-          </p>
+        <div
+          className="w-full h-[600px] bg-cover bg-center relative"
+          style={{ backgroundImage: "url('/images/n-1920.jpg')" }}
+        >
+          <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center px-4">
+            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+              야경명소
+            </h1>
+            <p className="text-lg sm:text-xl text-white">
+              서울의 아름다운 야경 명소를 찾아보세요!
+            </p>
+          </div>
         </div>
 
         {/* 지도 표시 */}
