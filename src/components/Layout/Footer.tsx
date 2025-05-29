@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
         {/* 왼쪽: 로고 */}
         <Link to="/">
-          <div className="flex w-[800px] items-center gap-2">
+          <div className="flex w-[200px] items-center gap-2">
             <img
               src="/images/nol-b.gif"
               alt="놀서울 로고"

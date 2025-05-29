@@ -21,7 +21,7 @@ const HeroSlider = () => {
   };
 
   return (
-    <div className="relative w-full h-[650px] bg-gray-50 overflow-hidden">
+    <div className="relative w-full h-auto lg:h-[650px] bg-gray-50 overflow-hidden">
       {bannerData.map((banner, idx) => (
         <div
           key={banner.id}
@@ -45,7 +45,7 @@ const HeroSlider = () => {
                 />
               </a>
 
-              <div className="absolute bottom-6 left-6 right-6 sm:right-auto bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md max-w-md">
+              <div className="absolute w-[700px] bottom-6 left-6 right-6 sm:right-auto bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md max-w-md">
                 <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
                   {banner.title}
                 </h2>
@@ -56,7 +56,7 @@ const HeroSlider = () => {
                 )}
                 <button
                   onClick={() => handleClick(banner.link)}
-                  className="mt-2 px-4 py-2 text-sm sm:text-base bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+                  className="mt-2 px-4 py-2 text-sm sm:text-base bg-navy-500 text-white rounded hover:bg-navy-700 transition"
                 >
                   자세히 보기
                 </button>
@@ -66,9 +66,9 @@ const HeroSlider = () => {
             {/* 오른쪽 야경 카드 */}
             <Link
               to="/night-views"
-              className="w-full lg:w-1/4 h-full mt-4 lg:mt-0"
+              className="w-full lg:w-1/4 h-auto mt-4 lg:mt-0"
             >
-              <div className="h-[60%] overflow-hidden rounded-xl shadow-lg mb-4">
+              <div className="aspect-[3/4] overflow-hidden rounded-xl shadow-lg mb-4">
                 <img
                   src="/images/nightview.jpg"
                   alt="서울 야경명소"
