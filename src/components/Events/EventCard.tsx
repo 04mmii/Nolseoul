@@ -43,9 +43,7 @@ export const EventCard = ({ event }: EventCardProps) => {
         />
         {event.CODENAME && (
           <span
-            className={`absolute top-2 left-2 text-white text-xs font-semibold px-2 py-1 rounded ${getBadgeColor(
-              event.CODENAME
-            )}`}
+            className={`absolute top-2 left-2 text-white text-xs font-semibold px-2 py-1 rounded`}
           >
             {event.CODENAME}
           </span>
