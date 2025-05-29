@@ -17,7 +17,7 @@ export const bannerData = [
         id: 3,
         title: "광복80주년 서울시 주요 문화예술행사 프로그램",
         description: "서울시와 함께 광복의 의미를 1년내내 되새겨요!",
-        image: "/images/banner-4.jpg",
+        image: "/images/banner-04.jpg",
         link: "https://culture.seoul.go.kr/culture/bbs/B0000000/view.do?nttId=14652&menuNo=200050",
     },
     {

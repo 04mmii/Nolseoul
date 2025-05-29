@@ -43,7 +43,9 @@ export const EventCard = ({ event }: EventCardProps) => {
         />
         {event.CODENAME && (
           <span
-            className={`absolute top-2 left-2 text-white text-xs font-semibold px-2 py-1 rounded`}
+            className={`absolute top-2 left-2 text-white text-xs font-semibold px-2 py-1 rounded ${getBadgeColor(
+              event.CODENAME
+            )}`}
           >
             {event.CODENAME}
           </span>
@@ -52,11 +54,12 @@ export const EventCard = ({ event }: EventCardProps) => {
 
       <div className="p-3 flex-1 flex flex-col justify-between">
         <h3 className="text-sm font-semibold leading-snug line-clamp-2">
-          [{event.ORG_NAME}] {event.TITLE}
+          {event.TITLE}
         </h3>
         <div className="mt-2">
           <p className="text-sm text-gray-600">{event.DATE}</p>
           <p className="text-sm text-gray-500">{event.PLACE}</p>
+          {/* <p className="text-sm text-gray-500">{event.ORG_NAME}</p> */}
         </div>
       </div>
     </div>
