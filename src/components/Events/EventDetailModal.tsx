@@ -42,7 +42,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm overflow-auto">
       <div
         ref={modalRef}
-        className="bg-white w-full max-w-4xl p-6 rounded shadow-lg relative"
+        className="bg-white w-full max-w-4xl max-h-[95vh] p-6 rounded shadow-lg relative"
       >
         {/* 닫기 버튼 */}
         <button
@@ -85,10 +85,14 @@ const EventDetailModal = ({ event, onClose }: Props) => {
         )}
 
         {/* 지도 */}
-        {event.PLACE && (
+        {event.LAT && event.LONG && (
           <div className="mt-6">
             <h3 className="font-semibold mb-2 text-lg">위치 안내</h3>
-            <KakaoMapSingle address={event.PLACE} name={event.TITLE} />
+            <KakaoMapSingle
+              lat={parseFloat(event.LAT)}
+              lng={parseFloat(event.LONG)}
+              name={event.TITLE}
+            />
           </div>
         )}
       </div>
