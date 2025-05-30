@@ -65,7 +65,7 @@ const NightViewsPage = () => {
         </div>
 
         {/* 지도 */}
-        <div className="max-w-7xl mx-auto px-4 mb-8">
+        <div className="max-w-7xl mx-auto p-4 mb-8">
           <NightViewMap spots={paginatedSpots} />
         </div>
 

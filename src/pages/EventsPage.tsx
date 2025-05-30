@@ -90,7 +90,7 @@ const EventsPage = () => {
             <input
               type="text"
               placeholder="행사명을 검색하세요"
-              className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 pl-10 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />

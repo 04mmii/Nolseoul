@@ -73,7 +73,7 @@ const CulturalSpacesPage = () => {
         </div>
 
         {/* 지도 */}
-        <div className="max-w-7xl mx-auto px-4 mb-8">
+        <div className="max-w-7xl mx-auto p-4 mb-8">
           <Map spaces={paginatedSpaces} />
         </div>
 
@@ -91,7 +91,7 @@ const CulturalSpacesPage = () => {
             <input
               type="text"
               placeholder="문화공간 이름 또는 주소 검색"
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-3 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />

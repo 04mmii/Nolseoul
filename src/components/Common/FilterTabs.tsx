@@ -26,7 +26,7 @@ const FilterTabs: React.FC<FilterTabsProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap justify-center gap-2 my-4">
+    <div className="flex flex-wrap gap-2 my-4">
       {options.map(({ label, value }) => (
         <button
           key={label}
