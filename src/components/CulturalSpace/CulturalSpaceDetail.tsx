@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useCulturalSpaces } from "../../hooks/useCulturalSpaces";
 import Header from "../Layout/Header";
 import KakaoMapSingle from "../Map/KakaoMapSingle";
+import Footer from "../Layout/Footer";
 
 const CulturalSpaceDetailPage = () => {
   const { NUM } = useParams<{ NUM: string }>();
@@ -97,6 +98,7 @@ const CulturalSpaceDetailPage = () => {
           목록으로 돌아가기
         </button>
       </main>
+      <Footer />
     </>
   );
 };

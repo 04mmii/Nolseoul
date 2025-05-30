@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Event } from "../../types/Event";
+import KakaoMapSingle from "../Map/KakaoMapSingle";
 
 type Props = {
   event: Event;
@@ -41,7 +42,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
       <div
         ref={modalRef}
-        className="bg-white w-full max-w-2xl max-h-[90vh] p-6 rounded shadow-lg relative flex flex-col"
+        className="bg-white w-full max-w-4xl max-h-[95vh] p-6 rounded shadow-lg relative flex flex-col"
       >
         <button
           className="absolute top-4 right-4 text-gray-500 hover:text-black text-xl"
@@ -65,6 +66,11 @@ const EventDetailModal = ({ event, onClose }: Props) => {
               alt={event.TITLE}
               className="mt-4 w-full h-auto rounded"
             />
+          )}
+          {event.PLACE && (
+            <div className="pt-2">
+              <KakaoMapSingle address={event.PLACE} name={event.TITLE} />
+            </div>
           )}
         </div>
       </div>
