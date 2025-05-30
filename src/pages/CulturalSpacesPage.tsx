@@ -4,7 +4,8 @@ import CulturalSpaceCard from "../components/CulturalSpace/CulturalSpaceCard";
 import Map from "../components/Map/KakaoMap";
 import FilterTabs from "../components/Common/FilterTabs";
 import Pagination from "../components/Common/Pagination";
-import { useState, useEffect } from "react";
+import Footer from "@/components/Layout/Footer";
+import { useState, useEffect, useMemo } from "react";
 import { spaceCategoryOptions } from "../components/CulturalSpace/spaceCategoryOptions";
 
 const CulturalSpacesPage = () => {
@@ -20,6 +21,30 @@ const CulturalSpacesPage = () => {
     setCurrentPage(1);
   }, [searchTerm, selectedCategory]);
 
+  const filteredSpaces = useMemo(() => {
+    return (spaces ?? []).filter((space) => {
+      const subj = space.SUBJCODE || "";
+      const name = space.FAC_NAME || "";
+      const addr = space.ADDR || "";
+      const matchesCategory =
+        (Array.isArray(selectedCategory) &&
+          selectedCategory.some((cat) => subj.includes(cat))) ||
+        selectedCategory === "전체" ||
+        subj.includes(selectedCategory as string);
+      const matchesSearch =
+        name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        addr.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [spaces, selectedCategory, searchTerm]);
+
+  const paginatedSpaces = useMemo(() => {
+    return filteredSpaces.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+  }, [filteredSpaces, currentPage]);
+
   if (loading) return <div className="text-center py-8">로딩 중...</div>;
   if (error)
     return (
@@ -28,48 +53,35 @@ const CulturalSpacesPage = () => {
       </div>
     );
 
-  const filteredSpaces = (spaces ?? []).filter((space) => {
-    const subj = space.SUBJCODE || "";
-    const name = space.FAC_NAME || "";
-    const addr = space.ADDR || "";
-
-    // 카테고리 필터
-    const matchesCategory =
-      (Array.isArray(selectedCategory) &&
-        selectedCategory.some((cat) => subj.includes(cat))) ||
-      selectedCategory === "전체" ||
-      subj.includes(selectedCategory as string);
-
-    // 검색어 필터
-    const matchesSearch =
-      name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      addr.toLowerCase().includes(searchTerm.toLowerCase());
-
-    return matchesCategory && matchesSearch;
-  });
-
-  const paginatedSpaces = filteredSpaces.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
   return (
     <>
       <Header />
-      <main className="max-w-7xl mx-auto px-4">
-        <h1 className="text-3xl font-bold text-center mt-8 mb-4">
-          문화공간 전체
-        </h1>
-        <Map spaces={paginatedSpaces} />
-        <FilterTabs
-          selected={selectedCategory}
-          onSelect={(category) => {
-            setSelectedCategory(category);
-            setCurrentPage(1);
-          }}
-          options={spaceCategoryOptions}
-        />
-        <div className="mt-4 mb-6">
+      <main className="min-h-screen bg-white">
+        {/* Hero */}
+        <div
+          className="w-full h-[300px] bg-cover bg-center relative"
+          style={{ backgroundImage: "url('/images/seoul-1280.jpg')" }}
+        >
+          <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center px-4">
+            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+              문화공간
+            </h1>
+            <p className="text-lg sm:text-xl text-white">
+              서울의 다양한 문화공간을 둘러보세요.
+            </p>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 mt-8 space-y-6">
+          <FilterTabs
+            selected={selectedCategory}
+            onSelect={(category) => {
+              setSelectedCategory(category);
+              setCurrentPage(1);
+            }}
+            options={spaceCategoryOptions}
+          />
+
           <input
             type="text"
             placeholder="문화공간 이름 또는 주소 검색"
@@ -77,19 +89,24 @@ const CulturalSpacesPage = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+
+          <Map spaces={paginatedSpaces} />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {paginatedSpaces.map((space) => (
+              <CulturalSpaceCard key={space.NUM} space={space} />
+            ))}
+          </div>
+
+          <Pagination
+            totalItems={filteredSpaces.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-6 pt-1">
-          {paginatedSpaces.map((space) => (
-            <CulturalSpaceCard key={space.NUM} space={space} />
-          ))}
-        </div>
-        <Pagination
-          totalItems={filteredSpaces.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-        />
       </main>
+      <Footer />
     </>
   );
 };

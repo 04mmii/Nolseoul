@@ -7,6 +7,7 @@ import { eventCategoryOptions } from "../components/Events/eventCategoryOptions"
 import Pagination from "../components/Common/Pagination";
 import EventDetailModal from "../components/Events/EventDetailModal";
 import { useParams, useNavigate } from "react-router-dom";
+import Footer from "@/components/Layout/Footer";
 
 const EventsPage = () => {
   const { events } = useEvents();
@@ -98,6 +99,7 @@ const EventsPage = () => {
       {selectedEvent && (
         <EventDetailModal event={selectedEvent} onClose={handleCloseModal} />
       )}
+      <Footer />
     </>
   );
 };

@@ -15,37 +15,32 @@ const NightViewsPage = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const itemsPerPage = 8;
 
-  // 필터링 로직 수정 (FAC_NAME → TITLE)
-  const filteredSpots = useMemo(() => {
-    return spots.filter(
-      (spot) =>
-        (selectedCategory === "전체" || spot.SUBJECT_CD === selectedCategory) &&
-        (spot.TITLE.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-          spot.ADDR.toLowerCase().includes(searchKeyword.toLowerCase()))
-    );
-  }, [spots, selectedCategory, searchKeyword]);
-
-  // 페이지네이션
-  const paginatedSpots = useMemo(() => {
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    return filteredSpots.slice(startIndex, startIndex + itemsPerPage);
-  }, [currentPage, filteredSpots]);
-
-  // 페이지 초기화
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedCategory, searchKeyword]);
 
-  // 스크롤 상단 이동
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentPage]);
 
-  // 로딩 및 에러 상태 처리
+  const filteredSpots = useMemo(() => {
+    return spots.filter(
+      (spot) =>
+        (selectedCategory === "전체" || spot.SUBJECT_CD === selectedCategory) &&
+        (spot.TITLE?.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+          spot.ADDR?.toLowerCase().includes(searchKeyword.toLowerCase()))
+    );
+  }, [spots, selectedCategory, searchKeyword]);
+
+  const paginatedSpots = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredSpots.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredSpots, currentPage]);
+
   if (loading) return <div className="text-center py-8">로딩 중...</div>;
   if (error)
     return (
-      <div className="text-red-500 text-center py-8">
+      <div className="text-center py-8 text-red-500">
         오류 발생: {error.message}
       </div>
     );
@@ -53,7 +48,8 @@ const NightViewsPage = () => {
   return (
     <>
       <Header />
-      <div className="min-h-screen bg-white">
+      <main className="min-h-screen bg-white">
+        {/* Hero Banner */}
         <div
           className="w-full h-[300px] bg-cover bg-center relative"
           style={{ backgroundImage: "url('/images/n-1920.jpg')" }}
@@ -68,12 +64,8 @@ const NightViewsPage = () => {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 mb-8 mt-8">
-          <NightViewMap spots={paginatedSpots} />
-        </div>
-
-        {/* 필터 섹션 */}
-        <div className="max-w-7xl mx-auto px-4 mb-6 space-y-4">
+        {/* 필터 및 검색창 */}
+        <div className="max-w-7xl mx-auto px-4 mt-8 mb-6 space-y-4">
           {/* 카테고리 필터 */}
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
@@ -91,7 +83,7 @@ const NightViewsPage = () => {
             ))}
           </div>
 
-          {/* 검색 필터 */}
+          {/* 검색창 */}
           <div className="relative">
             <input
               type="text"
@@ -116,7 +108,12 @@ const NightViewsPage = () => {
           </div>
         </div>
 
-        {/* 명소 카드 표시 */}
+        {/* 지도 */}
+        <div className="max-w-7xl mx-auto px-4 mb-8">
+          <NightViewMap spots={paginatedSpots} />
+        </div>
+
+        {/* 명소 카드 리스트 */}
         <div className="max-w-7xl mx-auto px-4 mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {paginatedSpots.map((spot) => (
             <NightViewCard key={spot.NUM} spot={spot} />
@@ -132,7 +129,7 @@ const NightViewsPage = () => {
             onPageChange={setCurrentPage}
           />
         </div>
-      </div>
+      </main>
       <Footer />
     </>
   );
