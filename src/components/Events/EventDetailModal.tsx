@@ -39,11 +39,8 @@ const EventDetailModal = ({ event, onClose }: Props) => {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm overflow-auto">
-      <div
-        ref={modalRef}
-        className="bg-white w-full max-w-4xl max-h-[95vh] p-6 rounded shadow-lg relative"
-      >
+    <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
+      <div className="w-full max-w-6xl h-[95vh] bg-white p-6 rounded shadow-lg relative flex flex-col overflow-hidden">
         {/* 닫기 버튼 */}
         <button
           className="absolute top-4 right-4 text-gray-500 hover:text-black text-xl"
@@ -52,49 +49,47 @@ const EventDetailModal = ({ event, onClose }: Props) => {
           ✕
         </button>
 
-        {/* 제목 */}
-        <h2 className="text-2xl font-bold mb-6">{event.TITLE}</h2>
+        {/* 내부 스크롤 영역 */}
+        <div className="overflow-y-auto pr-2 mt-8 space-y-6">
+          <h2 className="text-2xl font-bold">{event.TITLE}</h2>
 
-        {/* 정보 테이블 */}
-        <div className="border-t border-b divide-y">
-          <Row label="장소" value={event.PLACE} />
-          <Row label="기간" value={event.DATE} />
-          {event.USE_TRGT && <Row label="대상" value={event.USE_TRGT} />}
-          {event.USE_FEE && <Row label="요금" value={event.USE_FEE} />}
-          {event.PHONE && <Row label="문의" value={event.PHONE} />}
-          {event.USE_TIME && <Row label="시간" value={event.USE_TIME} />}
-        </div>
-
-        {/* 상세 설명 */}
-        {event.ETC_DESC && (
-          <div className="mt-6">
-            <h3 className="font-semibold mb-2 text-lg">상세 설명</h3>
-            <p className="text-gray-700 whitespace-pre-line">
-              {event.ETC_DESC}
-            </p>
+          <div className="border-t border-b divide-y">
+            <Row label="장소" value={event.PLACE} />
+            <Row label="기간" value={event.DATE} />
+            {event.USE_TRGT && <Row label="대상" value={event.USE_TRGT} />}
+            {event.USE_FEE && <Row label="요금" value={event.USE_FEE} />}
+            {event.PHONE && <Row label="문의" value={event.PHONE} />}
+            {event.USE_TIME && <Row label="시간" value={event.USE_TIME} />}
           </div>
-        )}
 
-        {/* 포스터 이미지 */}
-        {event.MAIN_IMG && (
-          <img
-            src={event.MAIN_IMG}
-            alt={event.TITLE}
-            className="mt-6 w-full h-auto rounded shadow"
-          />
-        )}
+          {event.ETC_DESC && (
+            <div>
+              <h3 className="font-semibold mb-2 text-lg">상세 설명</h3>
+              <p className="text-gray-700 whitespace-pre-line">
+                {event.ETC_DESC}
+              </p>
+            </div>
+          )}
 
-        {/* 지도 */}
-        {event.LAT && event.LONG && (
-          <div className="mt-6">
-            <h3 className="font-semibold mb-2 text-lg">위치 안내</h3>
-            <KakaoMapSingle
-              lat={parseFloat(event.LAT)}
-              lng={parseFloat(event.LONG)}
-              name={event.TITLE}
+          {event.MAIN_IMG && (
+            <img
+              src={event.MAIN_IMG}
+              alt={event.TITLE}
+              className="w-full h-auto rounded shadow"
             />
-          </div>
-        )}
+          )}
+
+          {event.LAT && event.LONG && (
+            <div>
+              <h3 className="font-semibold mb-2 text-lg">위치 안내</h3>
+              <KakaoMapSingle
+                lat={parseFloat(event.LAT)}
+                lng={parseFloat(event.LONG)}
+                name={event.TITLE}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

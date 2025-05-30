@@ -1,5 +1,8 @@
-declare const KakaoMapSingle: ({ address, name, }: {
-    address: string;
+interface Props {
     name: string;
-}) => import("react/jsx-runtime").JSX.Element;
+    address?: string;
+    lat?: number;
+    lng?: number;
+}
+declare const KakaoMapSingle: ({ name, address, lat, lng }: Props) => import("react/jsx-runtime").JSX.Element;
 export default KakaoMapSingle;
