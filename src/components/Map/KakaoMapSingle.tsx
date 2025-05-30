@@ -19,7 +19,7 @@ const KakaoMapSingle = ({ name, address, lat, lng }: Props) => {
       if (!mapRef.current) return;
 
       const map = new window.kakao.maps.Map(mapRef.current, {
-        center: new window.kakao.maps.LatLng(37.5665, 126.978), // fallback 중심
+        center: new window.kakao.maps.LatLng(37.5665, 126.978), // fallback
         level: 4,
       });
 
@@ -34,16 +34,17 @@ const KakaoMapSingle = ({ name, address, lat, lng }: Props) => {
         });
 
         infowindow.open(map, marker);
-        map.setCenter(position);
+
+        setTimeout(() => {
+          (map as any).relayout();
+          map.setCenter(position);
+        }, 100);
       };
 
-      // 좌표 기반 표시 우선
       if (lat && lng) {
         const position = new window.kakao.maps.LatLng(lat, lng);
         showMarker(position);
-      }
-      // 주소 기반 fallback
-      else if (address) {
+      } else if (address) {
         const geocoder = new window.kakao.maps.services.Geocoder();
         geocoder.addressSearch(address, (result, status) => {
           if (status === window.kakao.maps.services.Status.OK && result[0]) {
