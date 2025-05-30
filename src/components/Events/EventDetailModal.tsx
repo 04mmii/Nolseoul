@@ -62,6 +62,20 @@ const EventDetailModal = ({ event, onClose }: Props) => {
             {event.USE_TIME && <Row label="시간" value={event.USE_TIME} />}
           </div>
 
+          {/* ✅ 홈페이지 바로가기 버튼 */}
+          {event.HMPG_ADDR && (
+            <div className="mt-4">
+              <a
+                href={event.HMPG_ADDR}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-4 py-2 bg-navy-600 text-white text-sm font-semibold rounded hover:bg-blue-700 transition"
+              >
+                홈페이지 바로가기
+              </a>
+            </div>
+          )}
+
           {event.ETC_DESC && (
             <div>
               <h3 className="font-semibold mb-2 text-lg">상세 설명</h3>
