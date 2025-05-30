@@ -64,9 +64,13 @@ const NightViewsPage = () => {
           </div>
         </div>
 
+        {/* 지도 */}
+        <div className="max-w-7xl mx-auto px-4 mb-8">
+          <NightViewMap spots={paginatedSpots} />
+        </div>
+
         {/* 필터 및 검색창 */}
         <div className="max-w-7xl mx-auto px-4 mt-8 mb-6 space-y-4">
-          {/* 카테고리 필터 */}
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <button
@@ -83,7 +87,6 @@ const NightViewsPage = () => {
             ))}
           </div>
 
-          {/* 검색창 */}
           <div className="relative">
             <input
               type="text"
@@ -106,11 +109,6 @@ const NightViewsPage = () => {
               />
             </svg>
           </div>
-        </div>
-
-        {/* 지도 */}
-        <div className="max-w-7xl mx-auto px-4 mb-8">
-          <NightViewMap spots={paginatedSpots} />
         </div>
 
         {/* 명소 카드 리스트 */}

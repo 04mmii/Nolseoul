@@ -16,11 +16,9 @@ const EventsPage = () => {
   );
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-
+  const itemsPerPage = 20;
   const { slug } = useParams();
   const navigate = useNavigate();
-
-  const itemsPerPage = 20;
 
   const filteredEvents = useMemo(() => {
     return events
@@ -44,10 +42,12 @@ const EventsPage = () => {
       });
   }, [events, selectedCategory, searchQuery]);
 
-  const paginatedEvents = filteredEvents.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const paginatedEvents = useMemo(() => {
+    return filteredEvents.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+  }, [filteredEvents, currentPage]);
 
   const selectedEvent = useMemo(() => {
     if (!slug || events.length === 0) return null;
@@ -62,43 +62,80 @@ const EventsPage = () => {
   return (
     <>
       <Header />
-      <div className="p-6 max-w-7xl mx-auto">
-        <input
-          type="text"
-          placeholder="행사명을 검색하세요"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded mb-4"
-        />
-
-        <FilterTabs
-          selected={selectedCategory}
-          onSelect={setSelectedCategory}
-          options={eventCategoryOptions}
-        />
-
-        {paginatedEvents.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-            {paginatedEvents.map((event, i) => (
-              <EventCard key={i} event={event} />
-            ))}
+      <main className="min-h-screen bg-white">
+        {/* Hero Banner */}
+        <div
+          className="w-full h-[300px] bg-cover bg-center relative"
+          style={{ backgroundImage: "url('/images/event-hero.jpg')" }}
+        >
+          <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center px-4">
+            <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
+              문화행사
+            </h1>
+            <p className="text-lg sm:text-xl text-white">
+              서울의 다양한 문화행사를 찾아보세요.
+            </p>
           </div>
-        ) : (
-          <p className="text-gray-500">조건에 맞는 행사가 없습니다.</p>
+        </div>
+
+        {/* 필터 및 검색창 */}
+        <div className="max-w-7xl mx-auto px-4 mt-8 space-y-6">
+          <FilterTabs
+            selected={selectedCategory}
+            onSelect={setSelectedCategory}
+            options={eventCategoryOptions}
+          />
+
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="행사명을 검색하세요"
+              className="w-full p-3 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <svg
+              className="absolute left-3 top-4 h-5 w-5 text-gray-400"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+
+          {/* 카드 리스트 */}
+          {paginatedEvents.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+              {paginatedEvents.map((event, i) => (
+                <EventCard key={i} event={event} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-gray-500">
+              조건에 맞는 행사가 없습니다.
+            </p>
+          )}
+
+          {/* 페이지네이션 */}
+          <Pagination
+            totalItems={filteredEvents.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
+        </div>
+
+        {/* 행사 모달 */}
+        {selectedEvent && (
+          <EventDetailModal event={selectedEvent} onClose={handleCloseModal} />
         )}
-
-        <Pagination
-          totalItems={filteredEvents.length}
-          itemsPerPage={itemsPerPage}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-        />
-      </div>
-
-      {/* ✅ 모달은 URL로 선택된 이벤트 기반으로 렌더링 */}
-      {selectedEvent && (
-        <EventDetailModal event={selectedEvent} onClose={handleCloseModal} />
-      )}
+      </main>
       <Footer />
     </>
   );
