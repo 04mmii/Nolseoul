@@ -39,43 +39,72 @@ const EventDetailModal = ({ event, onClose }: Props) => {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm overflow-auto">
       <div
         ref={modalRef}
-        className="bg-white w-full max-w-4xl max-h-[95vh] p-6 rounded shadow-lg relative flex flex-col"
+        className="bg-white w-full max-w-4xl p-6 rounded shadow-lg relative"
       >
+        {/* 닫기 버튼 */}
         <button
           className="absolute top-4 right-4 text-gray-500 hover:text-black text-xl"
           onClick={handleClose}
         >
           ✕
         </button>
-        {/* 스크롤 가능한 컨텐츠 영역 */}
-        <div className="overflow-y-auto max-h-[70vh] pr-2">
-          <h2 className="text-2xl font-bold mb-4">{event.TITLE}</h2>
-          <p className="text-gray-600 mb-2">기간: {event.DATE}</p>
-          {event.PLACE && (
-            <p className="text-gray-600 mb-2">장소: {event.PLACE}</p>
-          )}
-          {event.ORG_NAME && (
-            <p className="text-gray-600 mb-2">주최: {event.ORG_NAME}</p>
-          )}
-          {event.MAIN_IMG && (
-            <img
-              src={event.MAIN_IMG}
-              alt={event.TITLE}
-              className="mt-4 w-full h-auto rounded"
-            />
-          )}
-          {event.PLACE && (
-            <div className="pt-2">
-              <KakaoMapSingle address={event.PLACE} name={event.TITLE} />
-            </div>
-          )}
+
+        {/* 제목 */}
+        <h2 className="text-2xl font-bold mb-6">{event.TITLE}</h2>
+
+        {/* 정보 테이블 */}
+        <div className="border-t border-b divide-y">
+          <Row label="장소" value={event.PLACE} />
+          <Row label="기간" value={event.DATE} />
+          {event.USE_TRGT && <Row label="대상" value={event.USE_TRGT} />}
+          {event.USE_FEE && <Row label="요금" value={event.USE_FEE} />}
+          {event.PHONE && <Row label="문의" value={event.PHONE} />}
+          {event.USE_TIME && <Row label="시간" value={event.USE_TIME} />}
         </div>
+
+        {/* 상세 설명 */}
+        {event.ETC_DESC && (
+          <div className="mt-6">
+            <h3 className="font-semibold mb-2 text-lg">상세 설명</h3>
+            <p className="text-gray-700 whitespace-pre-line">
+              {event.ETC_DESC}
+            </p>
+          </div>
+        )}
+
+        {/* 포스터 이미지 */}
+        {event.MAIN_IMG && (
+          <img
+            src={event.MAIN_IMG}
+            alt={event.TITLE}
+            className="mt-6 w-full h-auto rounded shadow"
+          />
+        )}
+
+        {/* 지도 */}
+        {event.PLACE && (
+          <div className="mt-6">
+            <h3 className="font-semibold mb-2 text-lg">위치 안내</h3>
+            <KakaoMapSingle address={event.PLACE} name={event.TITLE} />
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default EventDetailModal;
+
+// 🔹 행 컴포넌트
+const Row = ({ label, value }: { label: string; value?: string }) =>
+  value ? (
+    <div className="flex">
+      <div className="w-28 bg-gray-100 px-4 py-3 font-semibold text-sm text-gray-700">
+        {label}
+      </div>
+      <div className="flex-1 px-4 py-3 text-sm text-gray-800">{value}</div>
+    </div>
+  ) : null;
