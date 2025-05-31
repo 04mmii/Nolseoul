@@ -34,10 +34,10 @@ const HeroSlider = () => {
   };
 
   return (
-    <div className="relative w-full overflow-hidden bg-gray-50 min-h-[480px] lg:min-h-[650px]">
+    <div className="relative w-full overflow-hidden min-h-[480px] lg:min-h-[650px]">
       {/* 슬라이드 전체 */}
       <div
-        className="flex transition-transform duration-700 ease-in-out"
+        className="flex w-[70%] transition-transform duration-700 ease-in-out"
         style={{
           transform: `translateX(-${current * 100}%)`,
           width: `${bannerData.length * 100}%`,
