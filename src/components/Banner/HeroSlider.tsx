@@ -31,7 +31,7 @@ const HeroSlider = () => {
           >
             {bannerData.map((banner) => (
               <SwiperSlide key={banner.id}>
-                <div className="relative aspect-[16/9] w-[800px]">
+                <div className="relative w-full object-cover">
                   <a
                     href={banner.link}
                     target="_blank"
@@ -44,7 +44,7 @@ const HeroSlider = () => {
                       className="w-full h-full object-cover rounded-xl"
                     />
                   </a>
-                  <div className="absolute bottom-4 left-4 right-4 sm:w-[500px] bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md max-w-md">
+                  <div className="absolute bottom-[-4px] left-4 right-4 sm:w-[500px] max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md">
                     <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
                       {banner.title}
                     </h2>
@@ -55,7 +55,7 @@ const HeroSlider = () => {
                     )}
                     <button
                       onClick={() => handleClick(banner.link)}
-                      className="mt-2 px-4 py-2 text-sm sm:text-base bg-indigo-600 text-white rounded hover:bg-indigo-700 transition"
+                      className="mt-2 px-10 py-2 text-sm sm:text-base bg-navy-600 text-white rounded hover:bg-navy-700 transition"
                     >
                       자세히 보기
                     </button>
