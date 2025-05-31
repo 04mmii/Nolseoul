@@ -16,10 +16,10 @@ const HeroSlider = () => {
   };
 
   return (
-    <div className="w-full bg-gray-50 px-4 sm:px-8 py-6 max-w-[1440px] mx-auto">
+    <div className="w-full bg-gray-50 px-4 sm:px-8 py-6 mx-auto">
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
         {/* 왼쪽 슬라이드 */}
-        <div className="w-full lg:w-3/4 relative">
+        <div className="w-full relative">
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             slidesPerView={1}
@@ -44,7 +44,7 @@ const HeroSlider = () => {
                       className="w-full h-full object-cover rounded-xl"
                     />
                   </a>
-                  <div className="absolute bottom-4 left-4 right-4 sm:w-[500px] bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md max-w-md">
+                  <div className="absolute w-[800px] bottom-4 left-4 right-4 sm:w-[500px] bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md max-w-md">
                     <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
                       {banner.title}
                     </h2>
