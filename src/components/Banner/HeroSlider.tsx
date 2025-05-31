@@ -29,11 +29,9 @@ const HeroSlider = () => {
             autoplay={{ delay: 4000, disableOnInteraction: false }}
             className="rounded-xl shadow-lg"
           >
-            <div className="custom-swiper-pagination absolute bottom-4 right-4 z-10" />
-
             {bannerData.map((banner) => (
               <SwiperSlide key={banner.id}>
-                <div className="relative w-full object-cover">
+                <div className="relative w-full h-auto pd-14">
                   <a
                     href={banner.link}
                     target="_blank"
@@ -66,6 +64,7 @@ const HeroSlider = () => {
               </SwiperSlide>
             ))}
           </Swiper>
+          <div className="custom-swiper-pagination absolute bottom-4 right-4 z-10" />
         </div>
 
         {/* 오른쪽 고정 야경카드 */}
