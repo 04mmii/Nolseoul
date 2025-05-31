@@ -34,10 +34,10 @@ const HeroSlider = () => {
   };
 
   return (
-    <div className="relative w-full overflow-hidden min-h-[480px] lg:min-h-[650px]">
+    <div className="relative w-full overflow-hidden bg-gray-50 min-h-[360px] sm:min-h-[400px] lg:min-h-[500px]">
       {/* 슬라이드 전체 */}
       <div
-        className="flex w-[70%] transition-transform duration-700 ease-in-out"
+        className="flex w-full  transition-transform duration-700 ease-in-out"
         style={{
           transform: `translateX(-${current * 100}%)`,
           width: `${bannerData.length * 100}%`,
@@ -49,7 +49,7 @@ const HeroSlider = () => {
             className="w-full flex-shrink-0 flex flex-col lg:flex-row items-center justify-between px-4 sm:px-8 py-6 lg:min-h-[650px]"
           >
             {/* 왼쪽 배너 */}
-            <div className="relative w-full lg:w-3/4 h-[280px] sm:h-[360px] md:h-[420px] lg:h-full">
+            <div className="relative w-full lg:w-3/4 aspect-[3/2]">
               <a
                 href={banner.link}
                 target="_blank"
