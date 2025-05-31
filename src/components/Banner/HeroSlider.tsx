@@ -25,10 +25,12 @@ const HeroSlider = () => {
             slidesPerView={1}
             loop
             navigation
-            pagination={{ clickable: true }}
+            pagination={{ clickable: true, el: ".custom-swiper-pagination" }}
             autoplay={{ delay: 4000, disableOnInteraction: false }}
             className="rounded-xl shadow-lg"
           >
+            <div className="custom-swiper-pagination absolute bottom-4 right-4 z-10" />
+
             {bannerData.map((banner) => (
               <SwiperSlide key={banner.id}>
                 <div className="relative w-full object-cover">
@@ -44,7 +46,7 @@ const HeroSlider = () => {
                       className="w-full h-full object-cover rounded-xl"
                     />
                   </a>
-                  <div className="absolute bottom-[-4px] left-4 right-4 sm:w-[500px] max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6  shadow-md">
+                  <div className="absolute -bottom-3 left-4 right-4 w-[850px] sm:w-[500px] max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6  shadow-md">
                     <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
                       {banner.title}
                     </h2>
@@ -55,7 +57,7 @@ const HeroSlider = () => {
                     )}
                     <button
                       onClick={() => handleClick(banner.link)}
-                      className="mt-2 px-10 py-2 text-sm sm:text-base bg-navy-600 text-white rounded hover:bg-navy-700 transition"
+                      className="absolute -right-3 px-6 py-2 transform -translate-x-1/2 px-6 py-2 text-sm sm:text-base bg-navy-600 text-white rounded-full shadow-lg hover:bg-navy-700 transition"
                     >
                       자세히 보기
                     </button>
