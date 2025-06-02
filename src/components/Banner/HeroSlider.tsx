@@ -57,13 +57,14 @@ const HeroSlider = () => {
                         {banner.description}
                       </p>
                     )}
-
-                    <button
-                      onClick={() => handleClick(banner.link)}
-                      className="absolute -right-4 px-6 py-2 text-sm sm:text-base bg-navy-600 text-white rounded-full shadow-lg hover:bg-navy-700 transition"
-                    >
-                      자세히 보기
-                    </button>
+                    <div className="relative">
+                      <button
+                        onClick={() => handleClick(banner.link)}
+                        className="absolute -right-4 -translate-x-1/2 -bottom-5 px-6 py-2 text-sm sm:text-base bg-navy-600 text-white rounded-full shadow-lg hover:bg-navy-700 transition"
+                      >
+                        자세히 보기
+                      </button>
+                    </div>
                   </div>
                 </div>
               </SwiperSlide>
