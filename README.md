@@ -18,9 +18,9 @@
 
 🔗 [놀서울 바로가기](https://nolseoul.vercel.app/)
 
-### 📷 메인 페이지 화면
+# 📷 메인 페이지 화면
+![home](https://github.com/user-attachments/assets/2c9e1b92-5c78-4d19-8437-65889e932f4c)
 
-## <img src="./public/home.JPG" alt="놀서울 홈화면" width="800" />
 
 ## 🛠️ 사용 기술 스택
 
@@ -59,6 +59,6 @@ npm install -D eslint @vitejs/plugin-react @types/react @types/react-dom
 
 📝 구현 이슈 및 해결
 문제 해결 방법<br />
-XML → JSON 파싱 fast-xml-parser 사용하여 변환<br />
-날짜 필터 문제 dayjs 확장 플러그인으로 보완<br />
-Vercel 404 오류 vercel.json에 trailingSlash: true 설정<br />
+- XML → JSON 파싱 fast-xml-parser 사용하여 변환<br />
+- 날짜 필터 문제 dayjs 확장 플러그인으로 보완<br />
+- Vercel 404 오류 vercel.json에 trailingSlash: true 설정<br />
