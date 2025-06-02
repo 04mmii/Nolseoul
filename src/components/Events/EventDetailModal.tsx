@@ -37,7 +37,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
     };
   }, []);
 
-  const hasMap = event.LAT && event.LONG;
+  // const hasMap = event.LAT && event.LONG;
 
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
@@ -78,7 +78,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
               </p>
             )}
 
-            <table className="w-full border border-gray-200 text-sm">
+            <table className="w-full pt-10 border border-gray-200 text-sm">
               <tbody className="divide-y divide-gray-200">
                 <TableRow label="장소" value={event.PLACE} />
                 <TableRow label="기간" value={event.DATE} />
@@ -99,9 +99,22 @@ const EventDetailModal = ({ event, onClose }: Props) => {
                 {event.HOST_INST && (
                   <TableRow label="주관기관" value={event.HOST_INST} />
                 )}
-                {event.PLACE && <TableRow label="전시실" value={event.PLACE} />}
               </tbody>
             </table>
+
+            {/* 홈페이지 버튼 */}
+            {event.ORG_LINK && (
+              <div className="mt-12">
+                <a
+                  href={event.ORG_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-navy-900 text-white px-5 py-3 rounded hover:bg-gray-800 transition"
+                >
+                  홈페이지 →
+                </a>
+              </div>
+            )}
           </div>
         </div>
 
@@ -109,7 +122,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
         {event.PROGRAM && (
           <div className="mt-8">
             <h3 className="text-xl font-semibold mb-2 text-gray-800">
-              프로그램 소개개
+              프로그램 소개
             </h3>
             <p className="text-gray-700 whitespace-pre-line leading-relaxed">
               {event.PROGRAM}
@@ -128,20 +141,6 @@ const EventDetailModal = ({ event, onClose }: Props) => {
             name={event.TITLE}
           />
         </div>
-
-        {/* 홈페이지 버튼 */}
-        {event.ORG_LINK && (
-          <div className="mt-12">
-            <a
-              href={event.ORG_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-navy-900 text-white px-5 py-3 rounded hover:bg-gray-800 transition"
-            >
-              홈페이지 →
-            </a>
-          </div>
-        )}
       </div>
     </div>
   );
