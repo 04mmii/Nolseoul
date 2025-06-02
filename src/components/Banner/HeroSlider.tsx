@@ -48,7 +48,7 @@ const HeroSlider = () => {
                     />
                   </a>
 
-                  <div className="absolute top-[80%] left-6 w-full max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md">
+                  <div className="absolute top-[60%] left-6 w-full max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md">
                     <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
                       {banner.title}
                     </h2>
@@ -71,7 +71,7 @@ const HeroSlider = () => {
           </Swiper>
 
           {/* ✅ 인디케이터 오른쪽 하단 */}
-          <div className="custom-swiper-pagination absolute bottom-4 right-4 z-10" />
+          <div className="custom-swiper-pagination absolute bottom-4 left-4 z-10" />
         </div>
 
         {/* 오른쪽 고정 야경카드 */}
