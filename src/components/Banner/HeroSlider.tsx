@@ -34,14 +34,12 @@ const HeroSlider = () => {
           >
             {bannerData.map((banner) => (
               <SwiperSlide key={banner.id}>
-                <div className="relative w-full pb-20">
-                  {" "}
-                  {/* ✅ 아래 여백 확보 */}
+                <div className="relative w-full h-auto">
                   <a
                     href={banner.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full h-full"
+                    className="block w-full"
                   >
                     <img
                       src={banner.image}
@@ -49,8 +47,8 @@ const HeroSlider = () => {
                       className="w-full h-full object-cover rounded-xl"
                     />
                   </a>
-                  {/* ✅ 텍스트 박스 (relative 필요) */}
-                  <div className="absolute bottom-6 left-6 w-full max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md">
+
+                  <div className="absolute top-[40%] left-6 w-full max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md">
                     <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
                       {banner.title}
                     </h2>
@@ -59,10 +57,10 @@ const HeroSlider = () => {
                         {banner.description}
                       </p>
                     )}
-                    {/* ✅ 버튼: 오른쪽 아래 튀어나오게 */}
+
                     <button
                       onClick={() => handleClick(banner.link)}
-                      className="absolute -bottom-4 -right-4 px-6 py-2 text-sm sm:text-base bg-navy-600 text-white rounded-full shadow-lg hover:bg-navy-700 transition"
+                      className="absolute -right-4 px-6 py-2 text-sm sm:text-base bg-navy-600 text-white rounded-full shadow-lg hover:bg-navy-700 transition"
                     >
                       자세히 보기
                     </button>
