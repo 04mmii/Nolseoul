@@ -77,16 +77,18 @@ const HeroSlider = () => {
 
         {/* 오른쪽 고정 야경카드 */}
         <Link to="/night-views" className="w-full lg:w-1/4">
-          <div className="aspect-[3/4] overflow-hidden rounded-xl shadow-lg mb-4">
+          <div className="aspect-[3/4] overflow-hidden rounded-xl shadow-lg mb-4 ">
             <img
               src="/images/nightview.jpg"
               alt="서울 야경명소"
               className="w-full h-full object-cover"
             />
           </div>
-          <div className="mt-2">
+          <div className="mt-2 text-center">
             <h3 className="text-lg sm:text-xl font-bold mb-1">
-              2025 서울 문화의 밤, 문화로 야금야금(夜金)
+              2025 서울 문화의 밤,
+              <br />
+              문화로 야금야금(夜金)
             </h3>
             <p className="text-sm text-gray-500 mb-1">2025.4. ~ 12.</p>
             <p className="text-sm text-gray-700">
