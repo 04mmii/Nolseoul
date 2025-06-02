@@ -39,7 +39,7 @@ const HeroSlider = () => {
                     href={banner.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block w-full"
+                    className="block w-full h-full"
                   >
                     <img
                       src={banner.image}
@@ -48,7 +48,7 @@ const HeroSlider = () => {
                     />
                   </a>
 
-                  <div className="absolute top-[60%] left-6 w-full max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md">
+                  <div className="absolute top-[65%] left-6 w-full max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6 shadow-md">
                     <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
                       {banner.title}
                     </h2>
