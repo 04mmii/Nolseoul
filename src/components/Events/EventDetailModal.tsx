@@ -136,7 +136,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
           <KakaoMapSingle
             lat={parseFloat(event.LOT)}
             lng={parseFloat(event.LAT)}
-            name={event.PLACE}
+            name={event.PROGRAM}
           />
         </div>
       </div>
