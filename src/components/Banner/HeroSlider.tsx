@@ -34,7 +34,7 @@ const HeroSlider = () => {
           >
             {bannerData.map((banner) => (
               <SwiperSlide key={banner.id}>
-                <div className="relative w-full h-auto">
+                <div className="relative w-full h-[300px] sm:h-[400px] md:h-[480px] lg:h-[600px]">
                   <a
                     href={banner.link}
                     target="_blank"
@@ -48,7 +48,7 @@ const HeroSlider = () => {
                     />
                   </a>
 
-                  <div className="absolute top-[40%] left-6 w-full max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md">
+                  <div className="absolute top-[80%] left-6 w-full max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md">
                     <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
                       {banner.title}
                     </h2>
