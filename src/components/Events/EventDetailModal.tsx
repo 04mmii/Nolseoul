@@ -106,13 +106,13 @@ const EventDetailModal = ({ event, onClose }: Props) => {
         </div>
 
         {/* 상세 설명 */}
-        {event.ETC_DESC && (
-          <div className="mt-12">
+        {event.PROGRAM && (
+          <div className="mt-8">
             <h3 className="text-xl font-semibold mb-2 text-gray-800">
-              상세보기
+              프로그램 소개개
             </h3>
             <p className="text-gray-700 whitespace-pre-line leading-relaxed">
-              {event.ETC_DESC}
+              {event.PROGRAM}
             </p>
           </div>
         )}
@@ -124,8 +124,8 @@ const EventDetailModal = ({ event, onClose }: Props) => {
               위치 및 교통 안내
             </h3>
             <KakaoMapSingle
-              lat={parseFloat(event.LAT)}
-              lng={parseFloat(event.LOT)}
+              lat={parseFloat(event.LOT)}
+              lng={parseFloat(event.LAT)}
               name={event.TITLE}
             />
           </div>
