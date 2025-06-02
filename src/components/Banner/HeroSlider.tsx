@@ -48,7 +48,7 @@ const HeroSlider = () => {
                     />
                   </a>
 
-                  <div className="absolute top-[65%] left-6 w-full max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6 shadow-md">
+                  <div className="absolute top-[70%] left-6 w-full max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6 shadow-md">
                     <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
                       {banner.title}
                     </h2>
@@ -60,7 +60,7 @@ const HeroSlider = () => {
                     <div className="relative">
                       <button
                         onClick={() => handleClick(banner.link)}
-                        className="absolute -right-4 -translate-x-1/2 -bottom-5 px-6 py-2 text-sm sm:text-base bg-navy-600 text-white rounded-full shadow-lg hover:bg-navy-700 transition"
+                        className="absolute right-4 -bottom-6 -translate-x-1/2  px-6 py-2 text-sm sm:text-base bg-navy-600 text-white rounded-full shadow-lg hover:bg-navy-700 transition"
                       >
                         자세히 보기
                       </button>
