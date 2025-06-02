@@ -60,7 +60,7 @@ const HeroSlider = () => {
                     <div className="relative">
                       <button
                         onClick={() => handleClick(banner.link)}
-                        className="absolute right-4 -bottom-6 -translate-x-1/2  px-6 py-2 text-sm sm:text-base bg-navy-600 text-white rounded-full shadow-lg hover:bg-navy-700 transition"
+                        className="absolute -right-8 -bottom-6 translate-x-1  px-6 py-2 text-sm sm:text-base bg-navy-600 text-white rounded-full shadow-lg hover:bg-navy-700 transition"
                       >
                         자세히 보기
                       </button>
