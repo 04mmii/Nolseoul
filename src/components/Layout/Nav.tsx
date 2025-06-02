@@ -37,12 +37,12 @@ const Nav = () => {
 
       {/* 모바일 드롭다운 메뉴 */}
       {isOpen && (
-        <div className="absolute top-10 right-0 z-10 bg-white border shadow-md rounded-md flex flex-col gap-2 px-4 py-3 md:hidden">
+        <div className="absolute top-10 right-0 z-10 bg-white/80 border shadow-md rounded-md flex flex-col gap-2 px-4 py-3 md:hidden">
           {navItems.map((item) => (
             <Link
               key={item.href}
               to={item.href}
-              className="text-gray-700 hover:text-black transition"
+              className="text-gray-700 hover:text-black transition whitespace-nowrap"
               onClick={() => setIsOpen(false)}
             >
               {item.label}
