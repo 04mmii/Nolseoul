@@ -118,18 +118,16 @@ const EventDetailModal = ({ event, onClose }: Props) => {
         )}
 
         {/* 지도 */}
-        {hasMap && (
-          <div className="mt-12">
-            <h3 className="text-xl font-semibold mb-2 text-gray-800">
-              위치 및 교통 안내
-            </h3>
-            <KakaoMapSingle
-              lat={parseFloat(event.LOT)}
-              lng={parseFloat(event.LAT)}
-              name={event.TITLE}
-            />
-          </div>
-        )}
+        <div className="mt-12">
+          <h3 className="text-xl font-semibold mb-2 text-gray-800">
+            위치 안내
+          </h3>
+          <KakaoMapSingle
+            lat={parseFloat(event.LOT)}
+            lng={parseFloat(event.LAT)}
+            name={event.TITLE}
+          />
+        </div>
 
         {/* 홈페이지 버튼 */}
         {event.ORG_LINK && (
