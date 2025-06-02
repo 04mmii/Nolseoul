@@ -25,13 +25,18 @@ const HeroSlider = () => {
             slidesPerView={1}
             loop
             navigation
-            pagination={{ clickable: true, el: ".custom-swiper-pagination" }}
+            pagination={{
+              clickable: true,
+              el: ".custom-swiper-pagination",
+            }}
             autoplay={{ delay: 4000, disableOnInteraction: false }}
             className="rounded-xl shadow-lg"
           >
             {bannerData.map((banner) => (
               <SwiperSlide key={banner.id}>
-                <div className="relative w-full h-auto pd-14">
+                <div className="relative w-full pb-20">
+                  {" "}
+                  {/* ✅ 아래 여백 확보 */}
                   <a
                     href={banner.link}
                     target="_blank"
@@ -44,18 +49,20 @@ const HeroSlider = () => {
                       className="w-full h-full object-cover rounded-xl"
                     />
                   </a>
-                  <div className="absolute left-4 right-4 w-[850px] sm:w-[500px] max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6  shadow-md">
+                  {/* ✅ 텍스트 박스 (relative 필요) */}
+                  <div className="absolute bottom-6 left-6 w-full max-w-md bg-white/80 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-md">
                     <h2 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
                       {banner.title}
                     </h2>
                     {banner.description && (
-                      <p className="text-sm sm:text-base text-gray-700 mb-2">
+                      <p className="text-sm sm:text-base text-gray-700 mb-10">
                         {banner.description}
                       </p>
                     )}
+                    {/* ✅ 버튼: 오른쪽 아래 튀어나오게 */}
                     <button
                       onClick={() => handleClick(banner.link)}
-                      className="absolute -right-3 transform translate-x-1/2 px-6 py-2 text-sm sm:text-base bg-navy-600 text-white rounded-full shadow-lg hover:bg-navy-700 transition"
+                      className="absolute -bottom-4 -right-4 px-6 py-2 text-sm sm:text-base bg-navy-600 text-white rounded-full shadow-lg hover:bg-navy-700 transition"
                     >
                       자세히 보기
                     </button>
@@ -64,6 +71,8 @@ const HeroSlider = () => {
               </SwiperSlide>
             ))}
           </Swiper>
+
+          {/* ✅ 인디케이터 오른쪽 하단 */}
           <div className="custom-swiper-pagination absolute bottom-4 right-4 z-10" />
         </div>
 
