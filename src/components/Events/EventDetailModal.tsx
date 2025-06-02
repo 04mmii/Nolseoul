@@ -54,7 +54,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
         </button>
 
         <div className="text-center">
-          <h2 className="text-3xl font-bold mb-6">{event.TITLE}</h2>
+          <h2 className="text-2xl font-bold mb-16">{event.TITLE}</h2>
         </div>
         {/* 상단: 포스터 + 정보 */}
         <div className="flex flex-col lg:flex-row gap-10 mt-6">
@@ -125,7 +125,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
             </h3>
             <KakaoMapSingle
               lat={parseFloat(event.LAT)}
-              lng={parseFloat(event.LONG)}
+              lng={parseFloat(event.LOT)}
               name={event.TITLE}
             />
           </div>
