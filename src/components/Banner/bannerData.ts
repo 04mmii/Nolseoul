@@ -31,7 +31,7 @@ export const bannerData = [
   {
     id: 5,
     title: "서울국악축제",
-    description: "2025.06.07(토) 광화문 의정부지 역사유적광장장",
+    description: "2025.06.07(토) 광화문 의정부지 역사유적광장",
     image: "/images/banner-06.JPG",
     link: "https://www.seoulgugak.com/index.php",
   },

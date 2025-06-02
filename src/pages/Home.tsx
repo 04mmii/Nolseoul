@@ -68,8 +68,8 @@ const Home = () => {
       <HeroSlider />
       <div className="max-w-7xl mx-auto px-4">
         <section className="my-12">
-          <h2 className="text-3xl font-bold mb-8 text-center">
-            현재 진행 중인 행사
+          <h2 className="text-3xl font-bold mb-12 text-center">
+            현재 진행 중인 볼거리!
           </h2>
           {ongoingEvents?.length > 0 ? (
             <OngoingEventSlider events={ongoingEvents} />
@@ -80,18 +80,11 @@ const Home = () => {
           )}
         </section>
 
-        {/* 이번 달 행사 섹션 */}
         <section className="my-16">
-          <div className="mb-8 text-center">
-            <h2 className="text-3xl font-bold ">
+          <div className="mb-8 ">
+            <h2 className="text-3xl font-bold text-center">
               {today.month() + 1}월 문화 행사
             </h2>
-            <Link
-              to="/events"
-              className="block text-blue-600 hover:text-blue-800 transition-colors"
-            >
-              더보기 →
-            </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {currentMonthEvents?.length > 0 ? (
@@ -104,18 +97,27 @@ const Home = () => {
               </p>
             )}
           </div>
+          <div className="text-right mt-2">
+            <Link
+              to="/events"
+              className="inline-block text-blue-600 hover:text-blue-800 transition-colors"
+            >
+              더 많은 행사{">"}
+            </Link>
+          </div>
         </section>
 
-        {/* 문화공간 섹션 */}
         <section className="my-16">
-          <div className="mb-8 text-center">
-            <h2 className="text-3xl font-bold">추천 문화공간</h2>
-            <Link
-              to="/spaces"
-              className="block text-navy-600 hover:text-navy-800 transition-colors"
-            >
-              더보기 →
-            </Link>
+          <div className="mb-8 ">
+            <h2 className="text-3xl font-bold text-center">추천 문화공간</h2>
+            <div className="text-right mt-2">
+              <Link
+                to="/spaces"
+                className="block text-navy-600 hover:text-navy-800 transition-colors"
+              >
+                더 많은 공간{">"}
+              </Link>
+            </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             {spaces?.slice(0, 5).map((space) => (
