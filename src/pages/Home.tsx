@@ -49,7 +49,7 @@ const Home = () => {
 
       if (!start.isValid() || !end.isValid()) return false;
 
-      const currentMonth = today.month(); // 0부터 시작
+      const currentMonth = today.month();
       return (
         start.month() === currentMonth ||
         end.month() === currentMonth ||
@@ -67,9 +67,10 @@ const Home = () => {
       <Header />
       <HeroSlider />
       <div className="max-w-7xl mx-auto px-4">
-        {/* 현재 진행 중인 행사 섹션 */}
-        <section className="my-8">
-          <h2 className="text-2xl font-bold mb-6">현재 진행 중인 행사</h2>
+        <section className="my-12">
+          <h2 className="text-3xl font-bold mb-8 text-center">
+            현재 진행 중인 행사
+          </h2>
           {ongoingEvents?.length > 0 ? (
             <OngoingEventSlider events={ongoingEvents} />
           ) : (
@@ -80,14 +81,14 @@ const Home = () => {
         </section>
 
         {/* 이번 달 행사 섹션 */}
-        <section className="my-12">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">
+        <section className="my-16">
+          <div className="mb-8 text-center">
+            <h2 className="text-3xl font-bold ">
               {today.month() + 1}월 문화 행사
             </h2>
             <Link
               to="/events"
-              className="text-blue-600 hover:text-blue-800 transition-colors"
+              className="block text-blue-600 hover:text-blue-800 transition-colors"
             >
               더보기 →
             </Link>
@@ -106,12 +107,12 @@ const Home = () => {
         </section>
 
         {/* 문화공간 섹션 */}
-        <section className="my-12">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">추천 문화공간</h2>
+        <section className="my-16">
+          <div className="mb-8 text-center">
+            <h2 className="text-3xl font-bold">추천 문화공간</h2>
             <Link
               to="/spaces"
-              className="text-blue-600 hover:text-blue-800 transition-colors"
+              className="block text-navy-600 hover:text-navy-800 transition-colors"
             >
               더보기 →
             </Link>

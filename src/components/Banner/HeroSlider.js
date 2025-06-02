@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import "@/styles/swiper.css";
 import { bannerData } from "./bannerData";
 const HeroSlider = () => {
     const handleClick = (link) => {
