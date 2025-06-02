@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "@/styles/swiper.css";
 import { bannerData } from "./bannerData";
 
 const HeroSlider = () => {
@@ -48,7 +49,7 @@ const HeroSlider = () => {
                     />
                   </a>
 
-                  <div className="absolute top-[70%] left-6 w-full max-w-[850px] bg-white/80 backdrop-blur-sm p-4 sm:p-6 shadow-md">
+                  <div className="absolute top-[70%] left-6 w-full max-w-[700px] bg-white/80 backdrop-blur-sm p-4 sm:p-6 shadow-md">
                     <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
                       {banner.title}
                     </h2>
