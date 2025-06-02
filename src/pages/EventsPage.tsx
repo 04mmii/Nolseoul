@@ -38,7 +38,14 @@ const EventsPage = () => {
       .sort((a, b) => {
         const dateA = new Date(a.STRTDATE || a.DATE || "").getTime();
         const dateB = new Date(b.STRTDATE || b.DATE || "").getTime();
-        return dateB - dateA;
+        return dateA - dateB;
+      })
+      .filter((event) => {
+        const now = new Date().setHours(0, 0, 0, 0);
+        const eventDate = new Date(
+          event.STRTDATE || event.DATE || ""
+        ).getTime();
+        return eventDate >= now;
       });
   }, [events, selectedCategory, searchQuery]);
 

@@ -16,50 +16,49 @@
 
 ## 🚀 배포 링크
 
-🔗 [놀서울 바로가기](https://nolseoul.vercel.app/)  
+🔗 [놀서울 바로가기](https://nolseoul.vercel.app/)
 
+### 📷 메인 페이지 화면
 
----
+## <img src="./public/home.JPG" alt="놀서울 홈화면" width="800" />
 
 ## 🛠️ 사용 기술 스택
 
-| 분야         | 기술                                                    |
-|--------------|---------------------------------------------------------|
-| **Frontend** | React, TypeScript, Vite, Tailwind CSS                   |
-| **API 연동** | 서울시 열린데이터광장 API, Kakao Map API                  |
-| **상태 관리**| React Query (@tanstack/react-query)                     |
-| **날짜 처리**| dayjs                                                   |
-| **기타**     | Swiper.js (슬라이더), Lucide-react (아이콘)              |
-| **배포**     | Vercel                                                 |
+| 분야          | 기술                                        |
+| ------------- | ------------------------------------------- |
+| **Frontend**  | React, TypeScript, Vite, Tailwind CSS       |
+| **API 연동**  | 서울시 열린데이터광장 API, Kakao Map API    |
+| **상태 관리** | React Query (@tanstack/react-query)         |
+| **날짜 처리** | dayjs                                       |
+| **기타**      | Swiper.js (슬라이더), Lucide-react (아이콘) |
+| **배포**      | Vercel                                      |
 
 ---
 
 ## 📡 연동 API 목록
 
-| API 이름 | 설명 |
-|----------|------|
-| OA-21052 | 서울시 문화행사 정보 |
-| OA-15486 | 서울시 문화공간 정보 |
-| OA-22579 | 서울시 야경명소 홍보자료 |
-| Kakao Map API | 위치 및 마커 지도 표시 |
+| API 이름      | 설명                     |
+| ------------- | ------------------------ |
+| OA-21052      | 서울시 문화행사 정보     |
+| OA-15486      | 서울시 문화공간 정보     |
+| OA-22579      | 서울시 야경명소 홍보자료 |
+| Kakao Map API | 위치 및 마커 지도 표시   |
 
 ---
 
 # 주요 라이브러리
+
 npm install react react-dom react-router-dom
 npm install axios dayjs fast-xml-parser clsx swiper lucide-react
 npm install @tanstack/react-query
 
 # 개발 도구
+
 npm install -D typescript tailwindcss postcss autoprefixer
 npm install -D eslint @vitejs/plugin-react @types/react @types/react-dom
 
-
 📝 구현 이슈 및 해결
-문제	해결 방법
-XML → JSON 파싱	fast-xml-parser 사용하여 변환
-날짜 필터 문제	dayjs 확장 플러그인으로 보완
-Vercel 404 오류	vercel.json에 trailingSlash: true 설정
-
-
-
+문제 해결 방법<br />
+XML → JSON 파싱 fast-xml-parser 사용하여 변환<br />
+날짜 필터 문제 dayjs 확장 플러그인으로 보완<br />
+Vercel 404 오류 vercel.json에 trailingSlash: true 설정<br />
