@@ -59,7 +59,7 @@ export const EventCard = ({ event }: EventCardProps) => {
         <div className="mt-2">
           <p className="text-sm text-gray-600 truncate">{event.DATE}</p>
           <p className="text-sm text-gray-500 truncate">{event.PLACE}</p>
-          <p className="text-sm text-gray-500">{event.ORG_NAME}</p>
+          {/* <p className="text-sm text-gray-500">{event.ORG_NAME}</p> */}
         </div>
       </div>
     </div>

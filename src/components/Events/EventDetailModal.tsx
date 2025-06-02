@@ -127,12 +127,17 @@ const EventDetailModal = ({ event, onClose }: Props) => {
             <p className="text-gray-700 whitespace-pre-line leading-relaxed">
               {event.PROGRAM}
             </p>
+            <p className="text-gray-500 whitespace-pre-line leading-relaxed">
+              {event.ETC_DESC}
+            </p>
           </div>
         )}
 
         {/* 지도 */}
         <div className="mt-12">
-          <h3 className="text-xl font-semibold m-4 text-gray-800">위치 안내</h3>
+          <h3 className="text-xl font-semibold m-4 text-gray-800 text-center">
+            위치 안내 {">"}
+          </h3>
           <KakaoMapSingle
             lat={parseFloat(event.LOT)}
             lng={parseFloat(event.LAT)}
