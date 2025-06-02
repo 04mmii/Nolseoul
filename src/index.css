@@ -13,3 +13,23 @@
 body {
   @apply text-navy-900;
 }
+
+@layer utilities {
+  .swiper-pagination-bullet {
+    @apply bg-navy-100 opacity-100;
+  }
+
+  .swiper-pagination-bullet-active {
+    @apply bg-navy-600;
+  }
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    @apply text-navy-600;
+  }
+
+  .swiper-button-prev:hover,
+  .swiper-button-next:hover {
+    @apply text-navy-700;
+  }
+}
