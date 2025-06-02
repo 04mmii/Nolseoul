@@ -37,36 +37,45 @@ const EventDetailModal = ({ event, onClose }: Props) => {
     };
   }, []);
 
+  const hasMap = event.LAT && event.LONG;
+
   return (
     <div className="fixed inset-0 z-50 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center">
       <div
         ref={modalRef}
-        className="w-full max-w-6xl h-[95vh] bg-white p-8 rounded shadow-lg overflow-y-auto relative"
+        className="w-full max-w-6xl h-[95vh] bg-white p-12 rounded-xl shadow-lg overflow-y-auto relative"
       >
         {/* 닫기 버튼 */}
         <button
-          className="absolute top-4 right-4 text-gray-500 hover:text-black text-xl"
+          className="absolute top-6 right-6 text-gray-500 hover:text-black text-2xl"
           onClick={handleClose}
         >
           ✕
         </button>
 
-        {/* 상단 레이아웃: 이미지 + 표 */}
-        <div className="flex flex-col lg:flex-row gap-8 mt-4">
-          {/* 포스터 이미지 */}
+        {/* 상단: 포스터 + 정보 */}
+        <div className="flex flex-col lg:flex-row gap-10 mt-6">
+          {/* 포스터 */}
           {event.MAIN_IMG && (
             <div className="lg:w-1/2 w-full">
               <img
                 src={event.MAIN_IMG}
                 alt={event.TITLE}
-                className="w-full h-auto rounded shadow"
+                className="w-full h-auto rounded shadow-md"
               />
             </div>
           )}
 
           {/* 정보 표 */}
           <div className="lg:w-1/2 w-full">
-            <h2 className="text-3xl font-bold mb-3">{event.TITLE}</h2>
+            <h2 className="text-3xl font-bold mb-2">{event.TITLE}</h2>
+            {/* 카테고리 (CODENAME) */}
+            {event.CODENAME && (
+              <p className="text-sm text-indigo-600 font-medium mb-4">
+                {event.CODENAME}
+              </p>
+            )}
+
             <table className="w-full border border-gray-200 text-sm">
               <tbody className="divide-y divide-gray-200">
                 <TableRow label="장소" value={event.PLACE} />
@@ -81,6 +90,14 @@ const EventDetailModal = ({ event, onClose }: Props) => {
                   <TableRow label="요금" value={event.USE_FEE} />
                 )}
                 {event.PHONE && <TableRow label="문의" value={event.PHONE} />}
+                {/* 주최/주관 정보 */}
+                {event.SPONSOR && (
+                  <TableRow label="주최/주관" value={event.SPONSOR} />
+                )}
+                {event.HOST_INST && (
+                  <TableRow label="주관기관" value={event.HOST_INST} />
+                )}
+                {event.PLACE && <TableRow label="전시실" value={event.PLACE} />}
               </tbody>
             </table>
           </div>
@@ -88,7 +105,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
 
         {/* 상세 설명 */}
         {event.ETC_DESC && (
-          <div className="mt-10">
+          <div className="mt-12">
             <h3 className="text-xl font-semibold mb-2 text-gray-800">
               상세보기
             </h3>
@@ -99,16 +116,30 @@ const EventDetailModal = ({ event, onClose }: Props) => {
         )}
 
         {/* 지도 */}
-        {event.LAT && event.LONG && (
-          <div className="mt-10">
+        {hasMap && (
+          <div className="mt-12">
             <h3 className="text-xl font-semibold mb-2 text-gray-800">
-              위치 안내
+              위치 및 교통 안내
             </h3>
             <KakaoMapSingle
               lat={parseFloat(event.LAT)}
               lng={parseFloat(event.LONG)}
               name={event.TITLE}
             />
+          </div>
+        )}
+
+        {/* 홈페이지 버튼 */}
+        {event.HOMEPAGE && (
+          <div className="mt-12">
+            <a
+              href={event.HOMEPAGE}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-black text-white px-5 py-3 rounded hover:bg-gray-800 transition"
+            >
+              홈페이지 바로가기 →
+            </a>
           </div>
         )}
       </div>
@@ -122,7 +153,7 @@ export default EventDetailModal;
 const TableRow = ({ label, value }: { label: string; value?: string }) =>
   value ? (
     <tr>
-      <td className="bg-gray-100 font-semibold text-gray-700 px-4 py-3 w-24 whitespace-nowrap">
+      <td className="bg-gray-100 font-semibold text-gray-700 px-4 py-3 w-28 whitespace-nowrap">
         {label}
       </td>
       <td className="px-4 py-3 text-gray-800">{value}</td>
