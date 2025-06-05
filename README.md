@@ -48,14 +48,14 @@
 
 # 주요 라이브러리
 
-npm install react react-dom react-router-dom
-npm install axios dayjs fast-xml-parser clsx swiper lucide-react
-npm install @tanstack/react-query
+npm install react react-dom react-router-dom<br />
+npm install axios dayjs fast-xml-parser clsx swiper lucide-react<br />
+npm install @tanstack/react-query<br />
 
 # 개발 도구
 
-npm install -D typescript tailwindcss postcss autoprefixer
-npm install -D eslint @vitejs/plugin-react @types/react @types/react-dom
+npm install -D typescript tailwindcss postcss autoprefixer<br />
+npm install -D eslint @vitejs/plugin-react @types/react @types/react-dom<br />
 
 📝 구현 이슈 및 해결
 문제 해결 방법<br />
