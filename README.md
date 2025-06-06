@@ -59,6 +59,5 @@ npm install -D eslint @vitejs/plugin-react @types/react @types/react-dom<br />
 
 📝 구현 이슈 및 해결
 문제 해결 방법<br />
-- XML → JSON 파싱 fast-xml-parser 사용하여 변환<br />
 - 날짜 필터 문제 dayjs 확장 플러그인으로 보완<br />
 - Vercel 404 오류 vercel.json에 trailingSlash: true 설정<br />
