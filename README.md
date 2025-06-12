@@ -90,7 +90,7 @@ npm install -D eslint @vitejs/plugin-react @types/react @types/react-dom<br />
 
 ---
 
-## 🧙‍♂️ 기타
+## 🎡 기타
 
 - 본 프로젝트는 단순한 클론이 아닌 **개인 기획 기반의 웹서비스**입니다.  
 - 추후 기능 추가 예정: 장소 즐겨찾기 / 필터링 / 지역별 탐색 등
