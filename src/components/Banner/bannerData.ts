@@ -27,8 +27,8 @@ export const bannerData = [
     id: 4,
     title: "드디어 서울야외도서관이 펼쳐집니다!",
     description: "#광화문 책마당 #책읽는 서울광장 #책읽는 맑은냇가",
-    image_pc: "/images/banner-04_pc.webp?v=3",
-    image_mobile: "/images/banner-04_mobile.webp?v=3",
+    image_pc: "/images/banner-05_pc.webp?v=3",
+    image_mobile: "/images/banner-05_mobile.webp?v=3",
     link: "https://seouloutdoorlibrary.kr/user/main/mainIndex.do",
   },
   {
