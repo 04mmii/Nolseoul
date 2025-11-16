@@ -1,5 +1,4 @@
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
-// Home.tsx
 import { useEvents } from "../hooks/useEvents";
 import { EventCard } from "../components/Events/EventCard";
 import Header from "../components/Layout/Header";

@@ -1,4 +1,3 @@
-// Home.tsx
 import { useEvents } from "../hooks/useEvents";
 import { EventCard } from "../components/Events/EventCard";
 import Header from "../components/Layout/Header";
