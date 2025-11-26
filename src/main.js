@@ -1,9 +1,8 @@
-import { jsx as _jsx } from "react/jsx-runtime";
-import React from "react";
+import { jsx as _jsx, Fragment as _Fragment } from "react/jsx-runtime";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 import "./index.css";
+import { BrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const queryClient = new QueryClient();
-ReactDOM.createRoot(document.getElementById("root")).render(_jsx(React.StrictMode, { children: _jsx(BrowserRouter, { children: _jsx(QueryClientProvider, { client: queryClient, children: _jsx(App, {}) }) }) }));
+ReactDOM.createRoot(document.getElementById("root")).render(_jsx(_Fragment, { children: _jsx(BrowserRouter, { children: _jsx(QueryClientProvider, { client: queryClient, children: _jsx(App, {}) }) }) }));
