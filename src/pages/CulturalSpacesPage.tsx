@@ -45,11 +45,33 @@ const CulturalSpacesPage = () => {
     );
   }, [filteredSpaces, currentPage]);
 
-  if (loading) return <div className="text-center py-8">로딩 중...</div>;
+  if (loading)
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 flex items-center justify-center bg-white">
+          <div className="text-center text-gray-500">
+            문화공간 데이터를 불러오는 중입니다…
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+
   if (error)
     return (
-      <div className="text-center py-8 text-red-500">
-        오류 발생: {error.message}
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 flex items-center justify-center bg-white">
+          <div className="text-center text-red-500">
+            데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.
+            <br />
+            <span className="text-xs text-gray-400">
+              ({error instanceof Error ? error.message : "알 수 없는 오류"})
+            </span>
+          </div>
+        </main>
+        <Footer />
       </div>
     );
 
@@ -77,7 +99,7 @@ const CulturalSpacesPage = () => {
           <Map spaces={paginatedSpaces} />
         </div>
 
-        {/* 필터 및 검색창 */}
+        {/* 필터 및 검색창 + 카드 리스트 */}
         <div className="max-w-7xl mx-auto px-4 mt-8 space-y-6">
           <FilterTabs
             selected={selectedCategory}
@@ -87,6 +109,7 @@ const CulturalSpacesPage = () => {
             }}
             options={spaceCategoryOptions}
           />
+
           <div className="relative">
             <input
               type="text"

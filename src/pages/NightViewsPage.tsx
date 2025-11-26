@@ -37,11 +37,33 @@ const NightViewsPage = () => {
     return filteredSpots.slice(startIndex, startIndex + itemsPerPage);
   }, [filteredSpots, currentPage]);
 
-  if (loading) return <div className="text-center py-8">로딩 중...</div>;
+  if (loading)
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 flex items-center justify-center bg-white">
+          <div className="text-center text-gray-500">
+            야경 명소 데이터를 불러오는 중입니다…
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+
   if (error)
     return (
-      <div className="text-center py-8 text-red-500">
-        오류 발생: {error.message}
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1 flex items-center justify-center bg-white">
+          <div className="text-center text-red-500">
+            데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.
+            <br />
+            <span className="text-xs text-gray-400">
+              ({error instanceof Error ? error.message : "알 수 없는 오류"})
+            </span>
+          </div>
+        </main>
+        <Footer />
       </div>
     );
 

@@ -10,7 +10,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import Footer from "@/components/Layout/Footer";
 
 const EventsPage = () => {
-  const { events } = useEvents();
+  const { events, loading, isError } = useEvents(); // ✅ loading, isError 추가
   const [selectedCategory, setSelectedCategory] = useState<string | string[]>(
     "전체"
   );
@@ -116,26 +116,39 @@ const EventsPage = () => {
             </svg>
           </div>
 
-          {/* 카드 리스트 */}
-          {paginatedEvents.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-              {paginatedEvents.map((event, i) => (
-                <EventCard key={i} event={event} />
-              ))}
+          {/* ✅ 로딩 / 에러 상태 처리 */}
+          {loading ? (
+            <div className="w-full py-10 text-center text-gray-500">
+              문화행사 데이터를 불러오는 중입니다…
+            </div>
+          ) : isError ? (
+            <div className="w-full py-10 text-center text-red-500">
+              데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.
             </div>
           ) : (
-            <p className="text-center text-gray-500">
-              조건에 맞는 행사가 없습니다.
-            </p>
-          )}
+            <>
+              {/* 카드 리스트 */}
+              {paginatedEvents.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {paginatedEvents.map((event, i) => (
+                    <EventCard key={i} event={event} />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-center text-gray-500">
+                  조건에 맞는 행사가 없습니다.
+                </p>
+              )}
 
-          {/* 페이지네이션 */}
-          <Pagination
-            totalItems={filteredEvents.length}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-          />
+              {/* 페이지네이션 */}
+              <Pagination
+                totalItems={filteredEvents.length}
+                itemsPerPage={itemsPerPage}
+                currentPage={currentPage}
+                onPageChange={setCurrentPage}
+              />
+            </>
+          )}
         </div>
 
         {/* 행사 모달 */}
