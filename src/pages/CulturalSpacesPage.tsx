@@ -7,6 +7,7 @@ import Pagination from "../components/Common/Pagination";
 import Footer from "@/components/Layout/Footer";
 import { useState, useEffect, useMemo } from "react";
 import { spaceCategoryOptions } from "../components/CulturalSpace/spaceCategoryOptions";
+import SkeletonCard from "../components/Common/SkeletonCard";
 
 const CulturalSpacesPage = () => {
   const { spaces, loading, error } = useCulturalSpaces();
@@ -44,19 +45,6 @@ const CulturalSpacesPage = () => {
       currentPage * itemsPerPage
     );
   }, [filteredSpaces, currentPage]);
-
-  if (loading)
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1 flex items-center justify-center bg-white">
-          <div className="text-center text-gray-500">
-            문화공간 데이터를 불러오는 중입니다…
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
 
   if (error)
     return (
@@ -133,18 +121,29 @@ const CulturalSpacesPage = () => {
             </svg>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {paginatedSpaces.map((space) => (
-              <CulturalSpaceCard key={space.NUM} space={space} />
-            ))}
-          </div>
+          {/* 카드 리스트 영역 */}
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {paginatedSpaces.map((space) => (
+                <CulturalSpaceCard key={space.NUM} space={space} />
+              ))}
+            </div>
+          )}
 
-          <Pagination
-            totalItems={filteredSpaces.length}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-          />
+          {!loading && (
+            <Pagination
+              totalItems={filteredSpaces.length}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+            />
+          )}
         </div>
       </main>
       <Footer />

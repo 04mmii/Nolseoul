@@ -5,6 +5,7 @@ import NightViewMap from "../components/Map/NightViewMap";
 import { useNightViewSpots } from "../hooks/useNightViewSpots";
 import NightViewCard from "../components/Places/NightViewCard";
 import Footer from "../components/Layout/Footer";
+import SkeletonCard from "@/components/Common/SkeletonCard";
 
 const categories = ["전체", "공원/광장", "문화/체육", "공공시설", "가로/마을"];
 
@@ -36,19 +37,6 @@ const NightViewsPage = () => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     return filteredSpots.slice(startIndex, startIndex + itemsPerPage);
   }, [filteredSpots, currentPage]);
-
-  if (loading)
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <main className="flex-1 flex items-center justify-center bg-white">
-          <div className="text-center text-gray-500">
-            야경 명소 데이터를 불러오는 중입니다…
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
 
   if (error)
     return (
@@ -88,6 +76,7 @@ const NightViewsPage = () => {
 
         {/* 지도 */}
         <div className="max-w-7xl mx-auto p-4 mb-8">
+          {/* 로딩 중엔 지도 대신 스켈레톤 느낌으로 비워두고 싶으면 조건 분기 해도 됨 */}
           <NightViewMap spots={paginatedSpots} />
         </div>
 
@@ -134,21 +123,33 @@ const NightViewsPage = () => {
         </div>
 
         {/* 명소 카드 리스트 */}
-        <div className="max-w-7xl mx-auto px-4 mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {paginatedSpots.map((spot) => (
-            <NightViewCard key={spot.NUM} spot={spot} />
-          ))}
+        <div className="max-w-7xl mx-auto px-4 mb-8">
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {paginatedSpots.map((spot) => (
+                <NightViewCard key={spot.NUM} spot={spot} />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* 페이지네이션 */}
-        <div className="max-w-7xl mx-auto px-4 pb-8">
-          <Pagination
-            totalItems={filteredSpots.length}
-            itemsPerPage={itemsPerPage}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-          />
-        </div>
+        {!loading && (
+          <div className="max-w-7xl mx-auto px-4 pb-8">
+            <Pagination
+              totalItems={filteredSpots.length}
+              itemsPerPage={itemsPerPage}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+            />
+          </div>
+        )}
       </main>
       <Footer />
     </>

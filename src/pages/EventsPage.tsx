@@ -8,9 +8,10 @@ import Pagination from "../components/Common/Pagination";
 import EventDetailModal from "../components/Events/EventDetailModal";
 import { useParams, useNavigate } from "react-router-dom";
 import Footer from "@/components/Layout/Footer";
+import SkeletonCard from "@/components/Common/SkeletonCard";
 
 const EventsPage = () => {
-  const { events, loading, isError } = useEvents(); // ✅ loading, isError 추가
+  const { events, loading, isError } = useEvents();
   const [selectedCategory, setSelectedCategory] = useState<string | string[]>(
     "전체"
   );
@@ -85,7 +86,7 @@ const EventsPage = () => {
           </div>
         </div>
 
-        {/* 필터 및 검색창 */}
+        {/* 필터 및 검색창 + 리스트 영역 */}
         <div className="max-w-7xl mx-auto px-4 mt-8 space-y-6">
           <FilterTabs
             selected={selectedCategory}
@@ -116,10 +117,12 @@ const EventsPage = () => {
             </svg>
           </div>
 
-          {/* ✅ 로딩 / 에러 상태 처리 */}
+          {/* ✅ 로딩 / 에러 / 정상 상태 처리 */}
           {loading ? (
-            <div className="w-full py-10 text-center text-gray-500">
-              문화행사 데이터를 불러오는 중입니다…
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
             </div>
           ) : isError ? (
             <div className="w-full py-10 text-center text-red-500">
