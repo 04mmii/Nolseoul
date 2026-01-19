@@ -6,15 +6,26 @@ import { useNightViewSpots } from "../hooks/useNightViewSpots";
 import NightViewCard from "../components/Places/NightViewCard";
 import Footer from "../components/Layout/Footer";
 import SkeletonCard from "@/components/Common/SkeletonCard";
-
-const categories = ["전체", "공원/광장", "문화/체육", "공공시설", "가로/마을"];
+import { useTranslation } from "react-i18next";
 
 const NightViewsPage = () => {
+  const { t } = useTranslation();
   const { spots, loading, error } = useNightViewSpots();
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [currentPage, setCurrentPage] = useState(1);
   const [searchKeyword, setSearchKeyword] = useState("");
   const itemsPerPage = 8;
+
+  const categories = useMemo(
+    () => [
+      { label: t("categories.nightViews.all"), value: "전체" },
+      { label: t("categories.nightViews.parkPlaza"), value: "공원/광장" },
+      { label: t("categories.nightViews.cultureSports"), value: "문화/체육" },
+      { label: t("categories.nightViews.publicFacility"), value: "공공시설" },
+      { label: t("categories.nightViews.streetVillage"), value: "가로/마을" },
+    ],
+    [t]
+  );
 
   useEffect(() => {
     setCurrentPage(1);
@@ -44,10 +55,10 @@ const NightViewsPage = () => {
         <Header />
         <main className="flex-1 flex items-center justify-center bg-white">
           <div className="text-center text-red-500">
-            데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.
+            {t("common.error")}
             <br />
             <span className="text-xs text-gray-400">
-              ({error instanceof Error ? error.message : "알 수 없는 오류"})
+              ({error instanceof Error ? error.message : t("common.unknownError")})
             </span>
           </div>
         </main>
@@ -66,10 +77,10 @@ const NightViewsPage = () => {
         >
           <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center px-4">
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-              야경명소
+              {t("nightViews.title")}
             </h1>
             <p className="text-lg sm:text-xl text-white">
-              서울의 아름다운 야경 명소를 찾아보세요!
+              {t("nightViews.subtitle")}
             </p>
           </div>
         </div>
@@ -85,15 +96,15 @@ const NightViewsPage = () => {
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
+                key={category.value}
+                onClick={() => setSelectedCategory(category.value)}
                 className={`px-4 py-2 rounded-full transition-colors ${
-                  selectedCategory === category
+                  selectedCategory === category.value
                     ? "bg-orange-400 text-black font-bold"
                     : "bg-gray-100 hover:bg-gray-200"
                 }`}
               >
-                {category}
+                {category.label}
               </button>
             ))}
           </div>
@@ -101,7 +112,7 @@ const NightViewsPage = () => {
           <div className="relative">
             <input
               type="text"
-              placeholder="이름 또는 주소로 검색"
+              placeholder={t("nightViews.searchPlaceholder")}
               className="w-full p-3 pl-10 border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400"
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}

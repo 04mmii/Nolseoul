@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
-
-const navItems = [
-  { href: "/events", label: "문화행사" },
-  { href: "/spaces", label: "문화공간" },
-  { href: "/night-views", label: "야경명소" },
-];
+import { useTranslation } from "react-i18next";
 
 const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation();
+
+  const navItems = [
+    { href: "/events", labelKey: "nav.events" },
+    { href: "/spaces", labelKey: "nav.spaces" },
+    { href: "/night-views", labelKey: "nav.nightViews" },
+  ];
 
   return (
     <div className="relative">
@@ -29,7 +31,7 @@ const Nav = () => {
             to={item.href}
             className="relative group inline-block px-1 py-1 text-gray-600"
           >
-            {item.label}
+            {t(item.labelKey)}
             <span className="absolute left-1/2 bottom-0 h-[0.5px] w-0 bg-gray-600 transition-all duration-300 group-hover:w-full group-hover:left-0 origin-center" />
           </Link>
         ))}
@@ -45,7 +47,7 @@ const Nav = () => {
               className="text-gray-700 hover:text-black transition whitespace-nowrap"
               onClick={() => setIsOpen(false)}
             >
-              {item.label}
+              {t(item.labelKey)}
             </Link>
           ))}
         </div>

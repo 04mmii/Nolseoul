@@ -10,11 +10,13 @@ import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import { useEvents } from "../hooks/useEvents";
 import { useCulturalSpaces } from "../hooks/useCulturalSpaces";
+import { useTranslation } from "react-i18next";
 
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
 
 const Home = () => {
+  const { t, i18n } = useTranslation();
   const { events, loading: eventsLoading } = useEvents();
   const { spaces, loading: spacesLoading } = useCulturalSpaces();
 
@@ -65,18 +67,18 @@ const Home = () => {
         {/* 현재 진행 중인 볼거리 */}
         <section className="my-12">
           <h2 className="text-3xl font-bold mb-12 text-center">
-            현재 진행 중인 볼거리!
+            {t("home.ongoingEvents")}
           </h2>
 
           {eventsLoading ? (
             <p className="text-center text-gray-500">
-              행사를 불러오는 중입니다...
+              {t("home.loadingEvents")}
             </p>
           ) : ongoingEvents && ongoingEvents.length > 0 ? (
             <OngoingEventSlider events={ongoingEvents} />
           ) : (
             <p className="text-gray-500 text-center">
-              현재 진행 중인 문화 행사가 없습니다.
+              {t("home.noOngoingEvents")}
             </p>
           )}
         </section>
@@ -85,13 +87,17 @@ const Home = () => {
         <section className="my-16">
           <div className="mb-8">
             <h2 className="text-3xl font-bold text-center">
-              {today.month() + 1}월 문화 행사
+              {t("home.monthlyEvents", {
+                month: i18n.language === "en"
+                  ? today.format("MMMM")
+                  : today.month() + 1,
+              })}
             </h2>
           </div>
 
           {eventsLoading ? (
             <p className="text-center text-gray-500">
-              이번 달 문화 행사를 불러오는 중입니다...
+              {t("home.loadingMonthlyEvents")}
             </p>
           ) : (
             <>
@@ -102,7 +108,11 @@ const Home = () => {
                   ))
                 ) : (
                   <p className="text-gray-500 col-span-full">
-                    {today.month() + 1}월에 예정된 문화 행사가 없습니다.
+                    {t("home.noMonthlyEvents", {
+                      month: i18n.language === "en"
+                        ? today.format("MMMM")
+                        : today.month() + 1,
+                    })}
                   </p>
                 )}
               </div>
@@ -111,7 +121,7 @@ const Home = () => {
                   to="/events"
                   className="inline-block text-blue-600 hover:text-blue-800 transition-colors"
                 >
-                  더 많은 행사 {">"}
+                  {t("home.moreEvents")} {">"}
                 </Link>
               </div>
             </>
@@ -121,20 +131,20 @@ const Home = () => {
         {/* 추천 문화공간 */}
         <section className="my-16">
           <div className="mb-8">
-            <h2 className="text-3xl font-bold text-center">추천 문화공간</h2>
+            <h2 className="text-3xl font-bold text-center">{t("home.recommendedSpaces")}</h2>
             <div className="text-right mt-2">
               <Link
                 to="/spaces"
                 className="block text-navy-600 hover:text-navy-800 transition-colors"
               >
-                더 많은 공간 {">"}
+                {t("home.moreSpaces")} {">"}
               </Link>
             </div>
           </div>
 
           {spacesLoading ? (
             <p className="text-center text-gray-500">
-              문화공간 정보를 불러오는 중입니다...
+              {t("home.loadingSpaces")}
             </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">

@@ -1,6 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -9,6 +10,7 @@ import "swiper/css/pagination";
 import { bannerData } from "./bannerData";
 
 const HeroSlider = () => {
+  const { t } = useTranslation();
   const handleClick = (link: string) => {
     if (link.startsWith("http")) {
       window.open(link, "_blank");
@@ -75,7 +77,7 @@ const HeroSlider = () => {
                       onClick={() => handleClick(banner.link)}
                       className="absolute -right-10 -bottom-1 translate-x-1 px-5 py-1 text-sm bg-navy-600 text-white rounded-full shadow-lg hover:bg-navy-700 transition"
                     >
-                      자세히 보기
+                      {t("hero.viewDetails")}
                     </button>
                   </div>
                 </div>
@@ -97,7 +99,7 @@ const HeroSlider = () => {
               />
               <img
                 src="/images/nightview_pc.webp"
-                alt="서울 야경명소"
+                alt={t("hero.nightViewAlt")}
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
@@ -105,14 +107,12 @@ const HeroSlider = () => {
           </div>
 
           <div className="mt-2 text-center">
-            <h3 className="text-lg sm:text-xl font-bold mb-1">
-              2025 서울 문화의 밤,
-              <br />
-              문화로 야금야금(夜金)
+            <h3 className="text-lg sm:text-xl font-bold mb-1 whitespace-pre-line">
+              {t("hero.nightViewTitle")}
             </h3>
-            <p className="text-sm text-gray-500 mb-1">2025.4. ~ 12.</p>
+            <p className="text-sm text-gray-500 mb-1">{t("hero.nightViewPeriod")}</p>
             <p className="text-sm text-gray-700">
-              도심 내 주요 시립 문화시설(8개소), 한강공원 등
+              {t("hero.nightViewDescription")}
             </p>
           </div>
         </Link>

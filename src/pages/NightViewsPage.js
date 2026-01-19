@@ -6,13 +6,22 @@ import NightViewMap from "../components/Map/NightViewMap";
 import { useNightViewSpots } from "../hooks/useNightViewSpots";
 import NightViewCard from "../components/Places/NightViewCard";
 import Footer from "../components/Layout/Footer";
-const categories = ["전체", "공원/광장", "문화/체육", "공공시설", "가로/마을"];
+import SkeletonCard from "@/components/Common/SkeletonCard";
+import { useTranslation } from "react-i18next";
 const NightViewsPage = () => {
+    const { t } = useTranslation();
     const { spots, loading, error } = useNightViewSpots();
     const [selectedCategory, setSelectedCategory] = useState("전체");
     const [currentPage, setCurrentPage] = useState(1);
     const [searchKeyword, setSearchKeyword] = useState("");
     const itemsPerPage = 8;
+    const categories = useMemo(() => [
+        { label: t("categories.nightViews.all"), value: "전체" },
+        { label: t("categories.nightViews.parkPlaza"), value: "공원/광장" },
+        { label: t("categories.nightViews.cultureSports"), value: "문화/체육" },
+        { label: t("categories.nightViews.publicFacility"), value: "공공시설" },
+        { label: t("categories.nightViews.streetVillage"), value: "가로/마을" },
+    ], [t]);
     useEffect(() => {
         setCurrentPage(1);
     }, [selectedCategory, searchKeyword]);
@@ -31,12 +40,10 @@ const NightViewsPage = () => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         return filteredSpots.slice(startIndex, startIndex + itemsPerPage);
     }, [filteredSpots, currentPage]);
-    if (loading)
-        return (_jsxs("div", { className: "min-h-screen flex flex-col", children: [_jsx(Header, {}), _jsx("main", { className: "flex-1 flex items-center justify-center bg-white", children: _jsx("div", { className: "text-center text-gray-500", children: "\uC57C\uACBD \uBA85\uC18C \uB370\uC774\uD130\uB97C \uBD88\uB7EC\uC624\uB294 \uC911\uC785\uB2C8\uB2E4\u2026" }) }), _jsx(Footer, {})] }));
     if (error)
-        return (_jsxs("div", { className: "min-h-screen flex flex-col", children: [_jsx(Header, {}), _jsx("main", { className: "flex-1 flex items-center justify-center bg-white", children: _jsxs("div", { className: "text-center text-red-500", children: ["\uB370\uC774\uD130\uB97C \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uC7A0\uC2DC \uD6C4 \uB2E4\uC2DC \uC2DC\uB3C4\uD574 \uC8FC\uC138\uC694.", _jsx("br", {}), _jsxs("span", { className: "text-xs text-gray-400", children: ["(", error instanceof Error ? error.message : "알 수 없는 오류", ")"] })] }) }), _jsx(Footer, {})] }));
-    return (_jsxs(_Fragment, { children: [_jsx(Header, {}), _jsxs("main", { className: "min-h-screen bg-white", children: [_jsx("div", { className: "w-full h-[300px] bg-cover bg-center relative", style: { backgroundImage: "url('/images/n-1920.jpg')" }, children: _jsxs("div", { className: "absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center px-4", children: [_jsx("h1", { className: "text-4xl sm:text-5xl font-bold text-white mb-4", children: "\uC57C\uACBD\uBA85\uC18C" }), _jsx("p", { className: "text-lg sm:text-xl text-white", children: "\uC11C\uC6B8\uC758 \uC544\uB984\uB2E4\uC6B4 \uC57C\uACBD \uBA85\uC18C\uB97C \uCC3E\uC544\uBCF4\uC138\uC694!" })] }) }), _jsx("div", { className: "max-w-7xl mx-auto p-4 mb-8", children: _jsx(NightViewMap, { spots: paginatedSpots }) }), _jsxs("div", { className: "max-w-7xl mx-auto px-4 mt-8 mb-6 space-y-4", children: [_jsx("div", { className: "flex flex-wrap gap-2", children: categories.map((category) => (_jsx("button", { onClick: () => setSelectedCategory(category), className: `px-4 py-2 rounded-full transition-colors ${selectedCategory === category
+        return (_jsxs("div", { className: "min-h-screen flex flex-col", children: [_jsx(Header, {}), _jsx("main", { className: "flex-1 flex items-center justify-center bg-white", children: _jsxs("div", { className: "text-center text-red-500", children: [t("common.error"), _jsx("br", {}), _jsxs("span", { className: "text-xs text-gray-400", children: ["(", error instanceof Error ? error.message : t("common.unknownError"), ")"] })] }) }), _jsx(Footer, {})] }));
+    return (_jsxs(_Fragment, { children: [_jsx(Header, {}), _jsxs("main", { className: "min-h-screen bg-white", children: [_jsx("div", { className: "w-full h-[300px] bg-cover bg-center relative", style: { backgroundImage: "url('/images/n-1920.jpg')" }, children: _jsxs("div", { className: "absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center px-4", children: [_jsx("h1", { className: "text-4xl sm:text-5xl font-bold text-white mb-4", children: t("nightViews.title") }), _jsx("p", { className: "text-lg sm:text-xl text-white", children: t("nightViews.subtitle") })] }) }), _jsx("div", { className: "max-w-7xl mx-auto p-4 mb-8", children: _jsx(NightViewMap, { spots: paginatedSpots }) }), _jsxs("div", { className: "max-w-7xl mx-auto px-4 mt-8 mb-6 space-y-4", children: [_jsx("div", { className: "flex flex-wrap gap-2", children: categories.map((category) => (_jsx("button", { onClick: () => setSelectedCategory(category.value), className: `px-4 py-2 rounded-full transition-colors ${selectedCategory === category.value
                                         ? "bg-orange-400 text-black font-bold"
-                                        : "bg-gray-100 hover:bg-gray-200"}`, children: category }, category))) }), _jsxs("div", { className: "relative", children: [_jsx("input", { type: "text", placeholder: "\uC774\uB984 \uB610\uB294 \uC8FC\uC18C\uB85C \uAC80\uC0C9", className: "w-full p-3 pl-10 border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400", value: searchKeyword, onChange: (e) => setSearchKeyword(e.target.value) }), _jsx("svg", { className: "absolute left-3 top-4 h-5 w-5 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: _jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" }) })] })] }), _jsx("div", { className: "max-w-7xl mx-auto px-4 mb-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6", children: paginatedSpots.map((spot) => (_jsx(NightViewCard, { spot: spot }, spot.NUM))) }), _jsx("div", { className: "max-w-7xl mx-auto px-4 pb-8", children: _jsx(Pagination, { totalItems: filteredSpots.length, itemsPerPage: itemsPerPage, currentPage: currentPage, onPageChange: setCurrentPage }) })] }), _jsx(Footer, {})] }));
+                                        : "bg-gray-100 hover:bg-gray-200"}`, children: category.label }, category.value))) }), _jsxs("div", { className: "relative", children: [_jsx("input", { type: "text", placeholder: t("nightViews.searchPlaceholder"), className: "w-full p-3 pl-10 border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400", value: searchKeyword, onChange: (e) => setSearchKeyword(e.target.value) }), _jsx("svg", { className: "absolute left-3 top-4 h-5 w-5 text-gray-400", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", children: _jsx("path", { strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 2, d: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" }) })] })] }), _jsx("div", { className: "max-w-7xl mx-auto px-4 mb-8", children: loading ? (_jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6", children: Array.from({ length: 8 }).map((_, i) => (_jsx(SkeletonCard, {}, i))) })) : (_jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6", children: paginatedSpots.map((spot) => (_jsx(NightViewCard, { spot: spot }, spot.NUM))) })) }), !loading && (_jsx("div", { className: "max-w-7xl mx-auto px-4 pb-8", children: _jsx(Pagination, { totalItems: filteredSpots.length, itemsPerPage: itemsPerPage, currentPage: currentPage, onPageChange: setCurrentPage }) }))] }), _jsx(Footer, {})] }));
 };
 export default NightViewsPage;

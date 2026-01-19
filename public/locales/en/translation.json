@@ -1,0 +1,117 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Failed to load data. Please try again later.",
+    "unknownError": "Unknown error",
+    "noInfo": "No information",
+    "viewDetails": "View Details",
+    "backToList": "Back to List",
+    "homepage": "Website"
+  },
+  "nav": {
+    "events": "Events",
+    "spaces": "Cultural Spaces",
+    "nightViews": "Night Views"
+  },
+  "footer": {
+    "logoAlt": "Nolseoul Logo",
+    "copyright": "2025 Nolseoul. All rights reserved.",
+    "contact": "Contact"
+  },
+  "home": {
+    "ongoingEvents": "Ongoing Events!",
+    "loadingEvents": "Loading events...",
+    "noOngoingEvents": "No ongoing cultural events at the moment.",
+    "monthlyEvents": "Cultural Events in {{month}}",
+    "loadingMonthlyEvents": "Loading this month's events...",
+    "noMonthlyEvents": "No events scheduled for {{month}}.",
+    "moreEvents": "More Events",
+    "recommendedSpaces": "Recommended Spaces",
+    "moreSpaces": "More Spaces",
+    "loadingSpaces": "Loading cultural spaces..."
+  },
+  "events": {
+    "title": "Cultural Events",
+    "subtitle": "Discover various cultural events in Seoul.",
+    "searchPlaceholder": "Search for events",
+    "noResults": "No events match your criteria."
+  },
+  "eventDetail": {
+    "place": "Venue",
+    "period": "Period",
+    "time": "Time",
+    "target": "Target",
+    "fee": "Fee",
+    "contact": "Contact",
+    "organizer": "Organizer",
+    "hostInstitution": "Host Institution",
+    "homepage": "Website",
+    "programIntro": "Program Introduction",
+    "location": "Location"
+  },
+  "spaces": {
+    "title": "Cultural Spaces",
+    "subtitle": "Explore various cultural spaces in Seoul.",
+    "searchPlaceholder": "Search by name or address"
+  },
+  "spaceDetail": {
+    "address": "Address",
+    "phone": "Phone",
+    "category": "Category",
+    "homepage": "Website",
+    "introduction": "Introduction",
+    "directions": "Directions",
+    "mapPlaceholder": "[Map will be displayed here]",
+    "invalidAccess": "Invalid access. (No NUM)",
+    "notFound": "Cultural space not found.",
+    "errorOccurred": "An error occurred"
+  },
+  "nightViews": {
+    "title": "Night Views",
+    "subtitle": "Discover beautiful night views in Seoul!",
+    "searchPlaceholder": "Search by name or address"
+  },
+  "nightViewCard": {
+    "operatingHours": "Hours",
+    "entranceFee": "Fee",
+    "phone": "Phone",
+    "homepage": "Visit Website",
+    "subway": "Subway",
+    "bus": "Bus"
+  },
+  "hero": {
+    "viewDetails": "View Details",
+    "nightViewTitle": "2025 Seoul Culture Night,\nYageum Yageum",
+    "nightViewPeriod": "Apr - Dec 2025",
+    "nightViewDescription": "Major municipal cultural facilities (8 locations), Han River parks, etc.",
+    "nightViewAlt": "Seoul Night View"
+  },
+  "categories": {
+    "all": "All",
+    "events": {
+      "all": "All",
+      "performance": "Performance",
+      "exhibition": "Exhibition",
+      "festival": "Festival",
+      "education": "Education",
+      "other": "Other"
+    },
+    "spaces": {
+      "all": "All",
+      "performanceHall": "Performance Hall",
+      "museum": "Museum",
+      "gallery": "Gallery",
+      "culturalCenter": "Cultural Center",
+      "culturalInstitute": "Cultural Institute",
+      "library": "Library",
+      "other": "Other"
+    },
+    "nightViews": {
+      "all": "All",
+      "parkPlaza": "Park/Plaza",
+      "cultureSports": "Culture/Sports",
+      "publicFacility": "Public Facility",
+      "streetVillage": "Street/Village"
+    }
+  }
+}

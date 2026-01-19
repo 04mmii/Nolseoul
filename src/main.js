@@ -1,7 +1,10 @@
-import { jsx as _jsx, Fragment as _Fragment } from "react/jsx-runtime";
+import { jsx as _jsx } from "react/jsx-runtime";
 import ReactDOM from "react-dom/client";
+import { Suspense } from "react";
 import App from "./App";
 import "./index.css";
+import "@/styles/skeleton.css";
+import "./i18n";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const queryClient = new QueryClient({
@@ -13,4 +16,4 @@ const queryClient = new QueryClient({
         },
     },
 });
-ReactDOM.createRoot(document.getElementById("root")).render(_jsx(_Fragment, { children: _jsx(BrowserRouter, { children: _jsx(QueryClientProvider, { client: queryClient, children: _jsx(App, {}) }) }) }));
+ReactDOM.createRoot(document.getElementById("root")).render(_jsx(Suspense, { fallback: _jsx("div", { className: "flex items-center justify-center min-h-screen", children: "Loading..." }), children: _jsx(BrowserRouter, { children: _jsx(QueryClientProvider, { client: queryClient, children: _jsx(App, {}) }) }) }));

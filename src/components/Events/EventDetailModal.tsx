@@ -1,7 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Event } from "../../types/Event";
 import KakaoMapSingle from "../Map/KakaoMapSingle";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   event: Event;
@@ -9,24 +10,29 @@ type Props = {
 };
 
 const EventDetailModal = ({ event, onClose }: Props) => {
+  const { t } = useTranslation();
   const modalRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
-  const handleClickOutside = (e: MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-      handleClose();
+  const handleClose = useCallback(() => {
+    if (onClose) {
+      onClose();
+    } else {
+      navigate(-1);
     }
-  };
-
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") handleClose();
-  };
-
-  const handleClose = () => {
-    onClose ? onClose() : navigate(-1);
-  };
+  }, [onClose, navigate]);
 
   useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        handleClose();
+      }
+    };
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") handleClose();
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleKeyDown);
     document.body.style.overflow = "hidden";
@@ -35,7 +41,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "";
     };
-  }, []);
+  }, [handleClose]);
 
   // const hasMap = event.LAT && event.LONG;
 
@@ -80,24 +86,24 @@ const EventDetailModal = ({ event, onClose }: Props) => {
 
             <table className="w-full pt-10 border border-gray-200 text-sm">
               <tbody className="divide-y divide-gray-200">
-                <TableRow label="장소" value={event.PLACE} />
-                <TableRow label="기간" value={event.DATE} />
+                <TableRow label={t("eventDetail.place")} value={event.PLACE} />
+                <TableRow label={t("eventDetail.period")} value={event.DATE} />
                 {event.USE_TIME && (
-                  <TableRow label="시간" value={event.USE_TIME} />
+                  <TableRow label={t("eventDetail.time")} value={event.USE_TIME} />
                 )}
                 {event.USE_TRGT && (
-                  <TableRow label="대상" value={event.USE_TRGT} />
+                  <TableRow label={t("eventDetail.target")} value={event.USE_TRGT} />
                 )}
                 {event.USE_FEE && (
-                  <TableRow label="요금" value={event.USE_FEE} />
+                  <TableRow label={t("eventDetail.fee")} value={event.USE_FEE} />
                 )}
-                {event.PHONE && <TableRow label="문의" value={event.PHONE} />}
+                {event.PHONE && <TableRow label={t("eventDetail.contact")} value={event.PHONE} />}
                 {/* 주최/주관 정보 */}
                 {event.SPONSOR && (
-                  <TableRow label="주최/주관" value={event.SPONSOR} />
+                  <TableRow label={t("eventDetail.organizer")} value={event.SPONSOR} />
                 )}
                 {event.HOST_INST && (
-                  <TableRow label="주관기관" value={event.HOST_INST} />
+                  <TableRow label={t("eventDetail.hostInstitution")} value={event.HOST_INST} />
                 )}
               </tbody>
             </table>
@@ -111,7 +117,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
                   rel="noopener noreferrer"
                   className="inline-block bg-navy-900 text-white px-5 py-3 rounded hover:bg-gray-800 transition"
                 >
-                  홈페이지 →
+                  {t("eventDetail.homepage")} &rarr;
                 </a>
               </div>
             )}
@@ -122,7 +128,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
         {event.PROGRAM && (
           <div className="mt-8">
             <h3 className="text-xl font-semibold mb-2 text-gray-800">
-              프로그램 소개
+              {t("eventDetail.programIntro")}
             </h3>
             <p className="text-gray-700 whitespace-pre-line leading-relaxed">
               {event.PROGRAM}
@@ -136,7 +142,7 @@ const EventDetailModal = ({ event, onClose }: Props) => {
         {/* 지도 */}
         <div className="mt-12">
           <h3 className="text-xl font-semibold m-4 text-gray-800 text-center">
-            위치 안내 {">"}
+            {t("eventDetail.location")} {">"}
           </h3>
           <KakaoMapSingle
             lat={parseFloat(event.LOT)}

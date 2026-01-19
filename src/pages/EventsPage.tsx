@@ -3,14 +3,16 @@ import { useEvents } from "../hooks/useEvents";
 import { EventCard } from "../components/Events/EventCard";
 import Header from "../components/Layout/Header";
 import FilterTabs from "../components/Common/FilterTabs";
-import { eventCategoryOptions } from "../components/Events/eventCategoryOptions";
+import { getEventCategoryOptions } from "../components/Events/eventCategoryOptions";
 import Pagination from "../components/Common/Pagination";
 import EventDetailModal from "../components/Events/EventDetailModal";
 import { useParams, useNavigate } from "react-router-dom";
 import Footer from "@/components/Layout/Footer";
 import SkeletonCard from "@/components/Common/SkeletonCard";
+import { useTranslation } from "react-i18next";
 
 const EventsPage = () => {
+  const { t } = useTranslation();
   const { events, loading, isError } = useEvents();
   const [selectedCategory, setSelectedCategory] = useState<string | string[]>(
     "전체"
@@ -20,6 +22,7 @@ const EventsPage = () => {
   const itemsPerPage = 20;
   const { slug } = useParams();
   const navigate = useNavigate();
+  const eventCategoryOptions = useMemo(() => getEventCategoryOptions(t), [t]);
 
   const filteredEvents = useMemo(() => {
     return events
@@ -78,10 +81,10 @@ const EventsPage = () => {
         >
           <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center px-4">
             <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-              문화행사
+              {t("events.title")}
             </h1>
             <p className="text-lg sm:text-xl text-white">
-              서울의 다양한 문화행사를 찾아보세요.
+              {t("events.subtitle")}
             </p>
           </div>
         </div>
@@ -97,7 +100,7 @@ const EventsPage = () => {
           <div className="relative">
             <input
               type="text"
-              placeholder="행사명을 검색하세요"
+              placeholder={t("events.searchPlaceholder")}
               className="w-full p-3 pl-10 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -117,7 +120,7 @@ const EventsPage = () => {
             </svg>
           </div>
 
-          {/* ✅ 로딩 / 에러 / 정상 상태 처리 */}
+          {/* 로딩 / 에러 / 정상 상태 처리 */}
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
               {Array.from({ length: 12 }).map((_, i) => (
@@ -126,7 +129,7 @@ const EventsPage = () => {
             </div>
           ) : isError ? (
             <div className="w-full py-10 text-center text-red-500">
-              데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.
+              {t("common.error")}
             </div>
           ) : (
             <>
@@ -139,7 +142,7 @@ const EventsPage = () => {
                 </div>
               ) : (
                 <p className="text-center text-gray-500">
-                  조건에 맞는 행사가 없습니다.
+                  {t("events.noResults")}
                 </p>
               )}
 
